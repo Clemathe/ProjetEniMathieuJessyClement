@@ -13,10 +13,10 @@ public class ArticleVendu {
 	private int miseAPrix; 
 	private int PrixVente; 
 	private boolean etatVente; 
-	private Utilisateur noAcheteur; 
-	private Utilisateur noVendeur; 
+	private Utilisateur acheteur; 
+	private Utilisateur vendeur; 
 	private List<Enchere> encheres; 
-	private Categorie categorieArticle; 
+	private Categorie categorie; 
 	private Retrait lieuRetrait; 
 
 }
