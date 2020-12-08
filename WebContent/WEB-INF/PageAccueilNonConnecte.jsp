@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ page import=""%>
+<%-- <%@ page import=""%> --%>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
@@ -20,7 +20,7 @@
 	<%@ include file="./fragments/header.html"%>
 
 
-
+	<%@ include file="./fragments/footer.html" %>
 
 </body>
-</html>
+</html> 
