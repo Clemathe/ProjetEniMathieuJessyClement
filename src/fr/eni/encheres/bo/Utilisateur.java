@@ -15,8 +15,8 @@ public class Utilisateur {
 	private String ville; 
 	private String motDePasse; 
 	private int credit; 
-	private boolean administrateur; 
-	private List<ArticleVendu> ventes; 
+	private boolean administrateur;
+	private List<ArticleVendu> ventes;
 	private List<ArticleVendu> achats; 
 	private List<ArticleVendu> encheres; 
 
