@@ -19,7 +19,7 @@ public class Retrait {
 		this.articleVendu = articleVendu;
 	}
 
-
+ 
 
 	@Override
 	public String toString() {
