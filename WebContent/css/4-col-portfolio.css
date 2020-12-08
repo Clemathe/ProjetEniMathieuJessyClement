@@ -6,6 +6,23 @@
 
 body {
   padding-top: 54px;
+  
+}
+.formulaireConnexion{
+	margin-top :70px;
+}
+#creerUnCompte{
+	
+	margin-top: 30px;
+}
+#rememeberMe{
+	
+	margin-left : 10px;
+	
+}
+#forgetPassword{
+	
+	padding-left : 20px;
 }
 
 @media (min-width: 992px) {
