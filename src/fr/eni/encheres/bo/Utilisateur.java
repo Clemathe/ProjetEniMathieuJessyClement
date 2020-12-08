@@ -132,6 +132,14 @@ public class Utilisateur {
 	}
 	public void setEncheres(List<ArticleVendu> encheres) {
 		this.encheres = encheres;
+	}
+
+	@Override
+	public String toString() {
+		return String.format(
+				"Utilisateur [noUtilisateur=%s, pseudo=%s, nom=%s, prenom=%s, email=%s, telephone=%s, rue=%s, codePostal=%s, ville=%s, motDePasse=%s, credit=%s, administrateur=%s, ventes=%s, achats=%s, encheres=%s]",
+				noUtilisateur, pseudo, nom, prenom, email, telephone, rue, codePostal, ville, motDePasse, credit,
+				administrateur, ventes, achats, encheres);
 	} 
 	
 	
