@@ -39,7 +39,7 @@
 
 
 		<div class="row my-2">
-			<label for="prenom" class="col-3 col-form-label"> Prénom : </label>
+			<label for="prenom" class="col-3 col-form-label"> Prénom ? </label>
 			<%-- traitement ifEmpty à faire --%>
 			<input class="form-controln col-3" type="text" id="prenom"
 				name="prenom" value="${param.prenom}"required="required" placeholder="Votre prénom ?"> <label for="email"

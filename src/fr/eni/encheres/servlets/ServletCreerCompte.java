@@ -35,7 +35,7 @@ public class ServletCreerCompte extends HttpServlet {
 	}
 	
 	private void creerCompte(HttpServletRequest request, HttpServletResponse response) {
-		// lecture et vérification des paramètres 
+		// lecture et vérification des paramètres et  
 		
 		
 	}
