@@ -31,7 +31,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 		String userPassword = null;
 
 		try {
-			cnx = ConnectionProvider.getConnexion();
+			cnx = ConnectionProvider.getConnection();
 
 			if (login.matches("^[\\w.-]+@[\\w.-]+\\.[a-z]{2,}$")) {
 
@@ -73,7 +73,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 		Utilisateur user = null;
 
 		try {
-			cnx = ConnectionProvider.getConnexion();
+			cnx = ConnectionProvider.getConnection();
 		
 			if (login.matches("^[\\w.-]+@[\\w.-]+\\.[a-z]{2,}$")) {
 
