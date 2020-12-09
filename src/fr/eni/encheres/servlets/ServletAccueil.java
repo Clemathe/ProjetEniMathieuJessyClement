@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import fr.eni.encheres.bll.EnchereManager;
+import fr.eni.encheres.bll.ArticleVenduManager;
 
 /**
  * Servlet implementation class ServletAccueil
@@ -32,11 +32,12 @@ public class ServletAccueil extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		EnchereManager enchereManager = new EnchereManager();
+		ArticleVenduManager enchereEnCours = new ArticleVenduManager();
 		String categorie =(String)request.getParameter("categories");
 		String nomArticlePartiel = (String)request.getParameter("nomArticlePartiel");
+		System.out.println(categorie.toString()+" "+ nomArticlePartiel.toString());
 		
-		
+		enchereEnCours.getEnchereEnCours(categorie, nomArticlePartiel);
 		
 		
 		

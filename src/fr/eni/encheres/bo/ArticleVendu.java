@@ -1,6 +1,7 @@
 package fr.eni.encheres.bo;
 
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 public class ArticleVendu {
@@ -8,8 +9,8 @@ public class ArticleVendu {
 	private int noArticle; 
 	private String nomArticle; 
 	private String description; 
-	private LocalDate dateDebutEncheres; 
-	private LocalDate dateFinEncheres; 
+	private Date dateDebutEncheres; 
+	private Date dateFinEncheres; 
 	private int miseAPrix; 
 	private int PrixVente; 
 	private boolean etatVente; 
@@ -19,12 +20,14 @@ public class ArticleVendu {
 	private Categorie categorie; 
 	private Retrait lieuRetrait;
 	
+	private int enchereCourante;
+	private String pseudoVendeur;
 	public ArticleVendu() {
 	}
 	
 	
-	public ArticleVendu(int noArticle, String nomArticle, String description, LocalDate dateDebutEncheres,
-			LocalDate dateFinEncheres, int miseAPrix, int prixVente, boolean etatVente, Utilisateur acheteur,
+	public ArticleVendu(int noArticle, String nomArticle, String description, Date dateDebutEncheres,
+			Date dateFinEncheres, int miseAPrix, int prixVente, boolean etatVente, Utilisateur acheteur,
 			Utilisateur vendeur, List<Enchere> encheres, Categorie categorie, Retrait lieuRetrait) {
 		super();
 		this.noArticle = noArticle;
@@ -41,6 +44,16 @@ public class ArticleVendu {
 		this.categorie = categorie;
 		this.lieuRetrait = lieuRetrait;
 	}
+	public ArticleVendu(int noArticle, String nomArticle, int enchereCourante, Date dateFinEncheres, 
+			String pseudoVendeur) {
+		this.noArticle = noArticle;
+		this.nomArticle = nomArticle;
+		this.enchereCourante = enchereCourante;
+		this.dateFinEncheres = dateFinEncheres;
+		this.pseudoVendeur = pseudoVendeur;
+		
+	}
+	
 
 
 	@Override
@@ -71,16 +84,16 @@ public class ArticleVendu {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	public LocalDate getDateDebutEncheres() {
+	public Date getDateDebutEncheres() {
 		return dateDebutEncheres;
 	}
-	public void setDateDebutEncheres(LocalDate dateDebutEncheres) {
+	public void setDateDebutEncheres(Date dateDebutEncheres) {
 		this.dateDebutEncheres = dateDebutEncheres;
 	}
-	public LocalDate getDateFinEncheres() {
+	public Date getDateFinEncheres() {
 		return dateFinEncheres;
 	}
-	public void setDateFinEncheres(LocalDate dateFinEncheres) {
+	public void setDateFinEncheres(Date dateFinEncheres) {
 		this.dateFinEncheres = dateFinEncheres;
 	}
 	public int getMiseAPrix() {
@@ -131,5 +144,17 @@ public class ArticleVendu {
 	public void setLieuRetrait(Retrait lieuRetrait) {
 		this.lieuRetrait = lieuRetrait;
 	} 
+	public int getEnchereCourante() {
+		return enchereCourante;
+	}
+	public void setEnchereCourante(int enchereCourante) {
+		this.enchereCourante = enchereCourante;
+	}
+	public String getPseudoVendeur() {
+		return pseudoVendeur;
+	}
+	public void setPseudoVendeur(String pseudoVendeur) {
+		this.pseudoVendeur = pseudoVendeur;
+	}
 
 }
