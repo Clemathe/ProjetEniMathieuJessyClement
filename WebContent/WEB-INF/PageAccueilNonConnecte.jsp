@@ -32,7 +32,7 @@
 		
 		<div class="form-group">
 			<label for="recherche">Filtres :</label>
-			<input type="search" size="40" name="name" id="recherche" placeholder="Le nom de l'article contient" class="form-control">
+			<input type="search" size="40" name="nomArticlePartiel" id="recherche" placeholder="Le nom de l'article contient" class="form-control">
 			</div>
 			
 			<div class="form-group">
