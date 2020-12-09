@@ -34,7 +34,7 @@
 				class="col-3 col-form-label"> Nom : </label>
 			<%-- traitement ifEmpty  à faire --%>
 			<input class="form-controln col-3" type="text" id="nom" name="nom"
-				value="${param.nom}" required="required" placeholder=" Votre nom ?">
+				value="${param.nom}" required="required" placeholder=" Votre nom :">
 		</div>
 
 
