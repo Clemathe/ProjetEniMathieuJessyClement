@@ -20,12 +20,12 @@
 	</Header>
 	<nav></nav>
 
-	<section>
+	<section class= my-5>
 		<form action="ServletConnexion" method="post"
-			class=" formulaireConnexion">
+			class= my-5>
 			<div class="form-group">
-				<label for="id">Identifiant</label> <input type="text"
-					class="form-control" id="id" name="identifiant"
+				<label for="login">Identifiant</label> <input type="text"
+					class="form-control" id="login" name="login"
 					 autofocus placeholder="Votre identifiant" required >
 			</div>
 			<div class="form-group">
@@ -47,7 +47,7 @@
 		</form>
 	</section>
 	<section>
-		<div class="form-group" id="creerUnCompte">
+		<div class="form-group class= my-5" id="creerUnCompte">
 			<a href=""><button class="btn btn-info col-12">Créer un
 					compte</button></a>
 		</div>

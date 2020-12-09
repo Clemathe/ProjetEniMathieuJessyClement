@@ -2,6 +2,7 @@ package fr.eni.encheres.bll;
 
 import fr.eni.encheres.bo.Utilisateur;
 import fr.eni.encheres.dal.DAOFactory;
+import fr.eni.encheres.dal.UtilisateurDAO;
 
 
 public class UtilisateurManager {
@@ -21,14 +22,13 @@ public class UtilisateurManager {
 		
 	}
 
-	public boolean utilisateurExistant(String id) {
-		boolean existingUser = UtilisateurManager.utilisateurDAO.getExistingUser(id);
+	public boolean utilisateurExistant(String login) {
+		boolean existingUser = UtilisateurManager.utilisateurDAO.getExistingUser(login);
 		return existingUser;
-		
 	}
 	
-	public boolean VerificationUtilisateurMotDePasse(String id, String password) {
-		boolean okUserPass = UtilisateurManager.utilisateurDAO.getMatchingUserPassword(id, password);
+	public boolean VerificationUtilisateurMotDePasse(String login, String password) {
+		boolean okUserPass = UtilisateurManager.utilisateurDAO.getMatchingUserPassword(login, password);
 		
 		return okUserPass;
 		

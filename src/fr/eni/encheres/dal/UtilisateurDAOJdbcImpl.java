@@ -1,6 +1,5 @@
 package fr.eni.encheres.dal;
 
-import fr.eni.encheres.bll.UtilisateurDAO;
 import fr.eni.encheres.bo.Utilisateur;
 
 public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {

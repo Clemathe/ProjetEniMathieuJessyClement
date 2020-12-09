@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import fr.eni.encheres.bll.UtilisateurManager;
 
@@ -31,16 +32,19 @@ public class ServletConnexion extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		UtilisateurManager UManager = new UtilisateurManager();
-		String id = (String) request.getParameter("identifiant");
+		String login = (String) request.getParameter("login");
 		String password = (String) request.getParameter("pass");
 		
-		boolean matchingUserPassword = UManager.VerificationUtilisateurMotDePasse(id, password);
+		boolean matchingUserPassword = UManager.VerificationUtilisateurMotDePasse(login, password);
 		
 		
 		
 		if (!matchingUserPassword) {
 			//TODO
 		}else {
+			HttpSession sessionUtilisateur = request.getSession();
+			sessionUtilisateur.setAttribute("login", request.getParameter("login") );
+
 			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/PagesListeEncheresConnecte.jsp");
 			rd.forward(request, response);
 		}
