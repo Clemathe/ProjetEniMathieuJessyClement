@@ -32,9 +32,9 @@
 			<input class="form-controln col-3" type="text" id="pseudo"
 				name="pseudo" value="${param.pseudo}" required="required" autofocus="autofocus" placeholder="Votre pseudo ?"> <label for="nom"
 				class="col-3 col-form-label"> Nom : </label>
-			<%-- traitement ifEmpty  à faire --%>
+			<%-- traitement ifEmpty  à faire toDo--%>
 			<input class="form-controln col-3" type="text" id="nom" name="nom"
-				value="${param.nom}" required="required" placeholder=" Votre nom :">
+				value="${param.nom}" required="required" placeholder=" Votre nom ?">
 		</div>
 
 
