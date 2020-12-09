@@ -6,9 +6,14 @@ public interface UtilisateurDAO {
 	
 	public Utilisateur getUtilisateurById();
 	
-	public boolean getExistingUser(String id);
+	boolean getExistingUser(String login, String email);
 		
-	public  boolean getMatchingUserPassword(String id, String password);
+
+	public String getUserPassword(String login);
+
+	public Utilisateur getUserforSession(String login);
+
+	
 
 }
 

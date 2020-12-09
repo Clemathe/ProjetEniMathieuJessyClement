@@ -19,7 +19,14 @@
 		<%@ include file="./fragments/header.html"%>
 	</Header>
 	<nav></nav>
-
+	
+	<c:if test="${errorConnection != null}">
+		</div>
+			<div class="alert alert-danger" role="alert">
+	 		 ${errorConnection}
+		</div>
+	</c:if>
+	
 	<section class= my-5>
 		<form action="ServletConnexion" method="post"
 			class= my-5>

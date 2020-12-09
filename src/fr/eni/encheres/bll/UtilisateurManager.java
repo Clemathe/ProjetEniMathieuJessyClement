@@ -22,16 +22,35 @@ public class UtilisateurManager {
 		
 	}
 
-	public boolean utilisateurExistant(String login) {
-		boolean existingUser = UtilisateurManager.utilisateurDAO.getExistingUser(login);
+	
+	
+	public boolean utilisateurExistant(String login, String email) {
+		boolean existingUser = UtilisateurManager.utilisateurDAO.getExistingUser(login, email);
 		return existingUser;
 	}
 	
-	public boolean VerificationUtilisateurMotDePasse(String login, String password) {
-		boolean okUserPass = UtilisateurManager.utilisateurDAO.getMatchingUserPassword(login, password);
+	
+	
+	public boolean verificationUtilisateurMotDePasse(String login, String password) {
+		Boolean userPassOk = false; 
+		String userPasswordBDD = UtilisateurManager.utilisateurDAO.getUserPassword(login);
 		
-		return okUserPass;
+		if (userPasswordBDD != null && userPasswordBDD.trim().equals(password.trim())) {
+			userPassOk = true;
+		}
+		
+		return userPassOk;
 		
 	}
+
+	public Utilisateur getUtilisateurPourSession(String login) {
+		Utilisateur utilisateurCourant =  utilisateurDAO.getUserforSession(login);
+		utilisateurCourant.setMotDePasse(null);
+		System.out.println(utilisateurCourant);
+		return utilisateurCourant;
+		
+	}
+
+
 	
 }
