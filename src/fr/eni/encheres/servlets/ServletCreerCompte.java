@@ -216,7 +216,7 @@ public class ServletCreerCompte extends HttpServlet {
 				MessageErreur.add("erreur de confirmation du mot de passe : veuillez entrer de nouveau votre mot de passe");
 				System.out.println("erreur confirmation motDepasse" + motDePasse);
 			}else utilisateur.setMotDePasse(motDePasse);
-			System.out.println("Mot de passe entré : " + motDePasse);
+			System.out.println("Mot de passe entré  " + motDePasse);
 				
 			/*if (motDePasse1 == null || !motDePasse1.matches("^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[-+!*$@%_])([-+!*$@%_\\w]{8,15})$")) {
 					MessageErreur.add(
