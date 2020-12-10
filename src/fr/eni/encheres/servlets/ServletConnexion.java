@@ -50,7 +50,7 @@ public class ServletConnexion extends HttpServlet {
 					
 			sessionCourante.setAttribute("utilisateurCourant", utilisateurCourant);
 			
-			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/PageAccueilNonConnecte.jsp");
+			RequestDispatcher rd = request.getRequestDispatcher("/ServletAccueil");
 			rd.forward(request, response);
 			
 		} else {
