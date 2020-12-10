@@ -38,10 +38,10 @@
 			<div class="form-group">
 				<label for="categories">Catégories :</label>
 				<select  name="categories" id="categories" class="form-control">
-					<option value="informatique" selected>Informatique</option>
-					<option value="ameublement" >Ameublement</option>
-					<option value="vetement" >Vêtements</option>
-					<option value="sportetloisirs" >Sports et Loisirs</option>
+					<option value="Informatique" selected>Informatique</option>
+					<option value="Ameublement" >Ameublement</option>
+					<option value="Vêtement" >Vêtements</option>
+					<option value="Sport&Loisirs" >Sports et Loisirs</option>
 				</select>
 			</div>
 		</div>

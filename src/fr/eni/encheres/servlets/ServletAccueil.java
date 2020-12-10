@@ -24,8 +24,7 @@ public class ServletAccueil extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/PageAccueilNonConnecte.jsp");
-		rd.forward(request, response);
+		
 	}
 
 	/**
@@ -39,6 +38,8 @@ public class ServletAccueil extends HttpServlet {
 		
 		enchereEnCours.getEnchereEnCours(categorie, nomArticlePartiel);
 		
+		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/PageAccueilNonConnecte.jsp");
+		rd.forward(request, response);
 		
 		
 		
