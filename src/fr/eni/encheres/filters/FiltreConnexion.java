@@ -23,6 +23,7 @@ import javax.servlet.http.HttpServletResponse;
 urlPatterns = {"/ServletAccueil/a"})
 public class FiltreConnexion implements Filter {
 
+	
     /**
      * Default constructor. 
      */
