@@ -11,7 +11,7 @@
 <head>
 <meta charset="UTF-8">
 <jsp:include page="/WEB-INF/fragments/head.jsp"></jsp:include>
-<title>Nouveau Compte</title>
+<title>Nouveau Compte Uitlisateur</title>
 </head>
 
 <body class="container fluid">

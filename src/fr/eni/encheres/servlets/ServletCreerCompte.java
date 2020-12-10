@@ -175,7 +175,7 @@ public class ServletCreerCompte extends HttpServlet {
 
 			} else
 				utilisateur.setVille(ville);;
-			System.out.println("ville entrée : " + ville);
+			System.out.println("ville entrée: " + ville);
 
 		} catch (Exception e) {
 			e.printStackTrace();
