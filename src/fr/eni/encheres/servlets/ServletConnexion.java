@@ -66,8 +66,5 @@ public class ServletConnexion extends HttpServlet {
 			rd.forward(request, response);
 		}
 			
-		
-		
-
 	}
 }
