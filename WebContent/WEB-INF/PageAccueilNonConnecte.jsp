@@ -62,7 +62,7 @@
 
 	<c:forEach var="EEC" items="${enchereEnCours}">
 		<div class="card" style="width: 18rem;">
-			<img src="./images/ordi.png" class="card-img-top" alt="vente">
+			<img src="./images/${EEC.noArticle}.png" class="card-img-top" alt="vente">
 			<div class="card-body">
 			    <h5 class="card-title">${EEC.nomArticle}</h5>
 			    <p class="card-text">Prix: ${EEC.prixVente} points<br /> 
@@ -72,13 +72,6 @@
  			</div>
 		</div>
 	</c:forEach>
-
-
-
-
-
-
-
 
 </c:if>
 	
