@@ -15,19 +15,31 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 
 	@Override
 	public List<ArticleVendu> getenchereEnCours(String categorie, String nomArticlePartiel) {
-		System.out.println(categorie +" "+ nomArticlePartiel);
+		
 		List<ArticleVendu> enchereEnCours = new ArrayList<ArticleVendu>();
-		String ENCHERES_EN_COURS =
-				"SELECT "
-				+ "ARTICLES_VENDUS.no_article, "
-				+ "ARTICLES_VENDUS.nom_article, "
-				+ "ARTICLES_VENDUS.prix_vente, "
-				+ "ARTICLES_VENDUS.date_fin_encheres, "
-				+ "UTILISATEURS.pseudo "
-				+ "FROM ARTICLES_VENDUS "
-				+ "JOIN UTILISATEURS ON ARTICLES_VENDUS.no_utilisateur = UTILISATEURS.no_utilisateur "
-				+ "JOIN CATEGORIES ON ARTICLES_VENDUS.no_categorie = CATEGORIES.no_categorie "
-				+ "WHERE libelle = \""+categorie + "\" AND nom_article LIKE \"%"+nomArticlePartiel+"%\"";
+		String ENCHERES_EN_COURS;
+				if(categorie=="Toutes") {
+					 ENCHERES_EN_COURS = "SELECT "
+							+ "ARTICLES_VENDUS.no_article,"
+							+ "ARTICLES_VENDUS.nom_article, "
+							+ "ARTICLES_VENDUS.prix_vente, "
+							+ "ARTICLES_VENDUS.date_fin_encheres, "
+							+ "UTILISATEURS.pseudo "
+							+ "FROM ARTICLES_VENDUS "
+							+ "JOIN UTILISATEURS ON ARTICLES_VENDUS.no_utilisateur = UTILISATEURS.no_utilisateur "
+							+ "WHERE nom_article LIKE \"%"+nomArticlePartiel+"%\"";
+				}else{
+					 ENCHERES_EN_COURS = "SELECT "
+							+ "ARTICLES_VENDUS.no_article,"
+							+ "ARTICLES_VENDUS.nom_article, "
+							+ "ARTICLES_VENDUS.prix_vente, "
+							+ "ARTICLES_VENDUS.date_fin_encheres, "
+							+ "UTILISATEURS.pseudo "
+							+ "FROM ARTICLES_VENDUS "
+							+ "JOIN UTILISATEURS ON ARTICLES_VENDUS.no_utilisateur = UTILISATEURS.no_utilisateur "
+							+ "JOIN CATEGORIES ON ARTICLES_VENDUS.no_categorie = CATEGORIES.no_categorie "
+							+ "WHERE nom_article LIKE \"%"+nomArticlePartiel+"%\" AND libelle = \""+categorie+ "\"";}
+						
 		
 	
 		try (Connection cnx = ConnectionProvider.getConnection();){
@@ -43,9 +55,9 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 			e.printStackTrace();
 		}
 		
-		System.out.println(enchereEnCours.toString());
 		
 		
+		System.out.println(enchereEnCours);
 		
 		return enchereEnCours;
 	}

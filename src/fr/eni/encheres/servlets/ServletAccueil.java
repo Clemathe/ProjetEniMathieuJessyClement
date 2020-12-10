@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import fr.eni.encheres.bll.ArticleVenduManager;
+import fr.eni.encheres.bo.ArticleVendu;
 
 /**
  * Servlet implementation class ServletAccueil
@@ -24,7 +25,8 @@ public class ServletAccueil extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/PageAccueilNonConnecte.jsp");
+		rd.forward(request, response);
 	}
 
 	/**
@@ -36,7 +38,7 @@ public class ServletAccueil extends HttpServlet {
 		String nomArticlePartiel = (String)request.getParameter("nomArticlePartiel");
 		System.out.println(categorie.toString()+" "+ nomArticlePartiel.toString());
 		
-		enchereEnCours.getEnchereEnCours(categorie, nomArticlePartiel);
+		request.setAttribute("enchereEnCours", enchereEnCours.getEnchereEnCours(categorie, nomArticlePartiel));
 		
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/PageAccueilNonConnecte.jsp");
 		rd.forward(request, response);
