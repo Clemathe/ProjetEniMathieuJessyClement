@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import fr.eni.encheres.bll.ArticleVenduManager;
-import fr.eni.encheres.bo.ArticleVendu;
+import fr.eni.encheres.bo.Utilisateur;
 
 /**
  * Servlet implementation class ServletAccueil
@@ -35,7 +35,14 @@ public class ServletAccueil extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+		if(request.getSession().getAttribute("utilisateurCourant")!= null && request.getAttribute("nouvelleConnexion") != null) {
+	           
+            Utilisateur utilisateurCourant = (Utilisateur) request.getSession().getAttribute("utilisateurCourant");
+            request.getSession().setAttribute("utilisateurCourant", utilisateurCourant);
+           
+            RequestDispatcher rd = getServletContext().getRequestDispatcher("/WEB-INF/PageAccueilNonConnecte.jsp");
+            rd.forward(request, response);
+        }
 		ArticleVenduManager enchereEnCours = new ArticleVenduManager();
 		
 		String categorie =(String)request.getParameter("categories");
