@@ -218,7 +218,7 @@ public class ServletCreerCompte extends HttpServlet {
 			}else utilisateur.setMotDePasse(motDePasse);
 			System.out.println("Mot de passe entré : " + motDePasse);
 				
-			/*if (motDePasse1 == null || ! motDePasse1.matches("((?=.*\\d) (?=.*[a-zA-Z])(?=\\S+$).{8,12})")) {
+			/*if (motDePasse1 == null || !motDePasse1.matches("^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[-+!*$@%_])([-+!*$@%_\\w]{8,15})$")) {
 					MessageErreur.add(
 							"erreur de saisie du mot de passe : il doit contenir 8 caractères au minimum, au moins une lettre (minuscule ou majuscule), au moins un chiffre, les caractères spéciaux sont autoriés");
 					System.out.println("erreur saisie motDepasse1 " + motDePasse1);
@@ -229,8 +229,8 @@ public class ServletCreerCompte extends HttpServlet {
 			} else {
 				utilisateur.setMotDePasse(motDePasse);
 				System.out.println("Mot de passe entré : " + motDePasse);
-			}
-			*/	
+			}*/
+			
 
 		} catch (Exception e) {
 			e.printStackTrace();
