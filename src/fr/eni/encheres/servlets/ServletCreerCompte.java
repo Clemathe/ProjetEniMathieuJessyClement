@@ -205,8 +205,7 @@ public class ServletCreerCompte extends HttpServlet {
 		 * - au moins un chiffre
 		 * - les caractères spéciaux sont autoriés
 		 * - pas d'espace
-		 */  
-		
+		 */ 
 		String motDePasse1 = null;
 
 		try {
