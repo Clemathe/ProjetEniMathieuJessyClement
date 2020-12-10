@@ -25,6 +25,8 @@ public class ServletAccueil extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		ArticleVenduManager enchereEnCours = new ArticleVenduManager();
+		request.setAttribute("enchereEnCours", enchereEnCours.getEnchereEnCours("Toutes", ""));
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/PageAccueilNonConnecte.jsp");
 		rd.forward(request, response);
 	}
@@ -33,11 +35,14 @@ public class ServletAccueil extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
 		ArticleVenduManager enchereEnCours = new ArticleVenduManager();
+		
 		String categorie =(String)request.getParameter("categories");
 		String nomArticlePartiel = (String)request.getParameter("nomArticlePartiel");
-		System.out.println(categorie.toString()+" "+ nomArticlePartiel.toString());
 		
+		System.out.println(categorie.toString()+" "+ nomArticlePartiel.toString());
+
 		request.setAttribute("enchereEnCours", enchereEnCours.getEnchereEnCours(categorie, nomArticlePartiel));
 		
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/PageAccueilNonConnecte.jsp");

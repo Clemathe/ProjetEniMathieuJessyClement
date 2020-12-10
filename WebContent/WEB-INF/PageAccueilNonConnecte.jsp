@@ -59,13 +59,22 @@
 
 <c:if test="${!empty enchereEnCours}">
 <p>Il y' a actuellement ${enchereEnCours.size()} enchères sur notre site.<P>
-<ol>
+
 	<c:forEach var="EEC" items="${enchereEnCours}">
-		<li>${EEC.nomArticle}, ${EEC.prixVente}, ${EEC.dateFinEncheres}, ${EEC.pseudoVendeur},</li> 
+		<div class="card" style="width: 18rem;">
+			<img src="./images/ordi.png" class="card-img-top" alt="vente">
+			<div class="card-body">
+			    <h5 class="card-title">${EEC.nomArticle}</h5>
+			    <p class="card-text">Prix: ${EEC.prixVente} points<br /> 
+			    					Fin de l'enchère: ${EEC.dateFinEncheres}<br />
+			    					Vendeur: ${EEC.pseudoVendeur}</p>
+			    <a href="#" class="btn btn-primary">Accéder à la vente</a>
+ 			</div>
+		</div>
 	</c:forEach>
 
 
-</ol>
+
 
 
 
