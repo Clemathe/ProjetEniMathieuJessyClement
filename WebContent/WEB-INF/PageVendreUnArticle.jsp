@@ -13,8 +13,86 @@
 <jsp:include page="/WEB-INF/fragments/head.jsp"></jsp:include>
 <title>Vendre un article</title>
 </head>
-<body>
+<body class="container-fluid">
+	<header>
+		<jsp:include page="./fragments/header.jsp"></jsp:include>
+	</header>
+
+<div class="row justify-content-between mt-5" style >
+	<div class="col-4 font"><h1>ENI - Enchères</h1></div>
+	<div class="col-3"><h2>Nouvelle Vente</h2></div>
+</div>
+<br />
+
+<div class="row">
+<div class="col-3"></div>
+	<div class="col-4">
+		<form action="" method="post">
+			<div class="form-group">
+				<label for="nomArticle">Article: </label>
+				<input required type="text" size="40" name="nomArticle" id="nomArticle" placeholder="Le nom de l'article à vendre." class="form-control">
+			</div>
+			<div class="form-group">
+				<label for="description">Description: </label>
+				<textarea required class="form-control" rows="4" cols="4" name="description" id="description" placeholder="Décrivez votre article en quelques mots."></textarea>
+			</div>	
+			<div class="form-group">
+				<label for="categorie">Catégories: </label>
+				<select  required name="categories" id="categories" class="form-control">
+					<option value="Informatique">Informatique</option>
+					<option value="Ameublement" >Ameublement</option>
+					<option value="Vêtement" >Vêtements</option>
+					<option value="Sport&Loisirs" >Sports et Loisirs</option>
+				</select>
+			</div>
+			<div class="form-group">
+				<input required type="button" value="Ajouter une photo" class="btn btn-info" >
+			</div>
+			<div class="form-group">
+				<label for="miseAPrix">Mise à prix: </label>
+				<input required type="number" class="form-control" name="miseAPrix">
+			</div>
+			<div class="form-group">
+				<label for="dateDebutEncheres">Début de l'enchère: </label>
+				<input required type="date" class="form-control" name="dateDebutEncheres">
+			</div>
+			<div class="form-group">
+				<label for="dateFinEncheres">Fin de l'enchère: </label>
+				<input required type="date" class="form-control" name="dateDebutEncheres">
+			</div>	
+			<div class="form-group">
+				<input  type="submit" value="Ajout de l'article" class="btn btn-info" >
+			</div>	
+			<fieldset>
+				<legend align="left">Retrait</legend>
+				
+				<label for="rue">Rue: </label>
+				<input required type="text" size="30" name="rue" id="rue" placeholder="numero et rue du retrait" class="form-control">
+				
+				
+				
+				
+			</fieldset>
+		</form>
+	</div>
+</div>
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+<footer>
+		<%@ include file="./fragments/footer.html"%>
+</footer>
 </body>
 </html>
