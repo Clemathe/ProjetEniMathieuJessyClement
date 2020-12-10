@@ -26,6 +26,11 @@ public class ServletConnexion extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		if (request.getParameter("connect") != null) {
+			System.out.println("false");
+			request.getSession().invalidate();
+			request.setAttribute("connect", "false");
+		}
 		
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/PageConnexion.jsp");
 		rd.forward(request, response);
@@ -44,6 +49,9 @@ public class ServletConnexion extends HttpServlet {
 		String password = (String) request.getParameter("pass");
 
 		boolean matchingUserPassword = UManager.verificationUtilisateurMotDePasse(login, password);
+		String mdp = "Clement86*";
+		System.out.println("res " +mdp.matches("^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[-+!*$@%_])([-+!*$@%_\\w]{8,15})$"));
+		System.out.println("res2 " +mdp.matches("^(?=.*\\\\d) (?=.*[a-zA-Z])(?=\\\\S+$).{8,12}"));	
 		
 		if (matchingUserPassword) {
 		
