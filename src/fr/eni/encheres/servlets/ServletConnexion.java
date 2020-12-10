@@ -26,6 +26,7 @@ public class ServletConnexion extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/PageConnexion.jsp");
 		rd.forward(request, response);
 	}
@@ -38,19 +39,22 @@ public class ServletConnexion extends HttpServlet {
 			throws ServletException, IOException {
 		
 		UtilisateurManager UManager = new UtilisateurManager();
+		
 		String login = (String) request.getParameter("login");
 		String password = (String) request.getParameter("pass");
 
 		boolean matchingUserPassword = UManager.verificationUtilisateurMotDePasse(login, password);
-
+		
 		if (matchingUserPassword) {
-			HttpSession sessionCourante = request.getSession(true);
-			
+		
 			Utilisateur utilisateurCourant = UManager.getUtilisateurPourSession(login);
-					
+			
+			HttpSession sessionCourante = request.getSession(true);
 			sessionCourante.setAttribute("utilisateurCourant", utilisateurCourant);
 			
-			RequestDispatcher rd = request.getRequestDispatcher("/ServletAccueil");
+			request.setAttribute("nouvelleConnexion", request.getParameter("nouvelleConnexion"));
+			
+			RequestDispatcher rd = getServletContext().getRequestDispatcher("/ServletAccueil");
 			rd.forward(request, response);
 			
 		} else {
@@ -62,7 +66,5 @@ public class ServletConnexion extends HttpServlet {
 			rd.forward(request, response);
 		}
 			
-		
-
 	}
 }

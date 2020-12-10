@@ -29,6 +29,9 @@
 		<section >
 		
 			<form action="ServletConnexion" method="post" class="my-5" >
+			
+				<input type="hidden" name="nouvelleConnexion" value="nouvelleConnexion">
+				
 				<div class="form-group">
 					<label for="login">Identifiant</label> <input type="text"
 						class="form-control" id="login" name="login" autofocus
@@ -54,12 +57,16 @@
 				</div>
 
 			</form>
+			
 		</section>
+		
 		<section class="my-5">
+		
 			<div class="form-group" id="creerUnCompte">
 				<a href=""><button class="btn btn-info btn-lg col-12">Créer un
 						compte</button></a>
 			</div>
+			
 		</section>
 	</div>
 

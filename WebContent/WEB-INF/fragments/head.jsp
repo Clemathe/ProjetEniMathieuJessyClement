@@ -1,15 +1,12 @@
 
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="Jessy, Mathieu, Clement" content="">
     
 	<!--     Responsive design -->
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	
+	 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<!--Les mots clés sont séparés par une virgule et un blanc -->
 	<meta name="keywords"content="motcle1, motcle2"/>
-	
 	
 	<!-- Donne des infos aux agents utilisateurs, robots, et moteurs -->
 	<meta http-equiv="refresh"content="30">

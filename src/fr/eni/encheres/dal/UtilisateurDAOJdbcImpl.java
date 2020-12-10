@@ -9,7 +9,7 @@ import java.sql.SQLException;
 import fr.eni.encheres.bo.Utilisateur;
 
 public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
-
+	
 
 	@Override
 	public Utilisateur getUtilisateurById() {
@@ -37,6 +37,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 
 				String sql = "SELECT mot_de_passe FROM utilisateurs AS u WHERE u.email = ?";
 				pstmt = cnx.prepareStatement(sql);
+	
 				pstmt.setString(1, login.trim());
 				rs = pstmt.executeQuery();
 				System.out.println(login);
