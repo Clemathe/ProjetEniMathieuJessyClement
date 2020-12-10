@@ -18,16 +18,19 @@
 		<jsp:include page="./fragments/header.jsp"></jsp:include>
 	</header>
 
-<div class="row justify-content-between mt-5" style >
-	<div class="col-4 font"><h1>ENI - Enchères</h1></div>
+<div class="row  mt-5"  >
+	<div class="col-1"></div>
+	<div class="col-3 "><h1>ENI - Enchères</h1></div>
+	<div class="col-1"></div>
 	<div class="col-3"><h2>Nouvelle Vente</h2></div>
+	<div class="col-4"></div>
 </div>
 <br />
 
 <div class="row">
-<div class="col-3"></div>
+	<div class="col-3"></div>
 	<div class="col-4">
-		<form action="" method="post">
+		<form action="" method="post" enctype="multipart/form-data">
 			<div class="form-group">
 				<label for="nomArticle">Article: </label>
 				<input required type="text" size="40" name="nomArticle" id="nomArticle" placeholder="Le nom de l'article à vendre." class="form-control">
@@ -46,7 +49,7 @@
 				</select>
 			</div>
 			<div class="form-group">
-				<input required type="button" value="Ajouter une photo" class="btn btn-info" >
+				<input required type="file" value="Ajouter une photo" class="btn btn-outline-secondary btn-block" >
 			</div>
 			<div class="form-group">
 				<label for="miseAPrix">Mise à prix: </label>
@@ -60,20 +63,29 @@
 				<label for="dateFinEncheres">Fin de l'enchère: </label>
 				<input required type="date" class="form-control" name="dateDebutEncheres">
 			</div>	
-			<div class="form-group">
-				<input  type="submit" value="Ajout de l'article" class="btn btn-info" >
-			</div>	
-			<fieldset>
+			
+			
+			
+		</form>
+	</div>
+	<div class="col-3">
+		<fieldset>
 				<legend align="left">Retrait</legend>
 				
 				<label for="rue">Rue: </label>
-				<input required type="text" size="30" name="rue" id="rue" placeholder="numero et rue du retrait" class="form-control">
+				<input required type="text" size="10" name="rue" id="rue" placeholder="numero et rue du retrait" class="form-control">
 				
+				<label for="codePostal">Code postal: </label>
+				<input required type="text" size="10" name="codePostal" id="codePostal" placeholder="ex : 44000" class="form-control">
 				
-				
-				
+				<label for="ville">Ville: </label>
+				<input required type="text" size="10" name="ville" id="ville" placeholder="ex : Nantes" class="form-control">
 			</fieldset>
-		</form>
+			<br/>
+			<div class="form-group">
+				<input  type="submit" value="Ajout de l'article" class="btn btn-info btn-lg btn-block" >
+			</div>	
+	
 	</div>
 </div>
 
