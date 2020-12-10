@@ -38,10 +38,11 @@
 			<div class="form-group">
 				<label for="categories">Catégories :</label>
 				<select  name="categories" id="categories" class="form-control">
-					<option value="informatique" selected>Informatique</option>
-					<option value="ameublement" >Ameublement</option>
-					<option value="vetement" >Vêtements</option>
-					<option value="sportetloisirs" >Sports et Loisirs</option>
+					<option value="Toutes" selected>Toutes</option>
+					<option value="Informatique">Informatique</option>
+					<option value="Ameublement" >Ameublement</option>
+					<option value="Vêtement" >Vêtements</option>
+					<option value="Sport&Loisirs" >Sports et Loisirs</option>
 				</select>
 			</div>
 		</div>
@@ -56,7 +57,31 @@
 
 </div>
 
+<c:if test="${!empty enchereEnCours}">
+<p>Il y' a actuellement ${enchereEnCours.size()} enchères sur notre site.<P>
 
+	<c:forEach var="EEC" items="${enchereEnCours}">
+		<div class="card" style="width: 18rem;">
+			<img src="./images/ordi.png" class="card-img-top" alt="vente">
+			<div class="card-body">
+			    <h5 class="card-title">${EEC.nomArticle}</h5>
+			    <p class="card-text">Prix: ${EEC.prixVente} points<br /> 
+			    					Fin de l'enchère: ${EEC.dateFinEncheres}<br />
+			    					Vendeur: ${EEC.pseudoVendeur}</p>
+			    <a href="#" class="btn btn-primary">Accéder à la vente</a>
+ 			</div>
+		</div>
+	</c:forEach>
+
+
+
+
+
+
+
+
+</c:if>
+	
 
 
 

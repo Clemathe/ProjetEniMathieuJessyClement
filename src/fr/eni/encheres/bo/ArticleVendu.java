@@ -20,11 +20,11 @@ public class ArticleVendu {
 	private Categorie categorie; 
 	private Retrait lieuRetrait;
 	
-	private int enchereCourante;
+	
 	private String pseudoVendeur;
+	
 	public ArticleVendu() {
 	}
-	
 	
 	public ArticleVendu(int noArticle, String nomArticle, String description, Date dateDebutEncheres,
 			Date dateFinEncheres, int miseAPrix, int prixVente, boolean etatVente, Utilisateur acheteur,
@@ -44,13 +44,13 @@ public class ArticleVendu {
 		this.categorie = categorie;
 		this.lieuRetrait = lieuRetrait;
 	}
-	public ArticleVendu(int noArticle, String nomArticle, int enchereCourante, Date dateFinEncheres, 
-			String pseudoVendeur) {
-		this.noArticle = noArticle;
-		this.nomArticle = nomArticle;
-		this.enchereCourante = enchereCourante;
-		this.dateFinEncheres = dateFinEncheres;
-		this.pseudoVendeur = pseudoVendeur;
+	
+	public ArticleVendu(int noArticle, String nomArticle, int PrixVente, Date dateFinEncheres, String pseudoVendeur) {
+		setNoArticle(noArticle); 
+		setNomArticle(nomArticle);
+		setPrixVente(PrixVente);;
+		setDateFinEncheres(dateFinEncheres);
+		setPseudoVendeur(pseudoVendeur);
 		
 	}
 	
@@ -58,13 +58,15 @@ public class ArticleVendu {
 
 	@Override
 	public String toString() {
-		return "ArticleVendu [noArticle=" + noArticle + ", nomArticle=" + nomArticle + ", description=" + description
+		return "ArticleVendu"
+				+ "[noArticle=" + noArticle + ","
+						+ " nomArticle=" + nomArticle + ", description=" + description
 				+ ", dateDebutEncheres=" + dateDebutEncheres + ", dateFinEncheres=" + dateFinEncheres + ", miseAPrix="
 				+ miseAPrix + ", PrixVente=" + PrixVente + ", etatVente=" + etatVente + ", acheteur=" + acheteur
 				+ ", vendeur=" + vendeur + ", encheres=" + encheres + ", categorie=" + categorie + ", lieuRetrait="
 				+ lieuRetrait + "]";
 	}
-
+	
 
 	public int getNoArticle() {
 		return noArticle;
@@ -144,12 +146,6 @@ public class ArticleVendu {
 	public void setLieuRetrait(Retrait lieuRetrait) {
 		this.lieuRetrait = lieuRetrait;
 	} 
-	public int getEnchereCourante() {
-		return enchereCourante;
-	}
-	public void setEnchereCourante(int enchereCourante) {
-		this.enchereCourante = enchereCourante;
-	}
 	public String getPseudoVendeur() {
 		return pseudoVendeur;
 	}
