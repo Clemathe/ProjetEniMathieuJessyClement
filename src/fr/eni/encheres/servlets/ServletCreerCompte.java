@@ -151,9 +151,9 @@ public class ServletCreerCompte extends HttpServlet {
 
 		try {
 			rue = request.getParameter("rue");
-			if (rue == null || !rue.matches("[a-zA-Z0-9]+")) {
+			if (rue == null ) {
 
-				MessageErreur.add("erreur de saisie de la rue : null ou caractère interdit");
+				MessageErreur.add("erreur de saisie de la rue : null ");
 				System.out.println("erreur rue");
 
 			} else
@@ -168,14 +168,14 @@ public class ServletCreerCompte extends HttpServlet {
 
 		try {
 			ville = request.getParameter("ville");
-			if (ville == null || !rue.matches("^[a-zA-Z]*$")) {
+			if (ville == null || !ville.matches("^[a-zA-Z]*$")) {
 
-				MessageErreur.add("erreur de saisie de la rue : null ou caractère interdit");
-				System.out.println("erreur rue");
+				MessageErreur.add("erreur de saisie de la ville : null ou caractère interdit");
+				System.out.println("erreur ville");
 
 			} else
-				utilisateur.setRue(rue);
-			System.out.println("rue entrée : " + rue);
+				utilisateur.setVille(ville);;
+			System.out.println("ville entrée : " + ville);
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -192,36 +192,40 @@ public class ServletCreerCompte extends HttpServlet {
 
 			} else
 				utilisateur.setCodePostal(codePostal);
-			System.out.println("code Postal entrée : " + codePostal);
+			System.out.println("code Postal entré : " + codePostal);
 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
 		/*
-		 * lecture et vérification des mots de passe avec contrainte : - 8 caractères au
-		 * minimum - au moins une lettre (minuscule ou majuscule) - au moins un chiffre
+		 * lecture et vérification des mots de passe avec contrainte : 
+		 * - 8 caractères au minimum 
+		 * - au moins une lettre (minuscule ou majuscule) 
+		 * - au moins un chiffre
 		 * - les caractères spéciaux sont autoriés
+		 * - pas d'espace
 		 */
 		String motDePasse1 = null;
 
 		try {
 			motDePasse1 = request.getParameter("motDePasse1");
-			if (motDePasse1 == null || !motDePasse1.matches("^(?=.{8,})(?=.*[A-Za-z])(?=.*[0-9].*")) {
-				MessageErreur.add(
-						"erreur de saisie du mot de passe : il doit contenir 8 caractères au minimum, au moins une lettre (minuscule ou majuscule), au moins un chiffre, les caractères spéciaux sont autoriés");
-				System.out.println("erreur saisie motDepasse1");
-
-			} else
-				motDePasse = request.getParameter("motDePasse");
-			if (motDePasse1 != motDePasse) {
-				MessageErreur
-						.add("erreur de confirmation du mot de passe : veuillez entrer de nouveau votre mot de passe");
-				System.out.println("erreur confirmation motDepasse");
-			} else
+			motDePasse = request.getParameter("motDePasse");
+								
+			
+			if (motDePasse1 == null || ! motDePasse1.matches("((?=.*\\d) (?=.*[a-zA-Z])(?=\\S+$).{8,12})")) {
+					MessageErreur.add(
+							"erreur de saisie du mot de passe : il doit contenir 8 caractères au minimum, au moins une lettre (minuscule ou majuscule), au moins un chiffre, les caractères spéciaux sont autoriés");
+					System.out.println("erreur saisie motDepasse1 " + motDePasse1);
+				
+			} else if (!motDePasse.equals(motDePasse1)) {
+				MessageErreur.add("erreur de confirmation du mot de passe : veuillez entrer de nouveau votre mot de passe");
+				System.out.println("erreur confirmation motDepasse" + motDePasse);
+			} else {
 				utilisateur.setMotDePasse(motDePasse);
-			;
-			System.out.println("Mot de passe entré : " + motDePasse);
+				System.out.println("Mot de passe entré : " + motDePasse);
+			}
+				
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -232,8 +236,14 @@ public class ServletCreerCompte extends HttpServlet {
 	}
 
 	private void creerCompte(HttpServletRequest request, HttpServletResponse response) {
+		// vérifier unicité
+		
+		// verifier mot de passe 
+		
 		// lecture et vérification des paramètres et
+	
+
 
 	}
-
+	
 }

@@ -10,13 +10,18 @@
 <html>
 <head>
 <meta charset="UTF-8">
-
-<jsp:include page="./fragments/header.jsp"></jsp:include>
+<jsp:include page="/WEB-INF/fragments/head.jsp"></jsp:include>
 <title>Nouveau Compte</title>
 </head>
 
 <body class="container fluid">
-	<%@ include file="./fragments/header.html"%>
+
+<header>
+
+    <jsp:include page="./fragments/header.jsp"></jsp:include>
+
+</header>
+	
 
 	<div class="col-12"></div>
 	<h1 class="my-5 text center">Mon profil</h1>
