@@ -25,36 +25,35 @@
 
 
 <div class="row">
-<div class="col-4">
-<form action="" method="post">
-	<fieldset>
-		<legend>Liste des enchères</legend>
-		
-		<div class="form-group">
-			<label for="recherche">Filtres :</label>
-			<input type="search" size="40" name="nomArticlePartiel" id="recherche" placeholder="Le nom de l'article contient" class="form-control">
-			</div>
-			
-			<div class="form-group">
-				<label for="categories">Catégories :</label>
-				<select  name="categories" id="categories" class="form-control">
-					<option value="Toutes" selected>Toutes</option>
-					<option value="Informatique">Informatique</option>
-					<option value="Ameublement" >Ameublement</option>
-					<option value="Vêtement" >Vêtements</option>
-					<option value="Sport&Loisirs" >Sports et Loisirs</option>
-				</select>
-			</div>
-		</div>
-		
-		<div class="col-4">
-			<div class="form-group">
-			<input type="submit" value="rechercher" class="btn btn-info" >
-			</div>
-	</fieldset>
-</form>
-</div>
-
+	<div class="col-4">
+		<form action="" method="post">
+			<fieldset>
+				<legend>Liste des enchères</legend>
+				
+				<div class="form-group">
+					<label for="recherche">Filtres :</label>
+					<input type="search" size="40" name="nomArticlePartiel" id="recherche" placeholder="Le nom de l'article contient" class="form-control">
+				</div>
+					
+				<div class="form-group">
+					<label for="categories">Catégories :</label>
+						<select  name="categories" id="categories" class="form-control">
+							<option value="Toutes" selected>Toutes</option>
+							<option value="Informatique">Informatique</option>
+							<option value="Ameublement" >Ameublement</option>
+							<option value="Vêtement" >Vêtements</option>
+							<option value="Sport&Loisirs" >Sports et Loisirs</option>
+						</select>
+					</div>
+				</div>
+				
+				<div class="col-4">
+					<div class="form-group">
+					<input type="submit" value="rechercher" class="btn btn-info" >
+					</div>
+			</fieldset>
+		</form>
+	</div>
 </div>
 
 <c:if test="${!empty enchereEnCours}">
