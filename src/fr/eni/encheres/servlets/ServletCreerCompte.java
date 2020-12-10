@@ -39,9 +39,8 @@ public class ServletCreerCompte extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		System.out.println("doPost servletCreerCompte");
-		// Lecture des parametres
-
+		
+		
 		request.setCharacterEncoding("UTF-8");
 
 		// int noUtilisateur = 0;
@@ -241,15 +240,16 @@ public class ServletCreerCompte extends HttpServlet {
 			}
 
 		} else
-			// vérifier unicité
+			
 
 			// renvoyer message.erreur à jsp.
+			// vérifier unicité
+			
 			request.setAttribute("messageErreur", MessageErreur);
 
 		RequestDispatcher rd = request.getRequestDispatcher("WEB-INF/PageCreerCompte.jsp");
 		rd.forward(request, response);
-		System.out.println("fin doPost");
-
+		
 	}
 
 }

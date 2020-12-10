@@ -5,10 +5,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <!DOCTYPE html>
-<html>
+<html lang="fr">
 
 <head>
-
+<meta charset="UTF-8">
 <jsp:include page="/WEB-INF/fragments/head.jsp"></jsp:include>
 <title>Accueil</title>
 
