@@ -100,7 +100,7 @@
 		</div>
 
 
-		<button class="btn btn-info my-5 mx-5 " type="submit" value="Submit">Créer</button>
+		<button class="btn btn-info my-5 mx-5 " type="submit" >Créer</button>
 
 
 		<a class="btn btn-info my-5  mx-5 "

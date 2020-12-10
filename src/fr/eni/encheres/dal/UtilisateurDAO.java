@@ -1,5 +1,7 @@
 package fr.eni.encheres.dal;
 
+import java.sql.SQLException;
+
 import fr.eni.encheres.bo.Utilisateur;
 
 public interface UtilisateurDAO {
@@ -12,6 +14,8 @@ public interface UtilisateurDAO {
 	public String getUserPassword(String login);
 
 	public Utilisateur getUserforSession(String login);
+
+	public void insert(Utilisateur utilisateur) throws SQLException;
 
 	
 
