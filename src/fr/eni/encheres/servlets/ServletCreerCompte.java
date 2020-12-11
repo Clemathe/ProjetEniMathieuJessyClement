@@ -6,6 +6,8 @@ import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -232,6 +234,11 @@ public class ServletCreerCompte extends HttpServlet {
 			try {
 				System.out.println("je suis try-catch creation utilisateur");
 				utilisateurManager.creerUtilisateur(utilisateur);
+				
+				request.setAttribute("login", utilisateur.getPseudo() );
+				request.setAttribute ("pass", utilisateur.getMotDePasse()); 
+				RequestDispatcher rd = request.getRequestDispatcher("/connexion"); 
+				rd.forward(request, response);
 				System.out.println("créer :" + utilisateur);
 
 			} catch (Exception e) {

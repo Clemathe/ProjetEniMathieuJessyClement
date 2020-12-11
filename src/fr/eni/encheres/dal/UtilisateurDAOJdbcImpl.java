@@ -116,7 +116,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	@Override
 	public void insert(Utilisateur utilisateur) {
 		System.out.println("je suis insert utilisateurDAOJdbcImpl");
-		
+		System.out.println("dal utilisteur" + utilisateur);
 		// traitement businessEception ici 
 		/*if (utilisateur == null) {
 			BusinessException businessException = new BusinessException(); 
@@ -151,9 +151,10 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 					utilisateur.setNoUtilisateur(rs.getInt(1));
 				}
 				rs.close();
+				cnx.commit();
 				pstmt.close();
 				cnx.close();
-				System.out.println("connexion fermée");
+				System.out.println("connexion fermée");	
 				
 			} catch (Exception e) {
 				e.printStackTrace();
