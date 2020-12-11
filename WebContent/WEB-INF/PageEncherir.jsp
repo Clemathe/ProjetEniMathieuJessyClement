@@ -18,7 +18,7 @@
 
 	<h2 class="text-center my-5">Detail de la vente</h2>
 
-	<section class="my-10">
+	<section class="my-1">
 
 		<div class="row ">
 			<div class="col-md-5">

@@ -29,9 +29,7 @@ public class ServletCreerCompte extends HttpServlet {
 	 *      response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		System.out.println("doG servletCreerCompte");
-
+			throws ServletException, IOException {	
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/PageCreerCompte.jsp");
 		rd.forward(request, response);
 	}
@@ -253,9 +251,6 @@ public class ServletCreerCompte extends HttpServlet {
 				
 				request.setAttribute("login", utilisateur.getPseudo() );
 				request.setAttribute ("pass", utilisateur.getMotDePasse()); 
-				
-				
-				
 				RequestDispatcher rd = request.getRequestDispatcher("/connexion"); 
 				rd.forward(request, response);
 

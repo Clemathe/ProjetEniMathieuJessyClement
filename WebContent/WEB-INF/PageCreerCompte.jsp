@@ -18,10 +18,7 @@
 
 	<header>
 		<jsp:include page="./fragments/header.jsp"></jsp:include>
-
 	</header>
-
-
 	
 	<h1 class="text-center py-5">Mon profil</h1>
 	
