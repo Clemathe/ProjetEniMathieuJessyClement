@@ -5,9 +5,15 @@
 <head>
 <meta charset="UTF-8">
 <jsp:include page="/WEB-INF/fragments/head.jsp"></jsp:include>
-<title>Insert title here</title>
+<title>Mon profil/title>
 </head>
 <body>
 
+
+
+
+<footer>
+		<%@ include file="./fragments/footer.html"%>
+</footer>
 </body>
 </html>

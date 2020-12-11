@@ -35,7 +35,6 @@
 		
 
 
-
 	<form method="post"
 		action="${pageContext.request.contextPath}/CreerCompte"
 		class="form-horizontal">
@@ -106,7 +105,6 @@
 			<input class="form-controln col-md-4" type="password" id="motDePasse"
 				name="motDePasse" value="${param.motDePasse}" required="required"
 				placeholder="aA12@!GH">
-				
 
 		</div>
 		<div class="row my-10">

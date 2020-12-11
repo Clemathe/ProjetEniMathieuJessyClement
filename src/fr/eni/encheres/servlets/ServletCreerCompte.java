@@ -70,7 +70,7 @@ public class ServletCreerCompte extends HttpServlet {
 				System.out.println("erreur pseudo");
 			} else
 				utilisateur.setPseudo(pseudo);
-			System.out.println("pseudo entré : " + pseudo);
+				System.out.println("pseudo entré : " + pseudo);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -236,6 +236,7 @@ public class ServletCreerCompte extends HttpServlet {
 		//Fin des vérifications et traitement de la création utilisateur
 		
 		//instanciation StringBuilder pour envoie message erreur 
+		
 		StringBuilder sb = new StringBuilder();
 
 		if (MessageErreur.isEmpty()) {
@@ -248,15 +249,16 @@ public class ServletCreerCompte extends HttpServlet {
 				utilisateurManager.creerUtilisateur(utilisateur);
 				
 				//envoie des attributs necessaires à la connexion
+				
+				
 				request.setAttribute("login", utilisateur.getPseudo() );
 				request.setAttribute ("pass", utilisateur.getMotDePasse()); 
+				
+				
+				
 				RequestDispatcher rd = request.getRequestDispatcher("/connexion"); 
 				rd.forward(request, response);
-//<<<<<<< HEAD
-//				
-//=======
-//						
-//>>>>>>> branch 'master' of ssh://git@github.com/Clemathe/ProjetEniMathieuJessyClement.git
+
 
 			} catch (Exception e) {
 				// vérifie unicité en BDD
