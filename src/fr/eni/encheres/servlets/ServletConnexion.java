@@ -16,7 +16,7 @@ import fr.eni.encheres.bo.Utilisateur;
 /**
  * Servlet implementation class ServletConnexion
  */
-@WebServlet("/ServletConnexion")
+@WebServlet(urlPatterns={"/ServletConnexion", "/connexion"})
 public class ServletConnexion extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -31,7 +31,6 @@ public class ServletConnexion extends HttpServlet {
 			request.getSession().invalidate();
 			request.setAttribute("connect", "false");
 		}
-		
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/PageConnexion.jsp");
 		rd.forward(request, response);
 	}
@@ -44,17 +43,25 @@ public class ServletConnexion extends HttpServlet {
 			throws ServletException, IOException {
 		
 		UtilisateurManager UManager = new UtilisateurManager();
-		
-		String login = (String) request.getParameter("login");
-		String password = (String) request.getParameter("pass");
+	
+		String login = null;
+		String password = null;
+		boolean matchingUserPassword = false;
 
-		boolean matchingUserPassword = UManager.verificationUtilisateurMotDePasse(login, password);
-		String mdp = "Clement86*";
-		System.out.println("res " +mdp.matches("^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[-+!*$@%_])([-+!*$@%_\\w]{8,15})$"));
-		System.out.println("res2 " +mdp.matches("^(?=.*\\\\d) (?=.*[a-zA-Z])(?=\\\\S+$).{8,12}"));	
+		if ( request.getParameter("login") != null) {
+			
+		login = (String) request.getParameter("login");
+		password = (String) request.getParameter("pass");
+		matchingUserPassword = UManager.verificationUtilisateurMotDePasse(login, password);
 		
+		}else if ( request.getAttribute("login") != null) {
+		 
+		login = (String) request.getAttribute("login");
+		password = (String) request.getAttribute("pass");
+		matchingUserPassword = UManager.verificationUtilisateurMotDePasse(login, password);
+		}
 		if (matchingUserPassword) {
-		
+			
 			Utilisateur utilisateurCourant = UManager.getUtilisateurPourSession(login);
 			
 			HttpSession sessionCourante = request.getSession(true);
