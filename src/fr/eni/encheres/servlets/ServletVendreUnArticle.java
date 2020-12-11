@@ -3,7 +3,7 @@ package fr.eni.encheres.servlets;
 import java.io.IOException;
 import java.sql.Date;
 import java.time.LocalDate;
-
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -12,13 +12,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import fr.eni.encheres.bll.CategorieManager;
 import fr.eni.encheres.bo.Categorie;
 import fr.eni.encheres.bo.Utilisateur;
 
 /**
  * Servlet implementation class ServletVendreUnArticle
  */
-@WebServlet(urlPatterns={"/ServletVendreUnArticle"})
+@WebServlet(urlPatterns={"/ServletVendreUnArticle", "/Vendre"})
 public class ServletVendreUnArticle extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -51,24 +52,49 @@ public class ServletVendreUnArticle extends HttpServlet {
 		String rue = (String)request.getParameter("rue");
 		String codePostal = (String)request.getParameter("codePostal");
 		String ville = (String)request.getParameter("ville");
-		
+		 
 		//recuperation des informations manquantes pour créer un ArticleVendu en BDD : noUtilisateur et noCategorie 
 		Utilisateur utilisateurCourant = (Utilisateur)request.getSession().getAttribute("utilisateurCourant");
 		int noUtilisateur = utilisateurCourant.getNoUtilisateur();
 		
-		Categorie categorieCourante = new Categorie();
-		int noCategorie = categorieCourante.getNoCategorie();
-		
-		
-		System.out.println(nomArticle+" "+description+" "+ categorieLibelle+" "+ miseAPrix+" "+dateDebutEncheres+" "+dateFinEncheres+" "+ rue+" "+ codePostal+" "+ ville+" "+ noUtilisateur+" "+ noCategorie);
+		CategorieManager categorie = new CategorieManager();
+		List<Categorie> categorieListe = categorie.getCategorie();
 		
 		
 		
-		request.getSession().setAttribute("utilisateurCourant", utilisateurCourant);		
+		System.out.println(categorieListe.toString() );
+		
+		System.out.println(nomArticle+" "+description+" "+ categorieLibelle+" "+ miseAPrix+" "+dateDebutEncheres+" "+dateFinEncheres+" "+ rue+" "+ codePostal+" "+ ville+" "+ noUtilisateur);
+				
 		
 		
 		
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	
