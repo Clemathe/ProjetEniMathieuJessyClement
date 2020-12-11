@@ -239,7 +239,7 @@ public class ServletCreerCompte extends HttpServlet {
 				request.setAttribute ("pass", utilisateur.getMotDePasse()); 
 				RequestDispatcher rd = request.getRequestDispatcher("/connexion"); 
 				rd.forward(request, response);
-				System.out.println("créer :" + utilisateur);
+				
 
 			} catch (Exception e) {
 				MessageErreur.add("echec creation de l'utilisateur :  pseudo et/ou email déjà utilisé(s )");
