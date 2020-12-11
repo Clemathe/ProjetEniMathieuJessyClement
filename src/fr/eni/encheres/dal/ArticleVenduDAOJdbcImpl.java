@@ -13,6 +13,7 @@ import fr.eni.encheres.bo.ArticleVendu;
 
 public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 
+		
 	@Override
 	public List<ArticleVendu> getenchereEnCours(String categorie, String nomArticlePartiel) {
 		
@@ -60,6 +61,38 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 		System.out.println(enchereEnCours);
 		
 		return enchereEnCours;
+	}
+	
+	
+	@Override
+	public ArticleVendu getArticleVendu(int noArticle) {
+		Connection cnx = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		 String sqlGetArticleVendu = "SELECT ARTICLES_VENDUS.no_article,"
+		 		+ " ARTICLES_VENDUS.nom_article,"
+		 		+ " ARTICLES_VENDUS.description,"
+		 		+ " ARTICLES_VENDUS.date_fin_encheres,"
+		 		+ " ARTICLES_VENDUS.prix_initial,"
+		 		+ " ARTICLES_VENDUS.prix_vente,"
+		 		+ " ARTICLES_VENDUS.no_utilisateur as vendeur,"
+		 		+ " ARTICLES_VENDUS.no_categorie,"
+		 		+ " UTILISATEURS.pseudo,"
+		 		+ " CATEGORIES.libelle,"
+		 		+ " ENCHERES.no_utilisateur as encherisseur,"
+		 		+ " ENCHERES.montant_enchere"
+		 		+ " FROM ARTICLES_VENDUS JOIN UTILISATEURS ON ARTICLES_VENDUS.no_utilisateur = UTILISATEURS.no_utilisateur"
+		 		+ " JOIN CATEGORIES ON ARTICLES_VENDUS.no_categorie = CATEGORIES.no_categorie"
+		 		+ " JOIN ENCHERES ON ARTICLES_VENDUS.no_article = ENCHERES.no_article"
+		 		+ " WHERE ARTICLES_VENDUS.no_article = 3 and ENCHERES.montant_enchere = (SELECT MAX(montant_enchere) FROM ARTICLES_VENDUS"
+		 		+ " JOIN ENCHERES ON ARTICLES_VENDUS.no_article=ENCHERES.no_article)";
+		try {
+			cnx = ConnectionProvider.getConnection();
+			pstmt = cnx.prepareStatement(sqlGetArticleVendu);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 	

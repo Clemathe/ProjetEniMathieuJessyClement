@@ -19,5 +19,10 @@ public class ArticleVenduManager {
 		return ArticleVenduManager.articleVenduDAO.getenchereEnCours(categorie, nomArticlePartiel);
 	}
 	
+
+	public ArticleVendu getArticleVendu(int noArticle) {
+		
+		return ArticleVenduManager.articleVenduDAO.getArticleVendu(noArticle);
+	}
 	
 }

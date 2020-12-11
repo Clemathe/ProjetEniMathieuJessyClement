@@ -48,7 +48,7 @@ public class ServletConnexion extends HttpServlet {
 		String password = null;
 		boolean matchingUserPassword = false;
 
-		if ( request.getParameter("login") != null) {
+		if ( request.getParameter("login") != "nouvelleConnexion") {
 			
 		login = (String) request.getParameter("login");
 		password = (String) request.getParameter("pass");

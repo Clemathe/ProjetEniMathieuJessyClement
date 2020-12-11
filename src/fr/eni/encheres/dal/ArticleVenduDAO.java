@@ -8,5 +8,9 @@ public interface ArticleVenduDAO {
 
 	public List<ArticleVendu> getenchereEnCours(String categorie, String nomArticlePartiel);
 	
+	public ArticleVendu getArticleVendu(int noArticle);
+
+
+	
 	
 }
