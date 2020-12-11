@@ -25,6 +25,14 @@
 
 	<div class="col-12"></div>
 	<h1 class="my-6 text center">Mon profil</h1>
+	
+	
+		<c:if test="${ Erreur != null}">
+
+			<div class="container alert alert-danger text-align center" role="alert">
+			${Erreur}</div>
+		</c:if>
+		
 
 
 
@@ -98,6 +106,7 @@
 			<input class="form-controln col-md-4" type="password" id="motDePasse"
 				name="motDePasse" value="${param.motDePasse}" required="required"
 				placeholder="aA12@!GH">
+				
 
 		</div>
 		<div class="row my-10">
