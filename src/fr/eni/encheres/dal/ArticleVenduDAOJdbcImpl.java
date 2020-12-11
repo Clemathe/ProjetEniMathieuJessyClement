@@ -64,6 +64,7 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 	}
 	
 	
+	
 	@Override
 	public ArticleVendu getArticleVendu(int noArticle) {
 		Connection cnx = null;
@@ -84,8 +85,9 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 		 		+ " FROM ARTICLES_VENDUS JOIN UTILISATEURS ON ARTICLES_VENDUS.no_utilisateur = UTILISATEURS.no_utilisateur"
 		 		+ " JOIN CATEGORIES ON ARTICLES_VENDUS.no_categorie = CATEGORIES.no_categorie"
 		 		+ " JOIN ENCHERES ON ARTICLES_VENDUS.no_article = ENCHERES.no_article"
-		 		+ " WHERE ARTICLES_VENDUS.no_article = 3 and ENCHERES.montant_enchere = (SELECT MAX(montant_enchere) FROM ARTICLES_VENDUS"
-		 		+ " JOIN ENCHERES ON ARTICLES_VENDUS.no_article=ENCHERES.no_article)";
+		 		+ " WHERE ARTICLES_VENDUS.no_article = 3 and ENCHERES.montant_enchere = "
+		 		+ " (SELECT MAX(montant_enchere) FROM ARTICLES_VENDUS"
+		 		+ " JOIN ENCHERES ON ARTICLES_VENDUS.no_article=ENCHERES.no_article)"; 
 		try {
 			cnx = ConnectionProvider.getConnection();
 			pstmt = cnx.prepareStatement(sqlGetArticleVendu);
