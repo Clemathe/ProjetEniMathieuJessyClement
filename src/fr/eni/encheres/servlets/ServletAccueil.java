@@ -15,7 +15,7 @@ import fr.eni.encheres.bo.Utilisateur;
 /**
  * Servlet implementation class ServletAccueil
  */
-@WebServlet("/ServletAccueil")
+@WebServlet(urlPatterns = {"/ServletAccueil", "/accueil"})
 public class ServletAccueil extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -40,9 +40,8 @@ public class ServletAccueil extends HttpServlet {
             Utilisateur utilisateurCourant = (Utilisateur) request.getSession().getAttribute("utilisateurCourant");
             request.getSession().setAttribute("utilisateurCourant", utilisateurCourant);
            
-            RequestDispatcher rd = getServletContext().getRequestDispatcher("/WEB-INF/PageAccueilNonConnecte.jsp");
-            rd.forward(request, response);
-        }
+           doGet(request, response);
+        }else {
 		ArticleVenduManager enchereEnCours = new ArticleVenduManager();
 		
 		String categorie =(String)request.getParameter("categories");
@@ -55,7 +54,7 @@ public class ServletAccueil extends HttpServlet {
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/PageAccueilNonConnecte.jsp");
 		rd.forward(request, response);
 		
-		
+        }
 		
 		
 	}
