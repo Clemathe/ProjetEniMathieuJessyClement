@@ -11,7 +11,7 @@
 <jsp:include page="/WEB-INF/fragments/head.jsp"></jsp:include>
 </head>
 
-<body class="container fluid">
+<body class="container">
 	<header>
 		<jsp:include page="./fragments/header.jsp"></jsp:include>
 	</header>
