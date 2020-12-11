@@ -89,6 +89,10 @@
 			type="submit" value="Créer" /></a> <a class="btn btn-info"
 			href="${pageContext.request.contextPath}/ServletAccueil"><input
 			type="button" value="Annuler" /></a>
+			
+			<a class="btn btn-info my-5  mx-5 "
+			href="${pageContext.request.contextPath}/ServletAccueil"><input
+			type="button" value="Annuler" /></a>
 	</div>
 	<footer>
 		<%@ include file="./fragments/footer.html"%>

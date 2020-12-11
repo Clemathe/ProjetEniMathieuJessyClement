@@ -29,7 +29,7 @@
 				</a></li>
 				<li class="nav-item active "><a class="nav-link" href="#">Mon compte <span class="sr-only">(current)</span>
 				</a></li>
-				<li class="nav-item active "><a class="nav-link" href="#">Déconnexion<span class="sr-only">(current)</span>
+				<li class="nav-item active "><a class="nav-link" href="ServletConnexion?connect=false">Déconnexion<span class="sr-only">(current)</span>
 				</a></li>
 			
 			</c:if>

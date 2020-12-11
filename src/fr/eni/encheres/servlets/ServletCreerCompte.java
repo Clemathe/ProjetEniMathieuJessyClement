@@ -6,11 +6,14 @@ import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import fr.eni.encheres.bll.UtilisateurManager;
 import fr.eni.encheres.bo.Utilisateur;
 
 /**
@@ -28,16 +31,6 @@ public class ServletCreerCompte extends HttpServlet {
 			throws ServletException, IOException {
 		System.out.println("doG servletCreerCompte");
 
-		request.setAttribute("pseudo", "pseudo");
-		request.setAttribute("prenom", "prenom");
-		request.setAttribute("nom", "nom");
-		request.setAttribute("email", "email");
-		request.setAttribute("telephone", "telephone");
-		request.setAttribute("rue", "rue");
-		request.setAttribute("codePostal", "codePostal");
-		request.setAttribute("ville", "ville");
-		request.setAttribute("motDePasse1", "motDePasse1");
-		request.setAttribute("motDePasse", "motDePasse");
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/PageCreerCompte.jsp");
 		rd.forward(request, response);
 	}
@@ -48,9 +41,8 @@ public class ServletCreerCompte extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		System.out.println("doPost servletCreerCompte");
-		// Lecture des parametres
-
+		
+		
 		request.setCharacterEncoding("UTF-8");
 
 		// int noUtilisateur = 0;
@@ -151,7 +143,7 @@ public class ServletCreerCompte extends HttpServlet {
 
 		try {
 			rue = request.getParameter("rue");
-			if (rue == null ) {
+			if (rue == null) {
 
 				MessageErreur.add("erreur de saisie de la rue : null ");
 				System.out.println("erreur rue");
@@ -174,7 +166,8 @@ public class ServletCreerCompte extends HttpServlet {
 				System.out.println("erreur ville");
 
 			} else
-				utilisateur.setVille(ville);;
+				utilisateur.setVille(ville);
+			;
 			System.out.println("ville entrée: " + ville);
 
 		} catch (Exception e) {
@@ -199,56 +192,71 @@ public class ServletCreerCompte extends HttpServlet {
 		}
 
 		/*
-		 * lecture et vérification des mots de passe avec contrainte : 
-		 * - 8 caractères au minimum 
-		 * - au moins une lettre (minuscule ou majuscule) 
-		 * - au moins un chiffre
-		 * - les caractères spéciaux sont autoriés
-		 * - pas d'espace
-		 */ 
+		 * lecture et vérification des mots de passe avec contrainte : - 8 caractères au
+		 * minimum - au moins une lettre (minuscule ou majuscule) - au moins un chiffre
+		 * - les caractères spéciaux sont autoriés - pas d'espace
+		 */
 		String motDePasse1 = null;
 
 		try {
 			motDePasse1 = request.getParameter("motDePasse1");
 			motDePasse = request.getParameter("motDePasse");
-								
+
 			if (!motDePasse.equals(motDePasse1)) {
-				MessageErreur.add("erreur de confirmation du mot de passe : veuillez entrer de nouveau votre mot de passe");
+				MessageErreur
+						.add("erreur de confirmation du mot de passe : veuillez entrer de nouveau votre mot de passe");
 				System.out.println("erreur confirmation motDepasse" + motDePasse);
-			}else utilisateur.setMotDePasse(motDePasse);
-			System.out.println("Mot de passe entré : " + motDePasse);
-			
-			/*if (motDePasse1 == null || ! motDePasse1.matches("^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[-+!*$@%_])([-+!*$@%_\\w]{8,15})$")) {
-					MessageErreur.add(
-							"erreur de saisie du mot de passe : il doit contenir 8 caractères au minimum, au moins une lettre (minuscule ou majuscule), au moins un chiffre, les caractères spéciaux sont autoriés");
-					System.out.println("erreur saisie motDepasse1 " + motDePasse1);
-				
-			} else if (!motDePasse.equals(motDePasse1)) {
-				MessageErreur.add("erreur de confirmation du mot de passe : veuillez entrer de nouveau votre mot de passe");
-				System.out.println("erreur confirmation motDepasse" + motDePasse);
-			} else {
+			} else
 				utilisateur.setMotDePasse(motDePasse);
-				System.out.println("Mot de passe entré : " + motDePasse);
-			}
-			*/	
+			System.out.println("Mot de passe entré : " + motDePasse);
+
+			/*
+			 * if (motDePasse1 == null || !motDePasse1.matches(
+			 * "^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[-+!*$@%_])([-+!*$@%_\\w]{8,15})$")) {
+			 * MessageErreur.add(
+			 * "erreur de saisie du mot de passe : il doit contenir 8 caractères au minimum, au moins une lettre (minuscule ou majuscule), au moins un chiffre, les caractères spéciaux sont autoriés"
+			 * ); System.out.println("erreur saisie motDepasse1 " + motDePasse1);
+			 * 
+			 * } else if (!motDePasse.equals(motDePasse1)) { MessageErreur
+			 * .add("erreur de confirmation du mot de passe : veuillez entrer de nouveau votre mot de passe"
+			 * ); System.out.println("erreur confirmation motDepasse" + motDePasse); } else
+			 * { utilisateur.setMotDePasse(motDePasse);
+			 * System.out.println("Mot de passe entré : " + motDePasse); }
+			 */
 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
-		System.out.println("fin doPost");
+		if (MessageErreur.isEmpty()) {
+			// creation de l'Utilisateur
+			UtilisateurManager utilisateurManager = new UtilisateurManager();
+			try {
+				System.out.println("je suis try-catch creation utilisateur");
+				utilisateurManager.creerUtilisateur(utilisateur);
+				
+				request.setAttribute("login", utilisateur.getPseudo() );
+				request.setAttribute ("pass", utilisateur.getMotDePasse()); 
+				RequestDispatcher rd = request.getRequestDispatcher("/connexion"); 
+				rd.forward(request, response);
+				System.out.println("créer :" + utilisateur);
 
+			} catch (Exception e) {
+				MessageErreur.add("echec creation de l'utilisateur :  pseudo et/ou email déjà utilisé(s )");
+				e.printStackTrace();
+			}
+
+		} else
+			
+
+			// renvoyer message.erreur à jsp.
+			// vérifier unicité
+			
+			request.setAttribute("messageErreur", MessageErreur);
+
+		RequestDispatcher rd = request.getRequestDispatcher("WEB-INF/PageCreerCompte.jsp");
+		rd.forward(request, response);
+		
 	}
 
-	private void creerCompte(HttpServletRequest request, HttpServletResponse response) {
-		// vérifier unicité
-		
-		// verifier mot de passe 
-		
-		// lecture et vérification des paramètres et
-	
-
-
-	}
-	
 }

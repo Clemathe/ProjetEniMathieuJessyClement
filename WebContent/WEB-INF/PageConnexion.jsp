@@ -25,6 +25,11 @@
 			<div class="container alert alert-danger text-align center" role="alert">
 				${errorConnection}</div>
 		</c:if>
+		<c:if test="${connect != null}">
+			
+			<div class="container alert alert-success text-align center" role="alert">
+				Vous êtes déconnecté</div>
+		</c:if>
 
 		<section >
 		
