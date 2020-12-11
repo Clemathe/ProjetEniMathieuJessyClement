@@ -273,6 +273,7 @@ public class ServletCreerCompte extends HttpServlet {
 		RequestDispatcher rd = request.getRequestDispatcher("WEB-INF/PageCreerCompte.jsp");
 		rd.forward(request, response);
 		
+		
 	}
 
 }
