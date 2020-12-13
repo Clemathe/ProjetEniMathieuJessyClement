@@ -19,6 +19,18 @@
 		<jsp:include page="./fragments/header.jsp"></jsp:include>
 </header>
 
+<div class=" container  my-5 col-md-4">
+		
+<!--Affichage d'un message d'alerte indiquant une déconnexion réussie -->
+		<c:if test="${connect != null}">
+			
+			<div class="container alert alert-success text-align center" role="alert">
+				Vous êtes déconnectés</div>
+	
+		</c:if>
+</div>
+
+<!--  -->	
 
 <div class="row justify-content-between mt-5" style >
 	<div class="col-4 font"><h1>ENI - Enchères</h1></div>

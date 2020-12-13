@@ -60,7 +60,7 @@
 					<a class="ml-3"href="ServletCreerCompte" id="forgetPassword">Mot de passe
 						Oublié</a>
 				</div>
-		<input type="progress" >
+		
 			</form>
 			
 		</section>

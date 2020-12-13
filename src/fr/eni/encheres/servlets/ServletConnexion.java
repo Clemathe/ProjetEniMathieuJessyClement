@@ -26,11 +26,19 @@ public class ServletConnexion extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		if (request.getParameter("connect") != null) {
-			System.out.println("false");
+		Boolean deconnection = Boolean.parseBoolean(request.getParameter("disconnect"));
+		
+		if ( deconnection == true) {
+			
 			request.getSession().invalidate();
+			
+			// Pour l'affichage d'un message de déconnection dans la jsp accueil
 			request.setAttribute("connect", "false");
+			
+			RequestDispatcher rd = request.getRequestDispatcher("/accueil");
+			rd.forward(request, response);
 		}
+		
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/PageConnexion.jsp");
 		rd.forward(request, response);
 	}
@@ -47,18 +55,20 @@ public class ServletConnexion extends HttpServlet {
 		String login = null;
 		String password = null;
 		boolean matchingUserPassword = false;
+		boolean nouvelleConnexion  = request.getParameter("login") != "nouvelleConnexion";
+		boolean fromCreationToConnection =  request.getAttribute("login") != null;
 
-		if ( request.getParameter("login") != "nouvelleConnexion") {
+		if (nouvelleConnexion) {
 			
-		login = (String) request.getParameter("login");
-		password = (String) request.getParameter("pass");
-		matchingUserPassword = UManager.verificationUtilisateurMotDePasse(login, password);
+			login = (String) request.getParameter("login");
+			password = (String) request.getParameter("pass");
+			matchingUserPassword = UManager.verificationUtilisateurMotDePasse(login, password);
 		
-		}else if ( request.getAttribute("login") != null) {
+		}else if (fromCreationToConnection) {
 		 
-		login = (String) request.getAttribute("login");
-		password = (String) request.getAttribute("pass");
-		matchingUserPassword = UManager.verificationUtilisateurMotDePasse(login, password);
+			login = (String) request.getAttribute("login");
+			password = (String) request.getAttribute("pass");
+			matchingUserPassword = UManager.verificationUtilisateurMotDePasse(login, password);
 		}
 		if (matchingUserPassword) {
 			
