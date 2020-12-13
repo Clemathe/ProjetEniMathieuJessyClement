@@ -18,8 +18,14 @@ public class Retrait {
 		this.ville = ville;
 		this.articleVendu = articleVendu;
 	}
-
- 
+	
+	public Retrait(String rue, String codePostal, String ville) {
+		super();
+		this.rue = rue;
+		this.codePostal = codePostal;
+		this.ville = ville;
+	
+	}
 
 	@Override
 	public String toString() {

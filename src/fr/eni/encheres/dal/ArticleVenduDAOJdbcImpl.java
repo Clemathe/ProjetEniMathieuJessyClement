@@ -10,6 +10,9 @@ import java.util.List;
 
 
 import fr.eni.encheres.bo.ArticleVendu;
+import fr.eni.encheres.bo.Categorie;
+import fr.eni.encheres.bo.Enchere;
+import fr.eni.encheres.bo.Retrait;
 
 public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 
@@ -70,27 +73,41 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 		Connection cnx = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		 String sqlGetArticleVendu = "SELECT ARTICLES_VENDUS.no_article,"
-		 		+ " ARTICLES_VENDUS.nom_article,"
-		 		+ " ARTICLES_VENDUS.description,"
-		 		+ " ARTICLES_VENDUS.date_fin_encheres,"
-		 		+ " ARTICLES_VENDUS.prix_initial,"
-		 		+ " ARTICLES_VENDUS.prix_vente,"
-		 		+ " ARTICLES_VENDUS.no_utilisateur as vendeur,"
-		 		+ " ARTICLES_VENDUS.no_categorie,"
-		 		+ " UTILISATEURS.pseudo,"
-		 		+ " CATEGORIES.libelle,"
-		 		+ " ENCHERES.no_utilisateur as encherisseur,"
-		 		+ " ENCHERES.montant_enchere"
-		 		+ " FROM ARTICLES_VENDUS JOIN UTILISATEURS ON ARTICLES_VENDUS.no_utilisateur = UTILISATEURS.no_utilisateur"
-		 		+ " JOIN CATEGORIES ON ARTICLES_VENDUS.no_categorie = CATEGORIES.no_categorie"
-		 		+ " JOIN ENCHERES ON ARTICLES_VENDUS.no_article = ENCHERES.no_article"
-		 		+ " WHERE ARTICLES_VENDUS.no_article = 3 and ENCHERES.montant_enchere = "
-		 		+ " (SELECT MAX(montant_enchere) FROM ARTICLES_VENDUS"
-		 		+ " JOIN ENCHERES ON ARTICLES_VENDUS.no_article=ENCHERES.no_article)"; 
+		ArticleVendu article = null;
+		String sqlGetArticleVendu =  "SELECT ARTICLES_VENDUS.nom_article,"
+				+" ARTICLES_VENDUS.description,"
+		 		+" ARTICLES_VENDUS.date_fin_encheres,"
+		 		+" ARTICLES_VENDUS.prix_initial,"
+		 		+" ARTICLES_VENDUS.prix_vente,"
+				+" UTILISATEURS.pseudo as vendeur,"
+		 		+" CATEGORIES.no_categorie,"
+		 		+" CATEGORIES.libelle,"
+		 		+" ENCHERES.no_utilisateur as encherisseur,"
+		 		+" ENCHERES.montant_enchere,"
+				+" RETRAITS.rue,"
+				+" RETRAITS.code_postal,"
+				+" RETRAITS.ville"
+		 		+" FROM ARTICLES_VENDUS "
+				+" JOIN UTILISATEURS ON ARTICLES_VENDUS.no_utilisateur = UTILISATEURS.no_utilisateur"
+				+" JOIN RETRAITS ON ARTICLES_VENDUS.no_article = RETRAITS.no_article"
+		 		+" JOIN CATEGORIES ON ARTICLES_VENDUS.no_categorie = CATEGORIES.no_categorie"
+		 		+" JOIN ENCHERES ON ARTICLES_VENDUS.no_article = ENCHERES.no_article"
+		 		+" WHERE ARTICLES_VENDUS.no_article = ? and ENCHERES.montant_enchere = "
+		 		+" (SELECT MAX(montant_enchere) FROM ARTICLES_VENDUS"
+		 		+" JOIN ENCHERES ON ARTICLES_VENDUS.no_article=ENCHERES.no_article)"; 
+		 
+		 String BuyerNumberToPseudo = "SELECT no_utilisateur FROM utilisateurs WHERE no_utilisateur = ?";
+		 
 		try {
 			cnx = ConnectionProvider.getConnection();
 			pstmt = cnx.prepareStatement(sqlGetArticleVendu);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				
+//				article = new ArticleVendu(nomArticle, description, dateFinEncheres, miseAPrix,
+//						prixVente, etatVente, acheteur, vendeur, new Enchere( montantEnchere), new Categorie(noCategorie, libelle) , new Retrait(rue, codePostal, ville))
+				
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

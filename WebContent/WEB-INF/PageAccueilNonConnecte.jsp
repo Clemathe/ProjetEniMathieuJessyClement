@@ -21,11 +21,22 @@
 
 <div class=" container  my-5 col-md-4">
 		
-<!--Affichage d'un message d'alerte indiquant une déconnexion réussie -->
-		<c:if test="${connect != null}">
+	<!--Pour l'affichage de messages d'alerte indiquant une connexion ou une déconnexion réussie -->
+		<c:if test="${disconnect != null}">
 			
-			<div class="container alert alert-success text-align center" role="alert">
+			<div class="container alert alert-warning text-align center" role="alert">
+			<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+   			<span aria-hidden="true">&times;</span></button>
 				Vous êtes déconnectés</div>
+	
+		</c:if>
+
+		<c:if test="${nouvelleConnexion != null}">
+			
+			<div class="alert alert-success alert-dismissible fade show text-align center" role="alert">
+			<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+   			<span aria-hidden="true">&times;</span></button>
+ 			 Vous êtes connectés</div>
 	
 		</c:if>
 </div>

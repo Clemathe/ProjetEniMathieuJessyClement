@@ -35,7 +35,7 @@
 		
 			<form action="ServletConnexion" method="post" class="my-5" >
 			
-				<input type="hidden" name="nouvelleConnexion" value="nouvelleConnexion">
+				<input type="hidden" name="nouvelleConnexion" value="true">
 				
 				<div class="form-group">
 					<label for="login">Identifiant</label> <input type="text"
