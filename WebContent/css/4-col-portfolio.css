@@ -9,10 +9,7 @@ body {
   
 }
 
-#nav{
-	display: flex !important;
-	justify-content : space-between !important;
-}
+
 
 #creerUnCompte{
 	
@@ -20,7 +17,8 @@ body {
 }
 #navbarColor01{
 	
-	margin-left : 50% !important;
+	display: flex !important;
+	flex-grow: initial !important;
 }
 
 @media (min-width: 992px) {
