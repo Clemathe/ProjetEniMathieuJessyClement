@@ -15,6 +15,7 @@ import fr.eni.encheres.bo.Utilisateur;
 /**
  * Servlet implementation class ServletAccueil
  */
+
 @WebServlet(urlPatterns = {"/ServletAccueil", "/accueil"})
 public class ServletAccueil extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -41,7 +42,7 @@ public class ServletAccueil extends HttpServlet {
             request.getSession().setAttribute("utilisateurCourant", utilisateurCourant);
            
            doGet(request, response);
-        }else {
+        }
 		ArticleVenduManager enchereEnCours = new ArticleVenduManager();
 		
 		String categorie =(String)request.getParameter("categories");
