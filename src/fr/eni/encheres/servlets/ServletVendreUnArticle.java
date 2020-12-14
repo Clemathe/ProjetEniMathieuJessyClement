@@ -53,21 +53,16 @@ public class ServletVendreUnArticle extends HttpServlet {
 		String codePostal = (String)request.getParameter("codePostal");
 		String ville = (String)request.getParameter("ville");
 		
-		//recuperation des informations manquantes pour créer un ArticleVendu en BDD : noUtilisateur et noCategorie 
+		//recuperation des informations manquantes pour créer un ArticleVendu en BDD
+		//Recuperation du noUtilisateur à partir de la session en cours 
 		Utilisateur utilisateurCourant = (Utilisateur)request.getSession().getAttribute("utilisateurCourant");
 		int noUtilisateur = utilisateurCourant.getNoUtilisateur();
 		
+		//recuperation du noCategorie a partir du libelle choisit par le user
 		CategorieManager categorie = new CategorieManager();
-		List<Categorie> categorieListe = categorie.getCategorie();
+		int noCategorie = categorie.getCategorie(categorieLibelle);
 		
 		
-		
-		
-		
-		
-		
-		
-		System.out.println(categorieListe.toString());
 		System.out.println(nomArticle+" "+description+" "+ categorieLibelle+" "+ miseAPrix+" "+dateDebutEncheres+" "+dateFinEncheres+" "+ rue+" "+ codePostal+" "+ ville+" "+ noUtilisateur);
 		
 		
