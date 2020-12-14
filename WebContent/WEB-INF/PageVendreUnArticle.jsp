@@ -69,13 +69,15 @@
 					<legend align="left">Retrait</legend>
 					
 					<label for="rue">Rue: </label>
-					<input required type="text" size="10" name="rue" id="rue" placeholder="numero et rue du retrait" class="form-control">
+					<input required type="text" size="10" name="rue" id="rue" 
+					value="${retrait.rue}" placeholder="numero et rue du retrait" class="form-control">
 					
 					<label for="codePostal">Code postal: </label>
-					<input required type="text" size="10" name="codePostal" id="codePostal" placeholder="ex : 44000" class="form-control">
+					<input required type="text" size="10" name="codePostal" 
+					id="codePostal" value="${retrait.codePostal}" placeholder="ex : 44000" class="form-control">
 					
 					<label for="ville">Ville: </label>
-					<input required type="text" size="10" name="ville" id="ville" placeholder="ex : Nantes" class="form-control">
+					<input required type="text" size="10" value="${retrait.ville}" name="ville" id="ville" placeholder="ex : Nantes" class="form-control">
 				</fieldset>
 				<br/>
 				<div class="form-group">

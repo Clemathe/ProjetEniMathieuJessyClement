@@ -20,10 +20,10 @@ public class Retrait {
 	}
 	
 	public Retrait(String rue, String codePostal, String ville) {
-		super();
-		this.rue = rue;
-		this.codePostal = codePostal;
-		this.ville = ville;
+		
+		setRue(rue);
+		setCodePostal(codePostal);
+		setVille(ville);
 	
 	}
 
@@ -38,10 +38,10 @@ public class Retrait {
 	public void setRue(String rue) {
 		this.rue = rue;
 	}
-	public String getCode_postal() {
+	public String getCodePostal() {
 		return codePostal;
 	}
-	public void setCode_postal(String codePostal) {
+	public void setCodePostal(String codePostal) {
 		this.codePostal = codePostal;
 	}
 	public String getVille() {

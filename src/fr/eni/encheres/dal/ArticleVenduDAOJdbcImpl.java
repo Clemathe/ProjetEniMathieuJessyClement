@@ -191,7 +191,7 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 			PreparedStatement pstmt2 = cnx.prepareStatement(INSERT_RETRAIT);
 			pstmt2.setInt(1, articleVendu.getNoArticle());
 			pstmt2.setString(2, articleVendu.getLieuRetrait().getRue());
-			pstmt2.setString(3, articleVendu.getLieuRetrait().getCode_postal());
+			pstmt2.setString(3, articleVendu.getLieuRetrait().getCodePostal());
 			pstmt2.setString(4, articleVendu.getLieuRetrait().getVille());
 			
 			pstmt2.executeUpdate();
