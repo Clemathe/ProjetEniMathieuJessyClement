@@ -11,7 +11,8 @@ import fr.eni.encheres.bo.Utilisateur;
 
 public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	private static final String INSERT_UTILISATEUR = "INSERT INTO UTILISATEURS (pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"; 
-
+	private static final String SELECT_BY_ID = "SELECT no_utilisateur, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur FROM UTILISATEURS where id=?"; 
+	private static final String UPDATE = "UPDATE UTILISATEURS set pseudo = ?, nom =?, prenom=?, email=?, telephone=?, rue=?, code_postal=?, ville=?, mot_de_passe=? where id=?"; 
 	@Override
 	public Utilisateur getUtilisateurById() {
 		// TODO Auto-generated method stub
@@ -115,15 +116,12 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 
 	@Override
 	public void insertUtilisateur(Utilisateur utilisateur) throws Exception {
-		System.out.println("je suis insert utilisateurDAOJdbcImpl");
-		System.out.println("dal utilisateur" + utilisateur);
-		
 		
 		 try (Connection cnx = ConnectionProvider.getConnection()){
-			try {
+			
+			 try {
 				
 				cnx.setAutoCommit(false);
-				System.out.println("in trycatch insert après connexion");
 				PreparedStatement pstmt = cnx.prepareStatement(INSERT_UTILISATEUR, PreparedStatement.RETURN_GENERATED_KEYS);
 				
 				pstmt.setString(1, utilisateur.getPseudo());
@@ -139,7 +137,6 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 				pstmt.setBoolean(11, utilisateur.isAdministrateur());
 				pstmt.executeUpdate();
 				ResultSet rs = pstmt.getGeneratedKeys();
-				System.out.println("insert validé");
 				
 				if(rs.next())
 				{
@@ -160,5 +157,61 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 			
 		}
 		 
+	}
+
+	@Override
+	public Utilisateur selectBy(int no_utilisateur) throws SQLException {
+		Connection cnx = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		Utilisateur utilisateur = null;
+		
+		try{
+			 cnx = ConnectionProvider.getConnection(); 
+			 pstmt = cnx.prepareStatement(SELECT_BY_ID); 
+			 pstmt.setInt(1, no_utilisateur);
+			 rs=pstmt.executeQuery(); 
+			 
+			 if(rs.next()){				
+				 utilisateur = new Utilisateur(rs.getInt("no_utilisateur"),rs.getString("pseudo"),rs.getString("nom"), rs.getString("prenom"), 
+						 rs.getString("email"), rs.getString("telephone"), rs.getString("rue"), rs.getString("code_postal"),
+						 rs.getString("ville"), rs.getString("mot_de_passe"), rs.getInt("credit"), rs.getBoolean("administrateur")); 
+			 }
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (pstmt != null) {
+					pstmt.close();
+				}
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+		return utilisateur;
+	}
+
+	@Override
+	public void update(int no_utilisateur) throws SQLException {
+		PreparedStatement pstmt = null; 
+		Connection cnx = null; 
+		
+		try {
+			cnx = ConnectionProvider.getConnection();
+			try {
+				pstmt = cnx.prepareStatement(UPDATE); 
+				pstmt.executeUpdate();
+				
+			} catch (Exception e) {
+				// TODO: handle exception
+			}
+			
+		
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		
+	
 	}
 }

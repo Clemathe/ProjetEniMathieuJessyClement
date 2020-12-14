@@ -86,6 +86,8 @@ public class Utilisateur implements Serializable{
 		
 	}
 
+	
+
 	public Utilisateur(int noUtilisateur, String pseudo) {
 		super();
 		this.noUtilisateur = noUtilisateur;

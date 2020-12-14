@@ -16,6 +16,10 @@ public interface UtilisateurDAO {
 	public Utilisateur getUserforSession(String login);
 
 	public void insertUtilisateur(Utilisateur utilisateur) throws SQLException, Exception;
+	
+	public Utilisateur selectBy(int no_utilisateur) throws SQLException;  
+		
+	public void update(int no_utilisateur) throws SQLException;  
 
 
 }

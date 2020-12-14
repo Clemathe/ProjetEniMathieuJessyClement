@@ -41,13 +41,12 @@
 			<label for="pseudo" class="col-md-2 col-form-label"> Pseudo : </label>
 			
 			<input class="form-controln col-md-4" type="text" id="pseudo"
-				name="pseudo" value="${utilisateur.pseudo}" required="required"
-				autofocus="autofocus" placeholder="${utilisateur.pseudo}"> 
+				name="pseudo" value="${utilisateur.pseudo}"> 
 				
 			<label for="nom" class="col-md-2 col-form-label"> Nom : </label>
 			
-			<input class="form-controln col-md-4" type="text" id="nom" name="nom"
-				value="${param.nom}" required="required" placeholder=" ${utilisateur.nom}">
+			<input class="form-controln col-md-4" type="text" id="nom"
+				name="pseudo" value="${utilisateur.nom}"> 
 		</div>
 
 
@@ -55,13 +54,12 @@
 			<label for="prenom" class="col-md-2 col-form-label"> Prénom : </label>
 			
 			<input class="form-controln col-md-4" type="text" id="prenom" 
-			name="prenom" value="${param.prenom}" required="required"placeholder=" ${utilisateur.prenom}"> 
+			name="prenom" value="${utilisateur.prenom}"> 
 			
 			<label for="email" class="col-md-2 col-form-label"> Email : </label>
 			
 			<input class="form-controln col-md-4" type="email" size="50" id="email"
-				name="email" value="${param.email}" required="required"
-				placeholder="${utilisateur.email}">
+				name="email" value="${utilisateur.email}">
 		</div>
 
 		<div class="row my-2">
@@ -69,33 +67,30 @@
 			<label for="telephone" class="col-md-2 col-form-label"> Téléphone : </label>
 			
 			<input class="form-controln col-md-4" type="tel" id="telephone"
-				name="telephone" value="${param.telephone}" placeholder="${utilisateur.telephone}"> 
+				name="telephone" value="${utilisateur.telephone}"> 
 				
 			<label for="rue" class="col-2 col-form-label"> Rue : </label>
 			
 			<input class="form-controln col-md-4" type="text" id="rue" name="rue"
-				value="${param.rue}" required="required" placeholder=" ${utilisateur.rue}">
+				value="${utilisateur.rue}">
 		</div>
 
 		<div class="row my-2">
 			<label for="codePostal" class="col-md-2 col-form-label"> Code Postal : </label>
 			
 			<input class="form-controln col-md-4" type="text" id="codePostal"
-				name="codePostal" value="${param.codePostal}" required="required"
-				placeholder="${utilisateur.codePostal}"> 
+				name="codePostal" value="${utilisateur.codePostal}"> 
 			<label for="ville" class="col-md-2 col-form-label"> Ville : </label>
 			
 			<input class="form-controln col-md-4" type="text" id="ville"
-				name="ville" value="${param.ville}" required="required"
-				placeholder="${utilisateur.ville}">
+				name="ville" value="${utilisateur.ville}">
 		</div>
 		
 		<div class="row my-2">
 		<label for="motDePasseActuel" class="col-md-2 col-form-label"> Mot de passe actuel : </label>
 			
-			<input class="form-controln col-md-4" type="password" id="motDePasse1"
-				name="motDePasse1" required="required"
-				placeholder="${utilisateur.motDePasse}"> 
+			<input class="form-controln col-md-4" type="password" id="motDePasse"
+				name="motDePasse" value ="${utilisateur.motDePasse}"> 
 		</div>
 
 		<div class="row my-2">

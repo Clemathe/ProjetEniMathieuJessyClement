@@ -31,7 +31,7 @@ public class ServletMonProfil extends HttpServlet {
 			RequestDispatcher rd = request.getRequestDispatcher("/connexion"); 
 			rd.forward(request, response);
 			System.out.println("renvoyer vers page se connecter");
-		}else
+		} else
 			
 		request.setAttribute("utilisateur", utilisateur);
 		
