@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import fr.eni.encheres.bll.ArticleVenduManager;
 import fr.eni.encheres.bo.ArticleVendu;
+import fr.eni.encheres.bo.Utilisateur;
 
 /**
  * Servlet implementation class ServletEncheres
@@ -27,9 +28,9 @@ public class ServletEncheres extends HttpServlet {
 		
 		
 		ArticleVenduManager AvManager = new ArticleVenduManager();
-		int noArticleTEST = 3;
+		int noArticle = Integer.parseInt(request.getParameter("noArticle")) ;
 		try {
-			ArticleVendu article= AvManager.getArticleVendu(noArticleTEST);
+			ArticleVendu article= AvManager.getArticleVendu(noArticle);
 			System.out.println("serveletEnchere : " + article);
 			request.setAttribute("article", article);
 		} catch (Exception e) {
@@ -44,8 +45,21 @@ public class ServletEncheres extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+		boolean encherir = request.getParameter("encherir") != null;
+		System.out.println(encherir);
+		System.out.println(request.getParameter("noArticle"));
+		ArticleVenduManager aVManager = new ArticleVenduManager();
+		
+		if(encherir) {
+			int montant = Integer.parseInt(request.getParameter("montant"));
+			int noArticle = Integer.parseInt(request.getParameter("noArticle"));
+			Utilisateur utilisateurCourant = (Utilisateur) request.getSession().getAttribute("utilisateurCourant");
+			String enchereMessage = aVManager.Encherir(montant, utilisateurCourant, noArticle );
+			request.setAttribute("enchereMessage", enchereMessage);
+			System.out.println(enchereMessage);
+			doGet(request, response);
+		}
+		
 	}
 
 }

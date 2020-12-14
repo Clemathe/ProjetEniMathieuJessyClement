@@ -65,6 +65,7 @@ public class ServletConnexion extends HttpServlet {
 			Utilisateur utilisateurCourant = UManager.getUtilisateurPourSession(userLogin);
 			sessionCourante.setAttribute("utilisateurCourant", utilisateurCourant);
 			
+		
 			// Attribut pour afficher une alerte de connexion réussie
 			request.setAttribute("nouvelleConnexion", "true");
 
@@ -105,7 +106,7 @@ public class ServletConnexion extends HttpServlet {
 			//password = (String) request.getAttribute("pass");
 			matchingUserPassword = true;
 		}
-
+		
 		if (matchingUserPassword) {
 			checkedLogin = login;
 		}

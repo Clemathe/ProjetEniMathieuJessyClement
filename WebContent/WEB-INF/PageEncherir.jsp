@@ -41,7 +41,7 @@
 				
 				<p>Catégorie : ${article.categorie.libelle}</p>
 				
-				<p>Meilleur offre : ${article.encheres.get(0).montantEnchere}
+				<p>Meilleur offre : ${article.encheres.get(0).montantEnchere} pts 
 				
 					par ${article.encheres.get(0).utilisateur.pseudo}</p>
 					
@@ -57,8 +57,10 @@
 
 
 				<div class="d-flex justify-content-flex-end">
-					<form method="post" action="${pageContext.request.contextPath}/"
+					<form method="post" action="encheres"
 						class="form-horizontal">
+						<input type="hidden" name="encherir" value="true">
+						<input type="hidden" name="noArticle" value="${article.noArticle}">
 						<div class="d-sm-flex flex-row">
 							<div class="mt-3">
 								<label for="example-number-input">Ma proposition :</label>

@@ -126,4 +126,13 @@ public class UtilisateurManager {
 
 	}
 
+	public void rembourserUtilisateur(int enchereLaPlusHaute, Utilisateur user) {
+		utilisateurDAO.rembourserUtilisateur(enchereLaPlusHaute, user);
+	}
+
+	public void debiterUtilisateur(int montantEnchere, Utilisateur utilisateurCourant) {
+		utilisateurDAO.debiterUtilisateur(montantEnchere, utilisateurCourant);
+		
+	}
+
 }

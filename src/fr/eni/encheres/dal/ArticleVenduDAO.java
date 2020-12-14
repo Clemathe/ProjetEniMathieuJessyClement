@@ -3,6 +3,7 @@ package fr.eni.encheres.dal;
 import java.util.List;
 
 import fr.eni.encheres.bo.ArticleVendu;
+import fr.eni.encheres.bo.Enchere;
 
 public interface ArticleVenduDAO {
 
@@ -13,4 +14,6 @@ public interface ArticleVenduDAO {
 	public void insertArticleVendu(ArticleVendu articleVendu);
 	
 	public List<ArticleVendu> getToutesEncheresEnCours();
+
+	public boolean enregistrerUneEnchere(Enchere nouvelleEnchere);
 }

@@ -23,7 +23,7 @@
 			</c:if>
 			
 			<c:if test="${utilisateurCourant != null }">	
-				<li class="nav-item active "><a class="nav-link" href="encheres">Enchères<span class="sr-only">(current)</span>
+				<li class="nav-item active "><a class="nav-link" href="accueil">Enchères<span class="sr-only">(current)</span>
 				</a></li>
 				<li class="nav-item active "><a class="nav-link" href="vendre">Vendre un article<span class="sr-only">(current)</span>
 				</a></li>

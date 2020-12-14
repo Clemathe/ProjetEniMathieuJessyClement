@@ -19,7 +19,11 @@ public interface UtilisateurDAO {
 	
 	public Utilisateur selectBy(int no_utilisateur) throws SQLException;  
 		
-	public void update(int no_utilisateur) throws SQLException;  
+	public void update(int no_utilisateur) throws SQLException; 
+	
+	public void rembourserUtilisateur(int enchereLaPlusHaute, Utilisateur user);
+
+	public void debiterUtilisateur(int montantEnchere, Utilisateur utilisateurCourant);
 
 
 }
