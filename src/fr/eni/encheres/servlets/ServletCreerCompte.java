@@ -2,6 +2,7 @@ package fr.eni.encheres.servlets;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -28,9 +29,7 @@ public class ServletCreerCompte extends HttpServlet {
 	 *      response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		System.out.println("doG servletCreerCompte");
-
+			throws ServletException, IOException {	
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/PageCreerCompte.jsp");
 		rd.forward(request, response);
 	}
@@ -69,7 +68,7 @@ public class ServletCreerCompte extends HttpServlet {
 				System.out.println("erreur pseudo");
 			} else
 				utilisateur.setPseudo(pseudo);
-			System.out.println("pseudo entré : " + pseudo);
+				System.out.println("pseudo entré : " + pseudo);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -191,17 +190,15 @@ public class ServletCreerCompte extends HttpServlet {
 			e.printStackTrace();
 		}
 
-		/*
-		 * lecture et vérification des mots de passe avec contrainte : - 8 caractères au
-		 * minimum - au moins une lettre (minuscule ou majuscule) - au moins un chiffre
-		 * - les caractères spéciaux sont autoriés - pas d'espace
-		 */
+		
 		String motDePasse1 = null;
 
 		try {
 			motDePasse1 = request.getParameter("motDePasse1");
 			motDePasse = request.getParameter("motDePasse");
 
+			//solution verification motDePasse sans regexPattern
+			
 			if (!motDePasse.equals(motDePasse1)) {
 				MessageErreur
 						.add("erreur de confirmation du mot de passe : veuillez entrer de nouveau votre mot de passe");
@@ -210,7 +207,13 @@ public class ServletCreerCompte extends HttpServlet {
 				utilisateur.setMotDePasse(motDePasse);
 			System.out.println("Mot de passe entré : " + motDePasse);
 
+			// solution avec pattern à débugger 
+			
 			/*
+			 * lecture et vérification des mots de passe avec contrainte : - 8 caractères au
+			 * minimum - au moins une lettre (minuscule ou majuscule) - au moins un chiffre
+			 * - les caractères spéciaux sont autoriés - pas d'espace
+			 * 
 			 * if (motDePasse1 == null || !motDePasse1.matches(
 			 * "^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[-+!*$@%_])([-+!*$@%_\\w]{8,15})$")) {
 			 * MessageErreur.add(
@@ -227,36 +230,51 @@ public class ServletCreerCompte extends HttpServlet {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		
+		//Fin des vérifications et traitement de la création utilisateur
+		
+		//instanciation StringBuilder pour envoie message erreur 
+		
+		StringBuilder sb = new StringBuilder();
 
 		if (MessageErreur.isEmpty()) {
-			// creation de l'Utilisateur
+			
+			// creation de l'Utilisateur avant envoie 
 			UtilisateurManager utilisateurManager = new UtilisateurManager();
 			try {
-				System.out.println("je suis try-catch creation utilisateur");
+				
+				//creation de l'utilisateur en BDD
 				utilisateurManager.creerUtilisateur(utilisateur);
+				
+				//envoie des attributs necessaires à la connexion
+				
 				
 				request.setAttribute("login", utilisateur.getPseudo() );
 				request.setAttribute ("pass", utilisateur.getMotDePasse()); 
 				RequestDispatcher rd = request.getRequestDispatcher("/connexion"); 
 				rd.forward(request, response);
-				System.out.println("créer :" + utilisateur);
+
 
 			} catch (Exception e) {
+				// vérifie unicité en BDD
 				MessageErreur.add("echec creation de l'utilisateur :  pseudo et/ou email déjà utilisé(s )");
 				e.printStackTrace();
 			}
 
-		} else
-			
-
-			// renvoyer message.erreur à jsp.
-			// vérifier unicité
-			
-			request.setAttribute("messageErreur", MessageErreur);
-
+		} else {
+					
+		// renvoie les message.erreur à la jsp.	
+		for (String s : MessageErreur) {
+			sb.append(s); 
+			sb.append("/t"); 			
+		}	
+		System.out.println(sb.toString());
+		String Erreur = sb.toString(); 
+		request.setAttribute("Erreur",Erreur);
 		RequestDispatcher rd = request.getRequestDispatcher("WEB-INF/PageCreerCompte.jsp");
 		rd.forward(request, response);
 		
+		}
 	}
 
 }

@@ -8,9 +8,6 @@
 	<!--Les mots clés sont séparés par une virgule et un blanc -->
 	<meta name="keywords"content="motcle1, motcle2"/>
 	
-	<!-- Donne des infos aux agents utilisateurs, robots, et moteurs -->
-	<meta http-equiv="refresh"content="30">
-
     <!-- Bootstrap core CSS -->
     <link href="${pageContext.request.contextPath}/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
