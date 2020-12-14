@@ -61,7 +61,7 @@
 			</div>
 			<div class="form-group">
 				<label for="dateFinEncheres">Fin de l'enchère: </label>
-				<input  type="date" id="date" class="form-control" name="dateDebutEncheres">
+				<input  type="date" id="date" class="form-control" name="dateFinEncheres">
 			</div>	
 			</div>
 			<div class="col-3">

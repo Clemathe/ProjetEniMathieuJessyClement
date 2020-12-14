@@ -45,7 +45,7 @@
 
 <div class="row justify-content-between mt-5" style >
 	<div class="col-4 font"><h1>ENI - Enchères</h1></div>
-	<div class="col-3"><a href="ServletConnexion" >S'inscrire - Se connecter</a></div>
+
 </div>
 <br />
 
