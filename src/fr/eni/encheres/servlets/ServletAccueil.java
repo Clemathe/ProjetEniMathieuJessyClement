@@ -27,7 +27,10 @@ public class ServletAccueil extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		ArticleVenduManager enchereEnCours = new ArticleVenduManager();
-		request.setAttribute("enchereEnCours", enchereEnCours.getEnchereEnCours("Toutes", ""));
+		request.setAttribute("enchereEnCours", enchereEnCours.getToutesEncheresEnCours());
+		
+		
+		
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/PageAccueilNonConnecte.jsp");
 		rd.forward(request, response);
 	}

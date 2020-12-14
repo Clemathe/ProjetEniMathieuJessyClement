@@ -14,7 +14,7 @@
 
 </head>
 
-<body class="container-fluid">
+<body class="container">
 <header>
 		<jsp:include page="./fragments/header.jsp"></jsp:include>
 </header>
@@ -43,16 +43,10 @@
 
 <!--  -->	
 
-<div class="row justify-content-between mt-5" style >
-	<div class="col-4 font"><h1>ENI - Enchères</h1></div>
-
-</div>
-<br />
-
-
 
 <div class="row">
-	<div class="col-4">
+
+	<div class="col-12 col-sm-12 col-md-6">
 		<form action="" method="post">
 			
 				<legend>Liste des enchères</legend>
@@ -74,7 +68,7 @@
 					</div>
 				</div>
 				
-				<div class="col-4">
+				<div class="col-12 col-sm-12 col-md-6">
 					<div class="form-group">
 					<input type="submit" value="rechercher" class="btn btn-info" >
 					</div>
@@ -84,29 +78,34 @@
 </div>
 
 <c:if test="${!empty enchereEnCours}">
-<p>Il y' a actuellement ${enchereEnCours.size()} enchères sur notre site.<P>
-
+<div class="col-12 text-center" >
+<p>Il y'a actuellement ${enchereEnCours.size()} enchères sur notre site.</P>
+</div>
+<div class="card-deck">
 	<c:forEach var="EEC" items="${enchereEnCours}">
-		<div class="card" style="width: 18rem;">
-			<img src="./images/${EEC.noArticle}.png" class="card-img-top" alt="vente">
-			<div class="card-body">
-			    <h5 class="card-title">${EEC.nomArticle}</h5>
-			    <p class="card-text">Prix: ${EEC.prixVente} points<br /> 
-			    					Fin de l'enchère: ${EEC.dateFinEncheres}<br />
-			    					Vendeur: ${EEC.pseudoVendeur}</p>
-
-			    <c:if test="${utilisateurCourant != null}">					
-			    	<a href="encheres?noArticle=${EEC.noArticle}" class="btn btn-primary">Accéder à la vente</a>
-			    </c:if>
-			    <c:if test="${utilisateurCourant == null}">
-			    <a href="connexion" class="btn btn-primary">Accéder à la vente</a>
-			    </c:if>
-			     				
-			   
- 			</div>
+		<div class="col-lg-3 col-12 col-md-6">
+			<div class="card" >
+				<div class="card-header text-center">
+					<img src="./images/${EEC.noArticle}.png" class="card-img-top" alt="vente">
+				</div>
+				<div class="card-body">
+					<h5 class="card-title">${EEC.nomArticle}</h5>
+					<p class="card-text">Prix: ${EEC.prixVente} points<br /> 
+					Fin de l'enchère: ${EEC.dateFinEncheres}<br />
+					Vendeur: ${EEC.pseudoVendeur}</p>
+					<div class="text-center">
+						<c:if test="${utilisateurCourant != null}">					
+						<a href="encheres?noArticle=${EEC.noArticle}" class="btn btn-primary">Accéder à la vente</a>
+						</c:if>
+						<c:if test="${utilisateurCourant == null}">
+						<a href="connexion" class="btn btn-primary">Accéder à la vente</a>
+						</c:if>
+			    	</div>				
+				</div>  
+			</div>
 		</div>
 	</c:forEach>
-
+	</div>
 </c:if>
 	
 

@@ -194,13 +194,36 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+
+
+
+	@Override
+	public List<ArticleVendu> getToutesEncheresEnCours() {
+		List<ArticleVendu> enchereEnCours = new ArrayList<ArticleVendu>();
+		String ENCHERES_EN_COURS="SELECT "
+					+ "ARTICLES_VENDUS.no_article,"
+					+ "ARTICLES_VENDUS.nom_article, "
+					+ "ARTICLES_VENDUS.prix_vente, "
+					+ "ARTICLES_VENDUS.date_fin_encheres, "
+					+ "UTILISATEURS.pseudo "
+					+ "FROM ARTICLES_VENDUS "
+					+ "JOIN UTILISATEURS ON ARTICLES_VENDUS.no_utilisateur = UTILISATEURS.no_utilisateur "; 
+				 
+		try (Connection cnx = ConnectionProvider.getConnection();){
+			PreparedStatement pstmt = cnx.prepareStatement(ENCHERES_EN_COURS);
+			ResultSet rs = pstmt.executeQuery();
+			while (rs.next()) {
+				ArticleVendu articleVendu= new ArticleVendu(rs.getInt(1), rs.getString(2),rs.getInt(3),rs.getDate(4).toLocalDate(),rs.getString(5));
+				enchereEnCours.add(articleVendu);
+			}
 		
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
-		
-		
-		
-		
-		
+		return enchereEnCours;
 	}
 
 

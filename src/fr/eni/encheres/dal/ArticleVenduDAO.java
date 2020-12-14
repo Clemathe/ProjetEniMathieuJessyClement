@@ -12,5 +12,5 @@ public interface ArticleVenduDAO {
 
 	public void insertArticleVendu(ArticleVendu articleVendu);
 	
-
+	public List<ArticleVendu> getToutesEncheresEnCours();
 }
