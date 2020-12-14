@@ -68,7 +68,7 @@ public class UtilisateurManager {
 		} else if (telephone == null || !telephone.matches("(0|(\\+33)|(0033))[1-9][0-9]{8}")) {
 			MessageErreur.add("erreur de saisie du numéro de téléphone : null ou format interdit");
 
-			// ajouter espace accepté dans regex rue
+			
 		} else if (rue == null) {
 			MessageErreur.add("erreur de saisie de la rue : null ");
 
@@ -82,7 +82,7 @@ public class UtilisateurManager {
 		} else if (motDePasse1 == null
 				|| !motDePasse1.matches("^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[-+!*$@%_])([-+!*$@%_\\w]{8,12})$")) {
 			MessageErreur.add(
-					"erreur format mot de passe : il doit contenir entre 8 et 12 caractères, au moins une lettre (minuscule ou majuscule), au moins un chiffre, au moins un caractère spécial");
+					"le mot de passe doit contenir entre 8 et 12 caractères, au moins une lettre (minuscule ou majuscule), au moins un chiffre, au moins un caractère spécial");
 
 		}
 		return MessageErreur;

@@ -139,7 +139,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 				pstmt.setBoolean(11, utilisateur.isAdministrateur());
 				pstmt.executeUpdate();
 				ResultSet rs = pstmt.getGeneratedKeys();
-				System.out.println("insert effectué");
+				System.out.println("insert validé");
 				
 				if(rs.next())
 				{
