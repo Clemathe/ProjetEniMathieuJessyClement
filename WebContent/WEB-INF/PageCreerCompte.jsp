@@ -48,7 +48,7 @@
 
 
 		<div class="row my-2">
-			<label for="prenom" class="col-md-2 col-form-label"> Prénom : </label>
+			<label for="prenom" class="col-md-2 col-form-label"> Prenom : </label>
 			
 			<input class="form-controln col-md-4" type="text" id="prenom" 
 			name="prenom" value="${param.prenom}" required="required"placeholder="Ada"> 

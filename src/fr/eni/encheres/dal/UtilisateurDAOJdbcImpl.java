@@ -114,15 +114,10 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	}
 
 	@Override
-	public void insert(Utilisateur utilisateur) {
+	public void insertUtilisateur(Utilisateur utilisateur) throws Exception {
 		System.out.println("je suis insert utilisateurDAOJdbcImpl");
-		System.out.println("dal utilisteur" + utilisateur);
-		// traitement businessEception ici 
-		/*if (utilisateur == null) {
-			BusinessException businessException = new BusinessException(); 
-			businessException.ajouter(CodesResultatDal.INSERT_OBJET_NULL); 
-			throw businessException; 
-		}*/
+		System.out.println("dal utilisateur" + utilisateur);
+		
 		
 		 try (Connection cnx = ConnectionProvider.getConnection()){
 			try {
@@ -144,7 +139,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 				pstmt.setBoolean(11, utilisateur.isAdministrateur());
 				pstmt.executeUpdate();
 				ResultSet rs = pstmt.getGeneratedKeys();
-				System.out.println("insert effectué");
+				System.out.println("insert validé");
 				
 				if(rs.next())
 				{
@@ -153,17 +148,17 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 				rs.close();
 				cnx.commit();
 				pstmt.close();
-				cnx.close();
-				System.out.println("connexion fermée");	
+				cnx.close();				
 				
 			} catch (Exception e) {
 				e.printStackTrace();
-				cnx.rollback();
+				cnx.rollback(); 
 				throw e;			}
 		} catch (Exception e) {
+			throw e;
+					
 			
-			System.out.println("business exception ici");
 		}
-		
+		 
 	}
 }

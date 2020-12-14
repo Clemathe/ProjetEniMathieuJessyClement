@@ -15,9 +15,8 @@ public interface UtilisateurDAO {
 
 	public Utilisateur getUserforSession(String login);
 
-	public void insert(Utilisateur utilisateur) throws SQLException;
+	public void insertUtilisateur(Utilisateur utilisateur) throws SQLException, Exception;
 
-	
 
 }
 
