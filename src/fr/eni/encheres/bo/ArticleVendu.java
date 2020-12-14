@@ -23,6 +23,7 @@ public class ArticleVendu {
 	private Utilisateur utilisateur;
 	private String pseudoVendeur;
 	private int noCategorie;
+	
 	private int noUtilisateur;
 	
 	
@@ -193,6 +194,31 @@ public class ArticleVendu {
 	}
 	public void setPseudoVendeur(String pseudoVendeur) {
 		this.pseudoVendeur = pseudoVendeur;
+	}
+	public void setUtilisateur(Utilisateur utilisateur) {
+		this.utilisateur = utilisateur;
+	}
+	public int getNoCategorie() {
+		return noCategorie;
+	}
+
+	public void setNoCategorie(int noCategorie) {
+		this.noCategorie = noCategorie;
+	}
+
+	public int getNoUtilisateur() {
+		return noUtilisateur;
+	}
+
+	public void setNoUtilisateur(int noUtilisateur) {
+		this.noUtilisateur = noUtilisateur;
+	}
+
+	public void setDateFinEncheres(LocalDate dateFinEncheres) {
+		this.dateFinEncheres = dateFinEncheres;
+	}
+	public Utilisateur getUtilisateur() {
+		return utilisateur;
 	}
 
 }

@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import fr.eni.encheres.bll.ArticleVenduManager;
 import fr.eni.encheres.bll.CategorieManager;
 import fr.eni.encheres.bo.ArticleVendu;
 import fr.eni.encheres.bo.Retrait;
@@ -70,8 +71,9 @@ public class ServletVendreUnArticle extends HttpServlet {
 		Utilisateur utilisateur = new Utilisateur(noUtilisateur);
 		
 		//Construction de l'article à créer en BDD
-		ArticleVendu article = new ArticleVendu(nomArticle,description,dateDebutEnchere,dateFinEnchere,miseAPrix,noCategorie,utilisateur,lieuRetrait);
-		
+		ArticleVendu articleAVendre = new ArticleVendu(nomArticle,description,dateDebutEnchere,dateFinEnchere,miseAPrix,noCategorie,utilisateur,lieuRetrait);
+		ArticleVenduManager articleVendu = new ArticleVenduManager();
+		articleVendu.insertArticleVendu(articleAVendre);
 		
 	}
 	

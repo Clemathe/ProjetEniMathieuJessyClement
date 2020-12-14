@@ -1,6 +1,7 @@
 package fr.eni.encheres.dal;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -145,11 +146,91 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 
 
 	@Override
-	public void insertArticleVendu(String nomArticle, String description, LocalDate dateDebutEnchere,
-			LocalDate dateFinEnchere, int miseAPrix, int noCategorie, Utilisateur utilisateur, Retrait lieuRetrait) {
+	public void insertArticleVendu(ArticleVendu articleVendu) {
+		
+		//Insertion du nouvl article 
+		String INSERT_ARTICLES_VENDUS ="INSERT INTO ARTICLES_VENDUS "
+				+ "(nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial,prix_vente,no_utilisateur,no_categorie)"
+				+ "values (?,?,?,?,?,?,?,?)";
+		try (Connection cnx = ConnectionProvider.getConnection()) {
+			PreparedStatement pstmt = cnx.prepareStatement(INSERT_ARTICLES_VENDUS, PreparedStatement.RETURN_GENERATED_KEYS);
+			
+			pstmt.setString(1, articleVendu.getNomArticle());
+			pstmt.setString(2,articleVendu.getDescription());
+			pstmt.setDate(3, Date.valueOf(articleVendu.getDateDebutEncheres()));
+			pstmt.setDate(4, Date.valueOf(articleVendu.getDateFinEncheres()));
+			pstmt.setInt(5, articleVendu.getMiseAPrix());
+			pstmt.setInt(6, articleVendu.getMiseAPrix());
+			pstmt.setInt(7, articleVendu.getUtilisateur().getNoUtilisateur());
+			pstmt.setInt(8, articleVendu.getNoCategorie());
+			
+			pstmt.executeUpdate();
+			ResultSet rs = pstmt.getGeneratedKeys();
+			System.out.println("Article ajouté en base de donnée");
+			//auto-génération du numero d'article + recupération du numero
+			if(rs.next()) {
+				articleVendu.setNoArticle(rs.getInt(1));
+				
+			}
+			//renseignement de la table retrait avec noArticle récupéré
+			String INSERT_RETRAIT ="INSERT INTO RETRAITS"
+				+ "(no_article,rue,code_postal,ville)"
+				+ "values(?,?,?,?)";	
+			
+			
+			PreparedStatement pstmt2 = cnx.prepareStatement(INSERT_RETRAIT);
+			pstmt2.setInt(1, articleVendu.getNoArticle());
+			pstmt2.setString(2, articleVendu.getLieuRetrait().getRue());
+			pstmt2.setString(3, articleVendu.getLieuRetrait().getCode_postal());
+			pstmt2.setString(4, articleVendu.getLieuRetrait().getVille());
+			
+			pstmt2.executeUpdate();
+			System.out.println("Lieu de retrait ajouté en base de donnée");
+			
+			rs.close();
+			pstmt.close();
+			pstmt2.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		
+		
+		
+		
 		
 	}
 
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 
 }

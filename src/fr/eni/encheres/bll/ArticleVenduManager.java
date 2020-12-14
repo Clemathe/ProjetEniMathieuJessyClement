@@ -27,9 +27,8 @@ public class ArticleVenduManager {
 		
 		return ArticleVenduManager.articleVenduDAO.getArticleVendu(noArticle);
 	}
-	public void insertArticleVendu (String nomArticle,String description,LocalDate dateDebutEnchere,
-			LocalDate dateFinEnchere,int miseAPrix, int noCategorie,Utilisateur utilisateur,Retrait lieuRetrait) {
+	public void insertArticleVendu (ArticleVendu articleVendu) {
 		
-		ArticleVenduManager.articleVenduDAO.insertArticleVendu(nomArticle, description, dateDebutEnchere, dateFinEnchere, miseAPrix, noCategorie, utilisateur, lieuRetrait);
+		ArticleVenduManager.articleVenduDAO.insertArticleVendu(articleVendu);
 	}
 }
