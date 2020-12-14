@@ -50,7 +50,7 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 			PreparedStatement pstmt = cnx.prepareStatement(ENCHERES_EN_COURS);
 			ResultSet rs = pstmt.executeQuery();
 			while (rs.next()) {
-				ArticleVendu articleVendu= new ArticleVendu(rs.getInt(1), rs.getString(2),rs.getInt(3),rs.getDate(4),rs.getString(5));
+				ArticleVendu articleVendu= new ArticleVendu(rs.getInt(1), rs.getString(2),rs.getInt(3),rs.getDate(4).toLocalDate(),rs.getString(5));
 				enchereEnCours.add(articleVendu);
 			}
 		

@@ -1,7 +1,7 @@
 package fr.eni.encheres.bo;
 
 import java.time.LocalDate;
-import java.util.Date;
+
 import java.util.List;
 
 public class ArticleVendu {
@@ -9,10 +9,10 @@ public class ArticleVendu {
 	private int noArticle; 
 	private String nomArticle; 
 	private String description; 
-	private Date dateDebutEncheres; 
-	private Date dateFinEncheres; 
+	private LocalDate dateDebutEncheres; 
+	private LocalDate dateFinEncheres; 
 	private int miseAPrix; 
-	private int PrixVente; 
+	private int prixVente; 
 	private boolean etatVente; 
 	private Utilisateur acheteur; 
 	private Utilisateur vendeur; 
@@ -26,8 +26,8 @@ public class ArticleVendu {
 	public ArticleVendu() {
 	}
 	
-	public ArticleVendu(int noArticle, String nomArticle, String description, Date dateDebutEncheres,
-			Date dateFinEncheres, int miseAPrix, int prixVente, boolean etatVente, Utilisateur acheteur,
+	public ArticleVendu(int noArticle, String nomArticle, String description, LocalDate dateDebutEncheres,
+			LocalDate dateFinEncheres, int miseAPrix, int prixVente, boolean etatVente, Utilisateur acheteur,
 			Utilisateur vendeur, List<Enchere> encheres, Categorie categorie, Retrait lieuRetrait) {
 		super();
 		this.noArticle = noArticle;
@@ -36,7 +36,7 @@ public class ArticleVendu {
 		this.dateDebutEncheres = dateDebutEncheres;
 		this.dateFinEncheres = dateFinEncheres;
 		this.miseAPrix = miseAPrix;
-		PrixVente = prixVente;
+		this.prixVente = prixVente;
 		this.etatVente = etatVente;
 		this.acheteur = acheteur;
 		this.vendeur = vendeur;
@@ -45,16 +45,30 @@ public class ArticleVendu {
 		this.lieuRetrait = lieuRetrait;
 	}
 	
-	public ArticleVendu(int noArticle, String nomArticle, int PrixVente, Date dateFinEncheres, String pseudoVendeur) {
+	public ArticleVendu(int noArticle, String nomArticle, int PrixVente, LocalDate dateFinEncheres, String pseudoVendeur) {
 		setNoArticle(noArticle); 
 		setNomArticle(nomArticle);
 		setPrixVente(PrixVente);;
-		setDateFinEncheres(dateFinEncheres);
+		setDateDebutEncheres(dateFinEncheres);
 		setPseudoVendeur(pseudoVendeur);
 		
 	}
 	
-
+	public ArticleVendu(String nomArticle, String description, LocalDate dateFinEncheres, int miseAPrix, int prixVente,
+			boolean etatVente, Utilisateur acheteur, Utilisateur vendeur, List<Enchere> encheres, Categorie categorie,
+			Retrait lieuRetrait) {
+		this.nomArticle = nomArticle;
+		this.description = description;
+		this.dateFinEncheres = dateFinEncheres;
+		this.miseAPrix = miseAPrix;
+		this.prixVente = prixVente;
+		this.etatVente = etatVente;
+		this.acheteur = acheteur;
+		this.vendeur = vendeur;
+		this.encheres = encheres;
+		this.categorie = categorie;
+		this.lieuRetrait = lieuRetrait;
+	}
 
 	@Override
 	public String toString() {
@@ -62,7 +76,7 @@ public class ArticleVendu {
 				+ "[noArticle=" + noArticle + ","
 						+ " nomArticle=" + nomArticle + ", description=" + description
 				+ ", dateDebutEncheres=" + dateDebutEncheres + ", dateFinEncheres=" + dateFinEncheres + ", miseAPrix="
-				+ miseAPrix + ", PrixVente=" + PrixVente + ", etatVente=" + etatVente + ", acheteur=" + acheteur
+				+ miseAPrix + ", prixVente=" + prixVente + ", etatVente=" + etatVente + ", acheteur=" + acheteur
 				+ ", vendeur=" + vendeur + ", encheres=" + encheres + ", categorie=" + categorie + ", lieuRetrait="
 				+ lieuRetrait + "]";
 	}
@@ -86,18 +100,16 @@ public class ArticleVendu {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	public Date getDateDebutEncheres() {
+	public LocalDate getDateDebutEncheres() {
 		return dateDebutEncheres;
 	}
-	public void setDateDebutEncheres(Date dateDebutEncheres) {
+	public void setDateDebutEncheres(LocalDate dateDebutEncheres) {
 		this.dateDebutEncheres = dateDebutEncheres;
 	}
-	public Date getDateFinEncheres() {
+	public LocalDate getDateFinEncheres() {
 		return dateFinEncheres;
 	}
-	public void setDateFinEncheres(Date dateFinEncheres) {
-		this.dateFinEncheres = dateFinEncheres;
-	}
+	
 	public int getMiseAPrix() {
 		return miseAPrix;
 	}
@@ -105,10 +117,10 @@ public class ArticleVendu {
 		this.miseAPrix = miseAPrix;
 	}
 	public int getPrixVente() {
-		return PrixVente;
+		return prixVente;
 	}
 	public void setPrixVente(int prixVente) {
-		PrixVente = prixVente;
+		this.prixVente = prixVente;
 	}
 	public boolean isEtatVente() {
 		return etatVente;
