@@ -22,6 +22,9 @@ public class ArticleVendu {
 	
 	
 	private String pseudoVendeur;
+	int noCategorie;
+	int noUtilisateur;
+	
 	
 	public ArticleVendu() {
 	}
@@ -44,6 +47,19 @@ public class ArticleVendu {
 		this.categorie = categorie;
 		this.lieuRetrait = lieuRetrait;
 	}
+	public ArticleVendu(String nomArticle, String description, LocalDate dateDebutEncheres,
+			LocalDate dateFinEncheres, int miseAPrix, int noCategorie,int noUtilisateur, Retrait lieuRetrait) {
+		super();
+		
+		this.nomArticle = nomArticle;
+		this.description = description;
+		this.dateDebutEncheres = dateDebutEncheres;
+		this.dateFinEncheres = dateFinEncheres;
+		this.miseAPrix = miseAPrix;
+		this.noCategorie = noCategorie;
+		this.noUtilisateur = noUtilisateur;
+		this.lieuRetrait = lieuRetrait;
+	}
 	
 	public ArticleVendu(int noArticle, String nomArticle, int PrixVente, LocalDate dateFinEncheres, String pseudoVendeur) {
 		setNoArticle(noArticle); 
@@ -53,6 +69,7 @@ public class ArticleVendu {
 		setPseudoVendeur(pseudoVendeur);
 		
 	}
+	
 	
 	public ArticleVendu(String nomArticle, String description, LocalDate dateFinEncheres, int miseAPrix, int prixVente,
 			boolean etatVente, Utilisateur acheteur, Utilisateur vendeur, List<Enchere> encheres, Categorie categorie,

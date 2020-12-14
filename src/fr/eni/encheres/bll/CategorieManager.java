@@ -1,8 +1,8 @@
 package fr.eni.encheres.bll;
 
-import java.util.List;
 
-import fr.eni.encheres.bo.Categorie;
+
+
 import fr.eni.encheres.dal.CategorieDAO;
 import fr.eni.encheres.dal.DAOFactory;
 
@@ -12,8 +12,8 @@ public class CategorieManager {
 	public CategorieManager() {
 		categorieDAO = DAOFactory.getCategorie();
 	}
-	public List<Categorie> getCategorie(){
-		return CategorieManager.categorieDAO.getCategorie();
+	public int getCategorie(String libelle){
+		return CategorieManager.categorieDAO.getCategorie(libelle);
 	}
 	
 	

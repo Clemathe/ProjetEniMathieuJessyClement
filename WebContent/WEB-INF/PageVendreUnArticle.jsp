@@ -44,7 +44,7 @@
 				<select  required name="categorieLibelle" id="categorieLibelle" class="form-control">
 					<option value="Informatique">Informatique</option>
 					<option value="Ameublement" >Ameublement</option>
-					<option value="Vêtement" >Vêtements</option>
+					<option value="Vetement" >Vêtements</option>
 					<option value="Sport&Loisirs" >Sports et Loisirs</option>
 				</select>
 			</div>
