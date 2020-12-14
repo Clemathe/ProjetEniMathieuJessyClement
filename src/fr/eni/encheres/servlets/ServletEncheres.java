@@ -30,10 +30,12 @@ public class ServletEncheres extends HttpServlet {
 		int noArticleTEST = 3;
 		try {
 			ArticleVendu article= AvManager.getArticleVendu(noArticleTEST);
-			
+			System.out.println("serveletEnchere : " + article);
+			request.setAttribute("article", article);
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
+		
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/PageEncherir.jsp");
 		rd.forward(request, response);
 	}

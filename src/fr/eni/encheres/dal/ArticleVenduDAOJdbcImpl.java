@@ -75,7 +75,9 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 	public ArticleVendu getArticleVendu(int noArticle) {
 		Connection cnx = null;
 		PreparedStatement pstmt = null;
+		PreparedStatement pstmt2 = null;
 		ResultSet rs = null;
+		ResultSet rs2 = null;
 		ArticleVendu article = null;
 		String sqlGetArticleVendu =  "SELECT ARTICLES_VENDUS.nom_article,"
 				+" ARTICLES_VENDUS.description,"
@@ -105,42 +107,50 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 		try {
 			cnx = ConnectionProvider.getConnection();
 			pstmt = cnx.prepareStatement(sqlGetArticleVendu);
+			pstmt.setInt(1, noArticle);
 			rs = pstmt.executeQuery();
 			
 			List<Enchere> encheres = new ArrayList<>();
 			int noMeilleurEncherisseur = 0;
 			if(rs.next()) {
 				try{
-					
+			
 					encheres.add(new Enchere(rs.getInt(10), rs.getInt(11)));
-					article = new ArticleVendu(rs.getString(1), rs.getString(2), LocalDate.parse(rs.getString(3), DateTimeFormatter.ofLocalizedTime(FormatStyle.SHORT)),
+					article = new ArticleVendu(rs.getString(1), rs.getString(2), LocalDate.parse(rs.getString(3)),
 							rs.getInt(4), rs.getInt(5), new Utilisateur(rs.getInt(6), rs.getString(7)), encheres,
 							new Categorie(rs.getInt(8), rs.getString(9)) , new Retrait(rs.getString(12),rs.getString(13) ,rs.getString(14)));
 					noMeilleurEncherisseur = rs.getInt(10);
 					
+					System.out.println("mE" + noMeilleurEncherisseur);
 					System.out.println("dal : "+ article);
 				}catch (SQLException e){
 					//TODO Pour empêcher le déroulement suivant qui genererait une erreur si cette partie échouait
 					cnx.close();
 				}
 			}
-			pstmt = cnx.prepareStatement(sqlGetArticleVendu);
-			pstmt.setInt(1,noMeilleurEncherisseur);
-			rs = pstmt.executeQuery();
-			if(rs.next()) {
-				
-				Utilisateur user = new Utilisateur(noMeilleurEncherisseur, rs.getString(1));
+			
+			pstmt2 = cnx.prepareStatement(" SELECT pseudo FROM utilisateurs WHERE no_utilisateur = ?");
+			pstmt2.setInt(1, noMeilleurEncherisseur);
+			rs2 = pstmt.executeQuery();
+		
+			System.out.println(rs2.next());
+			if(rs2.next()) {
+				System.out.println("a");
+				Utilisateur user = new Utilisateur(noMeilleurEncherisseur, rs2.getString(1));
 				Enchere enchere = article.getEncheres().get(0);
 				enchere.setUtilisateur(user);
+				
+				System.out.println("b");
+				
 				article.getEncheres().remove(0);
 				article.getEncheres().add(enchere);
 				
 				System.out.println("dal2 : "+ article);
-			}
+			}System.out.println("fin");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return null;
+		return article;
 	}
 
 

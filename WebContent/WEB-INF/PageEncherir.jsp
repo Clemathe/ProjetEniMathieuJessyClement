@@ -3,12 +3,15 @@
 <%-- <%@ page import=""%> --%>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <!DOCTYPE html>
 <html lang="fr">
 
 <head>
 <jsp:include page="/WEB-INF/fragments/head.jsp"></jsp:include>
+
+
 </head>
 
 <body class="container">
@@ -20,7 +23,7 @@
 
 	<section class="my-1">
 
-		<div class="row ">
+		<div class="row">
 			<div class="col-md-5">
 				<img src="./images/2.png" style="width: 18rem;"
 					class="rounded float-left" alt="image ordinateur">
@@ -30,46 +33,51 @@
 
 				<h4>${article.nomArticle}</h4>
 
-				<p>${article.description}</p>
+				<div class="d-flex inline-block">
+					<p>Description : </p>
 
-
-				<p>Description :</p>
-				<p>${article.categorie}</p>
-
-
-
-				<p>Catégorie : par</p>
-				<%-- 	${article.encheres.get(encheres.size()-1)).montantEnchere} par  ${article.encheres.get(encheres.size()-1)).utilisateur.pseudo} --%>
+					<p class="ml-1"> ${article.description}</p>
+				</div>
+				
+				<p>Catégorie : ${article.categorie.libelle}</p>
+				
+				<p>Meilleur offre : ${article.encheres.get(0).montantEnchere}
+				
+					par ${article.encheres.get(0).utilisateur.pseudo}</p>
+					
 				<p>Mise à prix : ${article.miseAPrix} points</p>
 
-				<p>Fin de l'enchère : ${article.utilisateur.pseudo}</p>
+				<p>Fin de l'enchère : <fmt:parseDate value="${ article.dateFinEncheres }" pattern="yyyy-MM-dd" var="parsedDateTime" type="both" />
+										<fmt:formatDate pattern="dd/MM/yyyy" value="${ parsedDateTime }" /></p>
 
-				<p>Retrait : ${article.dateFinEncheres}</p>
+				<p>Retrait : ${article.lieuRetrait}</p>
+							
+							
+				<p>Vendeur : ${article.vendeur.pseudo}</p>
 
-				<p>Vendeur : ${article.vendeur}</p>
-			
 
-		<div class="d-flex justify-content-flex-end">
-				<form method="post" action="${pageContext.request.contextPath}/"
-					class="form-horizontal">
-					<div class="d-sm-flex flex-row">
-					<div class="mt-3">
-						<label for="example-number-input">Ma proposition :</label>
-					</div>
+				<div class="d-flex justify-content-flex-end">
+					<form method="post" action="${pageContext.request.contextPath}/"
+						class="form-horizontal">
+						<div class="d-sm-flex flex-row">
+							<div class="mt-3">
+								<label for="example-number-input">Ma proposition :</label>
+							</div>
 
-					<div class="p-2">
-						<input class="col-form-label" type="number" value="1"
-							name="montant" min="1" max="999" id="example-number-input">
-					</div>
+							<div class="p-2">
+								<input class="col-form-label" type="number" value="1"
+									name="montant" min="1" max="999" id="example-number-input">
+							</div>
 
-					<div class="p-2">
-						<input type="submit" value="Enchérir"
-							class=" btn btn-info btn-lg btn-block">
-					</div>
-					</div>
-				</form>
+							<div class="p-2">
+								<input type="submit" value="Enchérir"
+									class=" btn btn-info btn-lg btn-block">
+							</div>
+						</div>
+					</form>
 				</div>
-				</div>
+			</div>
+		</div>
 	</section>
 
 	<%@ include file="./fragments/footer.html"%>
