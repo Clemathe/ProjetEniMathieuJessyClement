@@ -91,19 +91,20 @@ public class ServletConnexion extends HttpServlet {
 
 		boolean matchingUserPassword = false;
 		boolean nouvelleConnexion = Boolean.parseBoolean(request.getParameter("nouvelleConnexion")) == true;
-		boolean fromCreationToConnection = request.getAttribute("login") != null;
+		boolean fromCreationToConnection = request.getAttribute("loginCreated") != null;
 
 		if (nouvelleConnexion) {
 
 			login = (String) request.getParameter("login");
 			password = (String) request.getParameter("pass");
+			matchingUserPassword = UManager.verificationUtilisateurMotDePasse(login, password);
 
 		} else if (fromCreationToConnection) {
 
-			login = (String) request.getAttribute("login");
-			password = (String) request.getAttribute("pass");
+			login = (String) request.getAttribute("loginCreated");
+			//password = (String) request.getAttribute("pass");
+			matchingUserPassword = true;
 		}
-		matchingUserPassword = UManager.verificationUtilisateurMotDePasse(login, password);
 
 		if (matchingUserPassword) {
 			checkedLogin = login;
