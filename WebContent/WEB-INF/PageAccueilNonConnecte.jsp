@@ -19,7 +19,7 @@
 		<jsp:include page="./fragments/header.jsp"></jsp:include>
 </header>
 
-<div class=" container  my-5 col-md-4">
+<div class="container my-5 col-md-4">
 		
 	<!--Pour l'affichage de messages d'alerte indiquant une connexion ou une déconnexion réussie -->
 		<c:if test="${disconnect != null}">
@@ -41,49 +41,53 @@
 		</c:if>
 </div>
 
-<!--  -->	
+	
+<h2 class="text-center" >Liste des enchères</h2>
 
 
-<div class="row">
 
-	<div class="col-12 col-sm-12 col-md-6">
-		<form action="" method="post">
-			
-				<legend>Liste des enchères</legend>
-				
-				<div class="form-group">
-					<label for="recherche">Filtres :</label>
-					<input type="search" size="40" name="nomArticlePartiel" id="recherche" placeholder="Le nom de l'article contient" class="form-control">
-				</div>
+	<div class="">
+	<form  class="row align-items-start" action="" method="post">
+		<div class="col-lg-4">
+		<label class="col-form-label" for="nomArticlePartiel">Filtres :</label>
+		<input type="search"  name="nomArticlePartiel" id="recherche" 
+				placeholder="Le nom de l'article contient" class="form-control">	
+		</div>
+
+		<div class="col-lg-4">		
+		<label class="col-form-label" for="categories">Catégories :</label>
+			<select  name="categories" id="categories" class="custom-select form-control">
+				<option value="Toutes" selected>Toutes</option>
+				<option value="Informatique">Informatique</option>
+				<option value="Ameublement" >Ameublement</option>
+				<option value="Vetement" >Vêtements</option>
+				<option value="Sport&Loisirs" >Sports et Loisirs</option>
+			</select>
+		</div>
+		<br />	
+		<div class="col-lg-4">	
+		<br />
+		
+		<input type="submit" value="rechercher" class="btn-lg btn-info btn-block" >
+		</div>	
+	</form>					
+	</div>		
 					
-				<div class="form-group">
-					<label for="categories">Catégories :</label>
-						<select  name="categories" id="categories" class="form-control">
-							<option value="Toutes" selected>Toutes</option>
-							<option value="Informatique">Informatique</option>
-							<option value="Ameublement" >Ameublement</option>
-							<option value="Vêtement" >Vêtements</option>
-							<option value="Sport&Loisirs" >Sports et Loisirs</option>
-						</select>
-					</div>
-				</div>
-				
-				<div class="col-12 col-sm-12 col-md-6">
-					<div class="form-group">
-					<input type="submit" value="rechercher" class="btn btn-info" >
-					</div>
-			
-		</form>
-	</div>
-</div>
+	<br />		
+		
+	
+
 
 <c:if test="${!empty enchereEnCours}">
-<div class="col-12 text-center" >
-<p>Il y'a actuellement ${enchereEnCours.size()} enchères sur notre site.</P>
+<div class=" text-center" >
+<h2>Il y'a actuellement ${enchereEnCours.size()} enchères sur notre site.</h2>
+<br />	
 </div>
-<div class="card-deck">
+
+<div class="row col-lg-12">
+
 	<c:forEach var="EEC" items="${enchereEnCours}">
-		<div class="col-lg-3 col-12 col-md-6">
+		<div class="col-lg-4 col-12 col-md-6">
 			<div class="card" >
 				<div class="card-header text-center">
 					<img src="./images/${EEC.noArticle}.png" class="card-img-top" alt="vente">
@@ -95,10 +99,10 @@
 					Vendeur: ${EEC.pseudoVendeur}</p>
 					<div class="text-center">
 						<c:if test="${utilisateurCourant != null}">					
-						<a href="encheres?noArticle=${EEC.noArticle}" class="btn btn-primary">Accéder à la vente</a>
+						<a href="encheres?noArticle=${EEC.noArticle}" class="btn btn-info">Accéder à la vente</a>
 						</c:if>
 						<c:if test="${utilisateurCourant == null}">
-						<a href="connexion" class="btn btn-primary">Accéder à la vente</a>
+						<a href="connexion" class="btn btn-info">Accéder à la vente</a>
 						</c:if>
 			    	</div>				
 				</div>  
@@ -106,6 +110,10 @@
 		</div>
 	</c:forEach>
 	</div>
+	</div>
+
+
+
 </c:if>
 	
 
@@ -114,7 +122,7 @@
 
 
 
-
+</div>
 
 
 
