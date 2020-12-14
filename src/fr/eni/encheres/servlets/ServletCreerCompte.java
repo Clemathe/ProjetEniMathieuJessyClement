@@ -90,7 +90,7 @@ public class ServletCreerCompte extends HttpServlet {
 			}
 		if (insertOK == false) {
 		
-				String messageErreurDal = "echec creation de l'utilisateur :  pseudo et/ou email déjà utilisé(s )";
+				String messageErreurDal = "échec creation de l'utilisateur :  pseudo et/ou email déjà utilisé(s )";
 				request.setAttribute("Erreur", messageErreurDal);
 				RequestDispatcher rd = request.getRequestDispatcher("WEB-INF/PageCreerCompte.jsp");
 				rd.forward(request, response);
