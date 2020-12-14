@@ -93,8 +93,12 @@
 			    <h5 class="card-title">${EEC.nomArticle}</h5>
 			    <p class="card-text">Prix: ${EEC.prixVente} points<br /> 
 			    					Fin de l'enchère: ${EEC.dateFinEncheres}<br />
-			    					Vendeur: ${EEC.pseudoVendeur}</p>
-			    <a href="#" class="btn btn-primary">Accéder à la vente</a>
+			    <c:if test="${utilisateurCourant != null}">					Vendeur: ${EEC.pseudoVendeur}</p>
+			    	<a href="encheres?noArticle=${EEC.noArticle}" class="btn btn-primary">Accéder à la vente</a>
+			    </c:if>
+			    <c:if test="${utilisateurCourant == null}">
+			    <a href="connexion" class="btn btn-primary">Accéder à la vente</a>
+			     </c:if>
  			</div>
 		</div>
 	</c:forEach>
