@@ -100,13 +100,11 @@
 		</div>
 		
 		<div class="d-flex justify-content-around">
-
 			<button class="btn btn-info my-5 mx-5 form-controln col-3 "
 				type="submit">Créer</button>
 
 			<button class="btn btn-info my-5 mx-5 form-controln col-3"
 				type="reset">Annuler</button>
-
 		</div>
 
 	</form>

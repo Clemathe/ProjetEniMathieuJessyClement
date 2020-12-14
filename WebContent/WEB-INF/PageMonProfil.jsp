@@ -9,6 +9,10 @@
 <html lang="fr">
 
 <head>
+
+ <% Utilisateur utilisateurCourant = (Utilisateur).session.getAttribute("utilisateurCourant"); 
+    %>
+    
 <meta charset="UTF-8">
 <jsp:include page="/WEB-INF/fragments/head.jsp"></jsp:include>
 <title>Mon profil</title>
@@ -22,27 +26,13 @@
 	<section class="my-2">
 	
 	
-	
-	<div class="saisie row my-2">
-
-		<c:if test="${ Erreur != null}">
-
-			<div class="container alert alert-danger text-align center"
-				role="alert">${Erreur}</div>
-		</c:if>
 
 
-	</div>
-	
-
-<form method="post"action="${pageContext.request.contextPath}/CreerCompte" class="form-horizontal">
 		
 		<div class="saisie row my-2">
 			<label for="pseudo" class="col-md-2 col-form-label"> Pseudo : </label>
 			
-			<input class="form-controln col-md-4" type="text" id="pseudo"
-				name="pseudo" value="${param.pseudo}" required="required"
-				autofocus="autofocus" placeholder="${utilisateur.pseudo}"> 
+			<p class="form-controln col-md-4" value="${utilisateur.pseudo}"> 
 				
 			<label for="nom" class="col-md-2 col-form-label"> Nom : </label>
 			
@@ -114,7 +104,7 @@
 		<label class="col-md-2 col-form-label">Credit :</label> 
 		${utilisateur.credit}
 		</div>
-		
+		<form method="post"action="${pageContext.request.contextPath}/CreerCompte" class="form-horizontal">
 		<div class="d-flex justify-content-around">
 
 			<button class="btn btn-info my-5 mx-5 form-controln col-3 "
