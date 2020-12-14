@@ -1,63 +1,129 @@
 package fr.eni.encheres.bll;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import fr.eni.encheres.bo.Utilisateur;
 import fr.eni.encheres.dal.DAOFactory;
 import fr.eni.encheres.dal.UtilisateurDAO;
 
-
 public class UtilisateurManager {
 
 	private static UtilisateurDAO utilisateurDAO;
-	
+
 	/**
 	 * @param daoRepas
 	 */
-	public UtilisateurManager () {
+	public UtilisateurManager() {
 		utilisateurDAO = DAOFactory.getUtilisateurDAO();
 	}
-	
+
 	public Utilisateur utilisateurParIdentifiant() {
-		
+
 		return UtilisateurManager.utilisateurDAO.getUtilisateurById();
-		
+
 	}
 
-	
-	
 	public boolean utilisateurExistant(String login, String email) {
 		boolean existingUser = UtilisateurManager.utilisateurDAO.getExistingUser(login, email);
 		return existingUser;
 	}
-	
-	
-	
+
 	public boolean verificationUtilisateurMotDePasse(String login, String password) {
-		Boolean userPassOk = false; 
+		Boolean userPassOk = false;
 		String userPasswordBDD = UtilisateurManager.utilisateurDAO.getUserPassword(login);
-		
+
 		if (userPasswordBDD != null && userPasswordBDD.trim().equals(password.trim())) {
 			userPassOk = true;
 		}
-		
+
 		return userPassOk;
-		
+
 	}
 
 	public Utilisateur getUtilisateurPourSession(String login) {
-		Utilisateur utilisateurCourant =  utilisateurDAO.getUserforSession(login);
+		Utilisateur utilisateurCourant = utilisateurDAO.getUserforSession(login);
 		utilisateurCourant.setMotDePasse(null);
 		System.out.println(utilisateurCourant);
 		return utilisateurCourant;
-		
+
 	}
 
-	public void creerUtilisateur(Utilisateur utilisateur) throws SQLException   {
-		 
-		utilisateurDAO.insert(utilisateur);
+	public List<String> verificationSaisieUtilisateur(String pseudo, String nom, String prenom, String email,
+			String telephone, String rue, String codePostal, String ville, String motDePasse, String motDePasse1) {
+		List<String> MessageErreur = new ArrayList<>();
+		if (pseudo == null || !pseudo.matches("[a-zA-Z0-9]+")) {
+			MessageErreur.add("erreur de saisie du pseudonyme : null ou caractères interdit");
+
+		} else if (nom == null || !nom.matches("^[a-zA-Z]*$")) {
+			MessageErreur.add("erreur de saisie du Nom : null ou caractère interdit");
+
+		} else if (prenom == null || !prenom.matches("^[a-zA-Z]*$")) {
+			MessageErreur.add("erreur de saisie du Prenom : null ou caractère interdit");
+
+		} else if (email == null || !email.matches("^[\\w.-]+@[\\w.-]+\\.[a-z]{2,}$")) {
+			MessageErreur.add("erreur de saisie de l'email : null ou format interdit");
+
+		} else if (telephone == null || !telephone.matches("(0|(\\+33)|(0033))[1-9][0-9]{8}")) {
+			MessageErreur.add("erreur de saisie du numéro de téléphone : null ou format interdit");
+
+			// ajouter espace accepté dans regex rue
+		} else if (rue == null) {
+			MessageErreur.add("erreur de saisie de la rue : null ");
+
+		} else if (ville == null || !ville.matches("^[a-zA-Z]*$")) {
+			MessageErreur.add("erreur de saisie de la ville : null ou caractère interdit");
+		} else if (codePostal == null || !codePostal.matches("^[0-9]{5}$")) {
+			MessageErreur.add("erreur de saisie du code postal : null ou caractère interdit");
+
+		} else if (!motDePasse.equals(motDePasse1)) {
+			MessageErreur.add("erreur de confirmation du mot de passe : veuillez entrer de nouveau votre mot de passe");
+		} else if (motDePasse1 == null
+				|| !motDePasse1.matches("^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[-+!*$@%_])([-+!*$@%_\\w]{8,12})$")) {
+			MessageErreur.add(
+					"erreur format mot de passe : il doit contenir entre 8 et 12 caractères, au moins une lettre (minuscule ou majuscule), au moins un chiffre, au moins un caractère spécial");
+
+		}
+		return MessageErreur;
+
 	}
 
+	public boolean validationCreationCompte(List<String> messageErreur) {
+		Boolean validationOk = false;
+		if (messageErreur.isEmpty()) {
+			validationOk = true;
+		}
+		return validationOk;
+	}
 
-	
+	public boolean creerUtilisateur(String pseudo, String nom, String prenom, String email, String telephone,
+			String rue, String codePostal, String ville, String motDePasse) throws SQLException {
+		Boolean insertOK = false;
+		Utilisateur utilisateur = new Utilisateur();
+		utilisateur.setPseudo(pseudo);
+		utilisateur.setNom(nom);
+		utilisateur.setPrenom(prenom);
+		utilisateur.setEmail(email);
+		utilisateur.setTelephone(telephone);
+		utilisateur.setRue(rue);
+		utilisateur.setVille(ville);
+		utilisateur.setCodePostal(codePostal);
+		utilisateur.setMotDePasse(motDePasse);
+		try {
+			utilisateurDAO.insertUtilisateur(utilisateur);
+			insertOK = true;
+		} catch (Exception e) {
+
+			e.printStackTrace();
+		}
+		return insertOK;
+	}
+
+	public void insertUtilisateur(Utilisateur utilisateur) throws Exception {
+
+		utilisateurDAO.insertUtilisateur(utilisateur);
+
+	}
+
 }
