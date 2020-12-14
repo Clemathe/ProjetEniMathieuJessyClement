@@ -10,6 +10,9 @@ public static ArticleVenduDAO getEnchereDAO() {
 		
 		return new ArticleVenduDAOJdbcImpl();
 	}
+public static CategorieDAO getCategorie() {
+	return new CategorieDAOJdbcImpl();
+}
 	
 }
 
