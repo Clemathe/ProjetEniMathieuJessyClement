@@ -3,7 +3,6 @@ package fr.eni.encheres.servlets;
 import java.io.IOException;
 import java.sql.Date;
 import java.time.LocalDate;
-import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -13,7 +12,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import fr.eni.encheres.bll.CategorieManager;
-import fr.eni.encheres.bo.Categorie;
+import fr.eni.encheres.bo.ArticleVendu;
+import fr.eni.encheres.bo.Retrait;
 import fr.eni.encheres.bo.Utilisateur;
 
 /**
@@ -43,11 +43,8 @@ public class ServletVendreUnArticle extends HttpServlet {
 		String categorieLibelle = (String)request.getParameter("categorieLibelle");
 		int miseAPrix = Integer.parseInt(request.getParameter("miseAPrix"));
 		
-		LocalDate lDDebut= LocalDate.parse(request.getParameter("dateDebutEncheres"));
-		Date dateDebutEncheres = Date.valueOf(lDDebut);
-		LocalDate lDFin = LocalDate.parse(request.getParameter("dateFinEncheres"));
-		Date dateFinEncheres = Date.valueOf(lDFin);
-		
+		LocalDate dateDebutEnchere = LocalDate.parse(request.getParameter("dateDebutEncheres"));
+		LocalDate dateFinEnchere = LocalDate.parse(request.getParameter("dateFinEncheres"));
 		
 		String rue = (String)request.getParameter("rue");
 		String codePostal = (String)request.getParameter("codePostal");
@@ -63,12 +60,17 @@ public class ServletVendreUnArticle extends HttpServlet {
 		int noCategorie = categorie.getCategorie(categorieLibelle);
 		
 		
-		System.out.println(nomArticle+" "+description+" "+ categorieLibelle+" "+ miseAPrix+" "+dateDebutEncheres+" "+dateFinEncheres+" "+ rue+" "+ codePostal+" "+ ville+" "+ noUtilisateur);
-		
-		
+		System.out.println(nomArticle+" "+description+" "+ categorieLibelle+" "+ miseAPrix+" "+dateDebutEnchere+" "+dateFinEnchere+" "+ rue+" "+ codePostal+" "+ ville+" "+ noUtilisateur);
 		
 		request.getSession().setAttribute("utilisateurCourant", utilisateurCourant);		
 		
+		//construction du retrait avec les paramêtres colléctés:
+		Retrait lieuRetrait = new Retrait(rue, codePostal, ville);
+		//construction d'un utilisateur "léger"
+		Utilisateur utilisateur = new Utilisateur(noUtilisateur);
+		
+		//Construction de l'article à créer en BDD
+		ArticleVendu article = new ArticleVendu(nomArticle,description,dateDebutEnchere,dateFinEnchere,miseAPrix,noCategorie,utilisateur,lieuRetrait);
 		
 		
 	}

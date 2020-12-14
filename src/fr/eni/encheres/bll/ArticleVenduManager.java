@@ -1,8 +1,11 @@
 package fr.eni.encheres.bll;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import fr.eni.encheres.bo.ArticleVendu;
+import fr.eni.encheres.bo.Retrait;
+import fr.eni.encheres.bo.Utilisateur;
 import fr.eni.encheres.dal.ArticleVenduDAO;
 import fr.eni.encheres.dal.DAOFactory;
 
@@ -11,7 +14,7 @@ public class ArticleVenduManager {
 	public ArticleVenduManager() {
 		
 		
-		articleVenduDAO = DAOFactory.getEnchereDAO();
+		articleVenduDAO = DAOFactory.articleVenduDAO();
 	}
 	
 	public List<ArticleVendu> getEnchereEnCours(String categorie, String nomArticlePartiel){
@@ -24,5 +27,9 @@ public class ArticleVenduManager {
 		
 		return ArticleVenduManager.articleVenduDAO.getArticleVendu(noArticle);
 	}
-	
+	public void insertArticleVendu (String nomArticle,String description,LocalDate dateDebutEnchere,
+			LocalDate dateFinEnchere,int miseAPrix, int noCategorie,Utilisateur utilisateur,Retrait lieuRetrait) {
+		
+		ArticleVenduManager.articleVenduDAO.insertArticleVendu(nomArticle, description, dateDebutEnchere, dateFinEnchere, miseAPrix, noCategorie, utilisateur, lieuRetrait);
+	}
 }

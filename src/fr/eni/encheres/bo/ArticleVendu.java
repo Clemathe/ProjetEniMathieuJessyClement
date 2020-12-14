@@ -20,10 +20,10 @@ public class ArticleVendu {
 	private Categorie categorie; 
 	private Retrait lieuRetrait;
 	
-	
+	private Utilisateur utilisateur;
 	private String pseudoVendeur;
-	int noCategorie;
-	int noUtilisateur;
+	private int noCategorie;
+	private int noUtilisateur;
 	
 	
 	public ArticleVendu() {
@@ -47,8 +47,9 @@ public class ArticleVendu {
 		this.categorie = categorie;
 		this.lieuRetrait = lieuRetrait;
 	}
+	//utilisé dans ajout nouvel article à la vente
 	public ArticleVendu(String nomArticle, String description, LocalDate dateDebutEncheres,
-			LocalDate dateFinEncheres, int miseAPrix, int noCategorie,int noUtilisateur, Retrait lieuRetrait) {
+			LocalDate dateFinEncheres, int miseAPrix, int noCategorie,Utilisateur utilisateur, Retrait lieuRetrait) {
 		super();
 		
 		this.nomArticle = nomArticle;
@@ -57,10 +58,10 @@ public class ArticleVendu {
 		this.dateFinEncheres = dateFinEncheres;
 		this.miseAPrix = miseAPrix;
 		this.noCategorie = noCategorie;
-		this.noUtilisateur = noUtilisateur;
+		this.utilisateur = utilisateur;
 		this.lieuRetrait = lieuRetrait;
 	}
-	
+	//utilisé dans page d'accueil
 	public ArticleVendu(int noArticle, String nomArticle, int PrixVente, LocalDate dateFinEncheres, String pseudoVendeur) {
 		setNoArticle(noArticle); 
 		setNomArticle(nomArticle);

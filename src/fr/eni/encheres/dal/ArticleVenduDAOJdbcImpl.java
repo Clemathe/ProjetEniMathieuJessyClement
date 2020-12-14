@@ -142,6 +142,14 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 		return null;
 	}
 
+
+
+	@Override
+	public void insertArticleVendu(String nomArticle, String description, LocalDate dateDebutEnchere,
+			LocalDate dateFinEnchere, int miseAPrix, int noCategorie, Utilisateur utilisateur, Retrait lieuRetrait) {
+		
+	}
+
 	
 
 }
