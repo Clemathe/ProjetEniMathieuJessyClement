@@ -78,6 +78,12 @@ public class Utilisateur {
 		
 	}
 
+	public Utilisateur(int noUtilisateur, String pseudo) {
+		super();
+		this.noUtilisateur = noUtilisateur;
+		this.pseudo = pseudo;
+	}
+
 	public int getNoUtilisateur() {
 		return noUtilisateur;
 	}

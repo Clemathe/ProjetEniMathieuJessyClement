@@ -28,6 +28,11 @@ public class Enchere {
 		this.utilisateur = utilisateur;
 	}
 
+	public Enchere( int noUtilisateur, int montantEnchere) {
+		this.utilisateur = new Utilisateur(noUtilisateur, null);
+		this.montantEnchere = montantEnchere;
+		
+	}
 	/**
 	 * @return the dateEnchere
 	 */

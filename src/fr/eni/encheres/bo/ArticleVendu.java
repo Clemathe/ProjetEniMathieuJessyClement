@@ -86,7 +86,19 @@ public class ArticleVendu {
 		this.categorie = categorie;
 		this.lieuRetrait = lieuRetrait;
 	}
-
+	public ArticleVendu(String nomArticle, String description, LocalDate dateFinEncheres, int miseAPrix, int prixVente,
+			 Utilisateur vendeur, List<Enchere> encheres, Categorie categorie,
+			Retrait lieuRetrait) {
+		this.nomArticle = nomArticle;
+		this.description = description;
+		this.dateFinEncheres = dateFinEncheres;
+		this.miseAPrix = miseAPrix;
+		this.prixVente = prixVente;
+		this.vendeur = vendeur;
+		this.encheres = encheres;
+		this.categorie = categorie;
+		this.lieuRetrait = lieuRetrait;
+	}
 	@Override
 	public String toString() {
 		return "ArticleVendu"
