@@ -30,7 +30,7 @@ public class ServletVendreUnArticle extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		Utilisateur utilisateurCourant = (Utilisateur) request.getSession().getAttribute("utilisateurCourant");
+		Utilisateur utilisateurCourant = (Utilisateur)request.getSession().getAttribute("utilisateurCourant");
 		String rue = utilisateurCourant.getRue();
 		String codePostal = utilisateurCourant.getCodePostal();
 		String ville = utilisateurCourant.getVille();
