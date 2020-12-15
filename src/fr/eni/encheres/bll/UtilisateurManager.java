@@ -7,7 +7,6 @@ import java.util.List;
 import fr.eni.encheres.bo.Utilisateur;
 import fr.eni.encheres.dal.DAOFactory;
 import fr.eni.encheres.dal.UtilisateurDAO;
-import fr.eni.test.bll.MD5Utils;
 
 public class UtilisateurManager {
 
@@ -21,7 +20,7 @@ public class UtilisateurManager {
 	}
 	
 
-	public Utilisateur verificationUtilisateurMotDePasse(String login, String password) {
+	public Utilisateur getUtilisateurPourSession(String login, String password) {
 		
 		String hashPassword = MD5Utils.digest(password);
 		
@@ -31,16 +30,6 @@ public class UtilisateurManager {
 			e.printStackTrace();
 			return null;
 		}
-		
-
-	}
-
-	public Utilisateur getUtilisateurPourSession(String login) {
-		Utilisateur utilisateurCourant = utilisateurDAO.getUserforSession(login);
-		utilisateurCourant.setMotDePasse(null);
-		System.out.println(utilisateurCourant);
-		return utilisateurCourant;
-
 	}
 
 	public List<String> verificationSaisieUtilisateur(String pseudo, String nom, String prenom, String email,
@@ -89,9 +78,11 @@ public class UtilisateurManager {
 		}
 		return validationOk;
 	}
+	
 
 	public boolean creerUtilisateur(String pseudo, String nom, String prenom, String email, String telephone,
 			String rue, String codePostal, String ville, String motDePasse) throws SQLException {
+		String hashPassword = MD5Utils.digest(motDePasse);
 		Boolean insertOK = false;
 		Utilisateur utilisateur = new Utilisateur();
 		utilisateur.setPseudo(pseudo);
@@ -102,7 +93,7 @@ public class UtilisateurManager {
 		utilisateur.setRue(rue);
 		utilisateur.setVille(ville);
 		utilisateur.setCodePostal(codePostal);
-		utilisateur.setMotDePasse(motDePasse);
+		utilisateur.setMotDePasse(hashPassword);
 		try {
 			utilisateurDAO.insertUtilisateur(utilisateur);
 			insertOK = true;

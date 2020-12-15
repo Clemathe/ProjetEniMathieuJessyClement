@@ -66,7 +66,7 @@ public class ServletEncheres extends HttpServlet {
 				request.setAttribute("enchereMessage", enchereMessage);
 				
 				//Rechargement de la session utilisateur pour mettre a jour le solde
-				utilisateurCourant = uManager.getUtilisateurPourSession(utilisateurCourant.getPseudo());
+				utilisateurCourant = uManager.getUtilisateurPourSession(utilisateurCourant.getPseudo(), utilisateurCourant.getMotDePasse());
 				request.getSession().setAttribute("utilisateurCourant", utilisateurCourant);
 				doGet(request, response);			
 			}
