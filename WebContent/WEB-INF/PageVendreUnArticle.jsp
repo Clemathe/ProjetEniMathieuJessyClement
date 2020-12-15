@@ -17,14 +17,34 @@
 	<header>
 		<jsp:include page="./fragments/header.jsp"></jsp:include>
 	</header>
+<div class="container my-5 col-md-4">
+		
+	<!--Pour l'affichage de messages d'alerte indiquant une connexion ou une déconnexion réussie -->
+		<c:if test="${disconnect != null}">
+			
+			<div class="container alert alert-warning text-align center" role="alert">
+			<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+   			<span aria-hidden="true">&times;</span></button>
+				Vous êtes déconnectés</div>
+	
+		</c:if>
 
-<div class="row  mt-5"  >
-	<div class="col-1"></div>
-	<div class="col-3 "><h1>ENI - Enchères</h1></div>
-	<div class="col-1"></div>
-	<div class="col-3"><h2>Nouvelle Vente</h2></div>
-	<div class="col-4"></div>
+		<c:if test="${nouvelleConnexion != null}">
+			
+			<div class="alert alert-success alert-dismissible fade show text-align center" role="alert">
+			<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+   			<span aria-hidden="true">&times;</span></button>
+ 			 Vous êtes connectés</div>
+	
+		</c:if>
 </div>
+
+	
+	
+	
+	<div class="text-center"><h2>Nouvelle Vente</h2></div>
+	
+
 <br />
 
 <div class="row">

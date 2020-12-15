@@ -19,16 +19,6 @@ public class UtilisateurManager {
 		utilisateurDAO = DAOFactory.getUtilisateurDAO();
 	}
 
-	public Utilisateur utilisateurParIdentifiant() {
-
-		return UtilisateurManager.utilisateurDAO.getUtilisateurById();
-
-	}
-
-	public boolean utilisateurExistant(String login, String email) {
-		boolean existingUser = UtilisateurManager.utilisateurDAO.getExistingUser(login, email);
-		return existingUser;
-	}
 
 	public boolean verificationUtilisateurMotDePasse(String login, String password) {
 		Boolean userPassOk = false;
