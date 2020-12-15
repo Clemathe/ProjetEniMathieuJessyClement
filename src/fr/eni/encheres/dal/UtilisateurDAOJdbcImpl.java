@@ -13,6 +13,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	private static final String UPDATE = "UPDATE UTILISATEURS set pseudo = ?, nom =?, prenom=?, email=?, telephone=?, rue=?, code_postal=?, ville=?, mot_de_passe=? where no_utilisateur=?";
 	private static final String REMBOURSER_UTILISATEUR = "UPDATE Utilisateurs SET credit = credit + ? WHERE no_utilisateur = ?";
 	private static final String DEBITER_UTILISATEUR = "UPDATE Utilisateurs SET credit = credit - ? WHERE no_utilisateur = ?";
+	private static final String SUPPRIMER_UTILISATEUR = "DELETE FROM utilisateurs WHERE no_utilisateur = ?";
 
 	@Override
 	public String getUserPassword(String login) {
@@ -184,8 +185,6 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 		return utilisateur;
 	}
 
-	
-
 	@Override
 	public void rembourserUtilisateur(int enchereLaPlusHaute, Utilisateur user) {
 		Connection cnx = null;
@@ -245,15 +244,14 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 
 	@Override
 	public void update(Utilisateur utilisateur) throws SQLException {
-		
-		
+
 		try (Connection cnx = ConnectionProvider.getConnection()) {
 
 			try {
 
 				cnx.setAutoCommit(false);
 				PreparedStatement pstmt = cnx.prepareStatement(UPDATE);
-						
+
 				pstmt.setString(1, utilisateur.getPseudo());
 				pstmt.setString(2, utilisateur.getNom());
 				pstmt.setString(3, utilisateur.getPrenom());
@@ -287,4 +285,25 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 
 	}
 
+	@Override
+	public void supprimerUtilisateur(int no_utilisateur) throws SQLException {
+		
+		try (Connection cnx = ConnectionProvider.getConnection()){
+			
+			try {
+				cnx.setAutoCommit(false);
+				PreparedStatement pstmt = cnx.prepareStatement(SUPPRIMER_UTILISATEUR); 
+				pstmt.setInt(1, no_utilisateur);
+				pstmt.executeUpdate(); 
+				cnx.close();
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+	}
 }

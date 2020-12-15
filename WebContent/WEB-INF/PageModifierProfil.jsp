@@ -23,12 +23,17 @@
 	
 	<section class="my-2">
 	
-	
+	<c:if test="${ Erreur != null}">
+
+			<div class="container alert alert-danger text-align center" role="alert">
+			${messageUtilisateur}</div>
+		</c:if>
 
 <form method="post"action="${pageContext.request.contextPath}/MonProfil" class="form-horizontal">
 			
 		
 		<div class="saisie row my-2">
+		
 			<label for="pseudo" class="col-md-2 col-form-label"> Pseudo : </label>
 			
 			<input class="form-controln col-md-4" type="text" id="pseudo"
@@ -105,11 +110,14 @@
 		${utilisateur.credit}
 		</div>
 		
-		<div class="d-flex justify-content-around">
-		<input type="hidden" name="modifier" value="false" >
-			<input type="hidden" name="enregsitrer" value="true" >
+	<div>
+	<input type="hidden" name="enregistrer" value="true" >
+	<input type="hidden" name="no_utilsateur" value="${utilisateur.noUtilisateur}" >
+	</div>
+			<div class="d-flex justify-content-around">
 			<button class="btn btn-info my-5 mx-5 form-controln col-3 "
 				type="submit">Enregistrer</button>
+				
 
 			<button class="btn btn-info my-5 mx-5 form-controln col-3"
 				type="" value="">Supprimer mon compte</button>

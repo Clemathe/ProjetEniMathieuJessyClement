@@ -23,7 +23,7 @@
 
 	<jsp:useBean id="utilisateur" scope="request" class="fr.eni.encheres.bo.Utilisateur"></jsp:useBean>
 		
-		<!--  faire le traitement : si l'utilisateur qui visite la page n'est pas propréitaire de ce profil
+		<!--  faire le traitement : si l'utilisateur qui visite la page n'est pas propriétaire de ce profil
 		alors masquer les informations personnelles  -->
 
 	<section class="my-2">
@@ -81,7 +81,6 @@
 						<jsp:getProperty property="ville" name="utilisateur" />
 					</div>
 				</div>
-
 
 				<div class=" my-5 text-center">
 				

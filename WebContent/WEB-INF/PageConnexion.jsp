@@ -47,8 +47,8 @@
 					<label for="password">Password</label> <input type="password"
 						class="form-control" id="password" name="pass"
 						placeholder=" Votre Mot de passe" required><small
-						class="form-text text-muted">8 caractères minimum avec
-						chiffres, lettres et symbole</small>
+						class="form-text text-muted">Entre 8 et 12 caractères minimum avec
+						chiffres, lettres minuscules et majuscules et symbole</small>
 				</div>
 				<div class="form-check mb-2">
 					<input type="checkbox" class="form-check-input" id="rememeberMe">

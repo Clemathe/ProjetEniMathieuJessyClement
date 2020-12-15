@@ -49,10 +49,13 @@ public class ServletMonProfil extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
 		System.out.println("DoPost Servlet MonProfil");
 		
-		String modifierProfil = request.getParameter("modifierProfil"); 
-		 if (modifierProfil.equals("true") ) {
+		boolean modifierProfil = request.getParameter("modifierProfil") != null; 
+		
+		
+		 if (modifierProfil ) {
 			System.out.println("DoPost Servlet MonProfil if request.getParameter != null");
 			// entrer dans le formulaire PageModifierProfil.jsp
 			Utilisateur utilisateur = new Utilisateur(); 
@@ -63,8 +66,10 @@ public class ServletMonProfil extends HttpServlet {
 		} 
 		 
 		System.out.println("DoPostServelt avant push enregistrer");
-		String enregistrer = request.getParameter("enregistrer"); 
-		if (request.getParameter("enregistrer").equals("true")) {
+		
+		boolean enregistrer = request.getParameter("enregistrer") != null; 
+		
+		if (enregistrer) {
 			
 			//traitement update
 			System.out.println("DoPostServelt après push enregistrer");
@@ -130,6 +135,22 @@ public class ServletMonProfil extends HttpServlet {
 			request.setAttribute("messageUtilisateur", message);
 			RequestDispatcher rd = request.getRequestDispatcher("WEB-INF/PageModifierProfil.jsp");
 			rd.forward(request, response);		
+		}
+		
+		if (supprimer) {
+			
+			/* afficher message êtes vous sûr de vouloir supprimer votre profil ? 
+			String alerteSupression = " êtes vous sûr de vouloir supprimer votre profil ? "; 
+			request.setAttribute("messageUtilisateur", alerteSupression);
+			RequestDispatcher rd = request.getRequestDispatcher("WEB-INF/PageModifierProfil.jsp");
+			rd.forward(request, response);*/
+			
+			// traitement supprimer
+			String no_utilsateur = request.getParameter("no_utilisateur"); 
+			
+			
+			
+			// 
 		}
 		
 		 System.out.println("DoPostServelt en dehors de tous les if");
