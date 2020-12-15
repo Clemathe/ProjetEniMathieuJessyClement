@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import fr.eni.encheres.bll.ArticleVenduManager;
+import fr.eni.encheres.bll.UtilisateurManager;
 import fr.eni.encheres.bo.ArticleVendu;
 import fr.eni.encheres.bo.Utilisateur;
 
@@ -47,8 +48,8 @@ public class ServletEncheres extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		boolean encherir = request.getParameter("encherir") != null;
-		System.out.println(encherir);
-		System.out.println(request.getParameter("noArticle"));
+		
+		UtilisateurManager uManager = new UtilisateurManager();
 		ArticleVenduManager aVManager = new ArticleVenduManager();
 		
 		if(encherir) {
@@ -57,7 +58,10 @@ public class ServletEncheres extends HttpServlet {
 			Utilisateur utilisateurCourant = (Utilisateur) request.getSession().getAttribute("utilisateurCourant");
 			String enchereMessage = aVManager.Encherir(montant, utilisateurCourant, noArticle );
 			request.setAttribute("enchereMessage", enchereMessage);
-			System.out.println(enchereMessage);
+			
+			//Rechargement de la session utilisateur pour mettre a jour le solde
+			utilisateurCourant = uManager.getUtilisateurPourSession(utilisateurCourant.getPseudo());
+			request.getSession().setAttribute("utilisateurCourant", utilisateurCourant);
 			doGet(request, response);
 		}
 		

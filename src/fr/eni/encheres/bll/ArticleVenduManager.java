@@ -66,6 +66,7 @@ public class ArticleVenduManager {
 					articleVenduDAO.enregistrerUneEnchere(nouvelleEnchere);
 					
 				} catch (Exception e) {
+					
 					message = "L'enchère n'a pas pu être enregistrée";
 					
 					return message;
@@ -81,7 +82,7 @@ public class ArticleVenduManager {
 				try{
 					if (auMoinsUneEnchere) uManager.rembourserUtilisateur(enchereLaPlusHaute, articleCourant.getEncheres().get(0).getUtilisateur());
 				}catch(Exception e){
-					//TODO Update BDD pour effacer enchère et debit utilisateur
+					//TODO Update BDD pour effacer enchère et débit utilisateur
 				}
 						
 				message = "Enchère enregistrée";
