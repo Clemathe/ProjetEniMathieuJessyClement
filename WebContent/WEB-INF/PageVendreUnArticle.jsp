@@ -57,11 +57,11 @@
 			</div>
 			<div class="form-group">
 				<label for="dateDebutEncheres">Début de l'enchère: </label>
-				<input  type="date" id="date" class="form-control" name="dateDebutEncheres">
+				<input  type="datetime-local" id="dateDebutEncheres" class="form-control" name="dateDebutEncheres">
 			</div>
 			<div class="form-group">
 				<label for="dateFinEncheres">Fin de l'enchère: </label>
-				<input  type="date" id="date" class="form-control" name="dateFinEncheres">
+				<input  type="datetime-local" id="dateFinEncheres" class="form-control" name="dateFinEncheres">
 			</div>	
 			</div>
 			<div class="col-3">
