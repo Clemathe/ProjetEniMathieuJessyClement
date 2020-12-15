@@ -28,7 +28,8 @@ public class ServletConnexion extends HttpServlet {
 			throws ServletException, IOException {
 		
 		Boolean deconnection = Boolean.parseBoolean(request.getParameter("disconnect"));
-
+		Boolean loginCreated = (request.getParameter("loginCreated") != null);
+		
 		if (deconnection == true) {
 			// déconnection de la session
 			request.getSession().invalidate();
@@ -38,7 +39,10 @@ public class ServletConnexion extends HttpServlet {
 
 			RequestDispatcher rd = request.getRequestDispatcher("/accueil");
 			rd.forward(request, response);
-		}else {
+			
+	
+		}
+		else {
 
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/PageConnexion.jsp");
 		rd.forward(request, response);
@@ -53,14 +57,23 @@ public class ServletConnexion extends HttpServlet {
 			throws ServletException, IOException {
 		
 		request.setCharacterEncoding("UTF-8");
-		boolean nouvelleConnexion = Boolean.parseBoolean(request.getParameter("nouvelleConnexion")) == true; 
-		if (nouvelleConnexion) {
-			
-		request.setCharacterEncoding("UTF-8");
-		UtilisateurManager UManager = new UtilisateurManager();
-		
+		boolean nouvelleConnexion = Boolean.parseBoolean(request.getParameter("nouvelleConnexion")); 
+		boolean nouvelleCreation = request.getAttribute("nouvelleCreation") != null;
 		String login = (String) request.getParameter("login");
 		String password = (String) request.getParameter("pass");
+		System.out.println("connexion "+nouvelleCreation);
+//		if (nouvelleConnexion) {
+//			 login = (String) request.getParameter("login");
+//			 password = (String) request.getParameter("pass");
+//			 
+//		}
+		if (nouvelleCreation) {
+			 login = (String) request.getAttribute("loginCreated");
+			 password = (String) request.getAttribute("passwordCreated");
+		}
+		UtilisateurManager UManager = new UtilisateurManager();
+		
+		
 		
 			try {Utilisateur utilisateurCourant = UManager.getUtilisateurPourSession(login, password);
 	
@@ -91,7 +104,7 @@ public class ServletConnexion extends HttpServlet {
 				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/login.jsp");
 				rd.forward(request, response);
 			}
-		}
+		//}
 	}
 
 	

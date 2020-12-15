@@ -14,8 +14,11 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
+import fr.eni.encheres.bll.MD5Utils;
 import fr.eni.encheres.bll.UtilisateurManager;
+import fr.eni.encheres.bo.Utilisateur;
 
 
 /**
@@ -97,10 +100,26 @@ public class ServletCreerCompte extends HttpServlet {
 			}
 
 		// renvoie des attributs si insertUtilisateur is true
-		else 
+		else {
+			request.setAttribute("nouvelleCreation", "true");
 			request.setAttribute("loginCreated", pseudo);
-		RequestDispatcher rd = request.getRequestDispatcher("/connexion");
-		rd.forward(request, response);
+			request.setAttribute("passwordCreated", MD5Utils.digest(motDePasse));
+			System.out.println("envoi vers accueil");
+//			UtilisateurManager UManager = new UtilisateurManager();
+//			Utilisateur utilisateurCourant = UManager.getUtilisateurPourSession(email, MD5Utils.digest(motDePasse));
+//			
+//			HttpSession sessionCourante = request.getSession(true);
+//			
+//			// Création du profil de l'utilisateur et stockage en session
+//			sessionCourante.setAttribute("utilisateurCourant", utilisateurCourant);
+//			
+//			// Attribut pour afficher une alerte de connexion réussie
+//			request.setAttribute("nouvelleConnexion", "true");
+
+			RequestDispatcher rd = request.getRequestDispatcher("/connexion");
+			rd.forward(request, response);
+
+		}
 
 	}
 
