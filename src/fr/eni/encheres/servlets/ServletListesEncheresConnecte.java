@@ -1,6 +1,8 @@
 package fr.eni.encheres.servlets;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -9,6 +11,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import fr.eni.encheres.bll.ArticleVenduManager;
+import fr.eni.encheres.bo.ArticleVendu;
 import fr.eni.encheres.bo.Utilisateur;
 
 /**
@@ -26,8 +30,8 @@ public class ServletListesEncheresConnecte extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Utilisateur utilisateurCourant = (Utilisateur)request.getSession().getAttribute("utilisateurCourant");  
 		int noUtilisateur = utilisateurCourant.getNoUtilisateur();
-		request.setAttribute("noUser", noUtilisateur);
-		
+		ArticleVenduManager mesVentes = new ArticleVenduManager();
+		request.setAttribute("mesVentes",mesVentes.getMesVentes(noUtilisateur));
 		
 		
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/PagesListeEncheresConnecte.jsp");
@@ -38,7 +42,13 @@ public class ServletListesEncheresConnecte extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		String achatVente = request.getParameter("achatsVentes");
+		System.out.println(achatVente);
+		if(achatVente.equalsIgnoreCase("vente")) {
+			request.setAttribute("vente", "vente");
+		}else if(achatVente.equalsIgnoreCase("achat")) {
+			request.setAttribute("achat", "achat");
+		}
 		doGet(request, response);
 	}
 
