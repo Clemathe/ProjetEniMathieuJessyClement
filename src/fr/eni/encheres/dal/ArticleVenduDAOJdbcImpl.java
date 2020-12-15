@@ -18,8 +18,7 @@ import fr.eni.encheres.bo.Retrait;
 import fr.eni.encheres.bo.Utilisateur;
 
 public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
-
-		
+	
 	@Override
 	public List<ArticleVendu> getenchereEnCours(String categorie, String nomArticlePartiel) {
 		
@@ -237,22 +236,6 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 	}
 
 
-	
-	
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	
 	
