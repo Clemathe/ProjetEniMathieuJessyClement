@@ -312,7 +312,7 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 
  
 
-        
+         
         return succes;
     }
 
