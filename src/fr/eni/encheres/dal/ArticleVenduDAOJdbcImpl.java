@@ -44,7 +44,9 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 					ArticleVendu articleVendu= new ArticleVendu(rs.getInt(1), rs.getString(2),rs.getInt(3),rs.getDate(4).toLocalDate(),rs.getString(5));
 					enchereEnCours.add(articleVendu);
 				}
-			
+				rs.close();
+				pstmt.close();
+				cnx.close();
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -70,7 +72,9 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 				ArticleVendu articleVendu= new ArticleVendu(rs.getInt(1), rs.getString(2),rs.getInt(3),rs.getDate(4).toLocalDate(),rs.getString(5));
 				enchereEnCours.add(articleVendu);
 			}
-		
+			rs.close();
+			pstmt.close();
+			cnx.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -146,7 +150,7 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 				ResultSet rs = pstmt.executeQuery();
 				List<Enchere> encheres = new ArrayList<>();
 				int noMeilleurEncherisseur = 0;
-				System.out.println(" chemin 1 avant rs.next : "+ rs.getFetchSize() + " ");
+				System.out.println(" chemin 1 avant rs.next  ");
 				if(rs.next()) {
 					
 						System.out.println("apres le rs.next");
@@ -169,7 +173,7 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 					
 				article.getEncheres().remove(0);
 				article.getEncheres().add(enchere);
-				System.out.println("DAO article  = " + article);
+				System.out.println("DAO1 article  = " + article);
 				rs.close();
 				pstmt.close();
 				cnx.close();
@@ -184,15 +188,15 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 				ResultSet rs = pstmt.executeQuery();
 				List<Enchere> encheres = new ArrayList<>();
 				int noMeilleurEncherisseur = 0;
-				System.out.println(" chemin 2 avant rs.next : "+ rs.getFetchSize() + " ");
+				System.out.println(" chemin 2 avant rs.next : ");
 				if(rs.next()) {
 					
-												
+					System.out.println(" chemin 2 apres rs.next : ");			
 						article = new ArticleVendu(rs.getInt(1), rs.getString(2), rs.getString(3), (rs.getDate(4)).toLocalDate(),
 								rs.getInt(5), rs.getInt(6), new Utilisateur(rs.getInt(7), rs.getString(8)),
 								new Categorie(rs.getInt(9), rs.getString(10)) , new Retrait(rs.getString(11),rs.getString(12) ,rs.getString(13)));
 
-				}
+				}System.out.println("DAO2 article  = " + article);
 				rs.close();
 				pstmt.close();
 				cnx.close();
@@ -218,6 +222,9 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 			if (rs.next()) {
 				meilleurEncherisseur = rs.getString(1);
 			}
+			rs.close();
+			pstmt.close();
+			cnx.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -243,10 +250,21 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 			if (rs.next()) {
 				meilleurEncherisseur = rs.getString(1);
 			}
+			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		}finally {
+			try {
+				rs.close();
+				pstmt.close();
+				cnx.close();
+			
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}	
 
 		return meilleurEncherisseur;
 
@@ -300,6 +318,7 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 			rs.close();
 			pstmt.close();
 			pstmt2.close();
+			cnx.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -327,6 +346,10 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 				ArticleVendu articleVendu= new ArticleVendu(rs.getInt(1), rs.getString(2),rs.getInt(3),rs.getDate(4).toLocalDate(),rs.getString(5));
 				enchereEnCours.add(articleVendu);
 			}
+			rs.close();
+			pstmt.close();
+			cnx.close();;
+			
 		
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -354,6 +377,10 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 			pstmt.setInt(4, nouvelleEnchere.getMontantEnchere());
 			pstmt.executeUpdate();
 			succes = true;
+			
+			
+			pstmt.close();
+			cnx.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
