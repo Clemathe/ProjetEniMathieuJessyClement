@@ -83,8 +83,60 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 		return enchereEnCours;
 	}
 	
-	
-	
+	@Override
+	public List<ArticleVendu> getMesVentes(int noUtilisateur) {
+		
+		List<ArticleVendu> mesVentes = new ArrayList<ArticleVendu>();
+		String SELECT_MES_VENTES ="SELECT "
+				+ "ARTICLES_VENDUS.no_article,"
+				+ "ARTICLES_VENDUS.nom_article,"
+				+ "ARTICLES_VENDUS.description,"
+				+ "ARTICLES_VENDUS.date_debut_encheres, "
+				+ "ARTICLES_VENDUS.date_fin_encheres, "
+				+" ARTICLES_VENDUS.prix_initial,"
+				+" ARTICLES_VENDUS.prix_vente,"
+				+" CATEGORIES.no_categorie,"
+				+" CATEGORIES.libelle,"
+				+" ENCHERES.no_utilisateur,"
+				+" ENCHERES.montant_enchere,"
+				+" ENCHERES.date_enchere,"
+				+" RETRAITS.rue,"
+				+" RETRAITS.code_postal,"
+				+" RETRAITS.ville"
+				+ "FROM ARTICLES_VENDUS"
+				+" JOIN CATEGORIES ON ARTICLES_VENDUS.no_categorie = CATEGORIES.no_categorie"
+				+" JOIN ENCHERES ON ARTICLES_VENDUS.no_article = ENCHERES.no_article"
+				+" JOIN RETRAITS ON ARTICLES_VENDUS.no_article = RETRAITS.no_article"
+				+ "WHERE no_utilisateur = ? and ENCHERES.montant_enchere = "
+				+" (SELECT MAX(montant_enchere) FROM ARTICLES_VENDUS"
+		 		+" JOIN ENCHERES ON ARTICLES_VENDUS.no_article=ENCHERES.no_article)"; 
+		
+		try (Connection cnx = ConnectionProvider.getConnection()){
+			PreparedStatement pstmt = cnx.prepareStatement(SELECT_MES_VENTES);
+			pstmt.setInt(1,noUtilisateur);
+			ResultSet rs = pstmt.executeQuery();
+			while (rs.next()) {
+				Enchere enchere = new Enchere(rs.getInt(10),rs.getInt(1),rs.getDate(12).toLocalDate(),rs.getInt(11));
+				Categorie categorie = new Categorie(rs.getInt(8),rs.getString(9));
+				Retrait retrait = new Retrait(rs.getString(13),rs.getString(14),rs.getString(15));
+				
+				ArticleVendu articleVendu= new ArticleVendu(rs.getString(2), rs.getString(3),
+						rs.getDate(4).toLocalDate(),rs.getDate(5).toLocalDate(),rs.getInt(6), rs.getInt(7),enchere, categorie, retrait); 
+						
+						
+				mesVentes.add(articleVendu);
+			}
+		
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		return null;
+	}
+//	,
+//						new Retrait(rs.getString(13),rs.getString(14),rs.getString(15)));
 	
 	
 	@Override
@@ -152,7 +204,7 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 					try{
 						System.out.println("1");
 						encheres.add(new Enchere(rs.getInt(11), rs.getInt(12)));
-						article = new ArticleVendu(rs.getInt(1), rs.getString(2), rs.getString(3), LocalDate.parse(rs.getString(4)),
+						article = new ArticleVendu(rs.getInt(1), rs.getString(2), rs.getString(3),(rs.getDate(4)).toLocalDate(),
 								rs.getInt(5), rs.getInt(6), new Utilisateur(rs.getInt(7), rs.getString(8)), encheres,
 								new Categorie(rs.getInt(9), rs.getString(10)) , new Retrait(rs.getString(13),rs.getString(14) ,rs.getString(15)));
 						noMeilleurEncherisseur = rs.getInt(11);
@@ -183,7 +235,7 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 				if(rs.next()) {
 					try{
 												
-						article = new ArticleVendu(rs.getInt(1), rs.getString(2), rs.getString(3), LocalDate.parse(rs.getString(4)),
+						article = new ArticleVendu(rs.getInt(1), rs.getString(2), rs.getString(3), (rs.getDate(4)).toLocalDate(),
 								rs.getInt(5), rs.getInt(6), new Utilisateur(rs.getInt(7), rs.getString(8)),
 								new Categorie(rs.getInt(9), rs.getString(10)) , new Retrait(rs.getString(11),rs.getString(12) ,rs.getString(13)));
 												
@@ -366,6 +418,12 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 		
 		return succes;
 	}
+
+
+
+
+
+	
 
 
 	
