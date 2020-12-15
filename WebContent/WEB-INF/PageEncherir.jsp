@@ -31,8 +31,7 @@
 
 		<div class="row">
 			<div class="col-md-5">
-				<img src="./images/2.png" style="width: 18rem;"
-					class="rounded float-left" alt="image ordinateur">
+				<img src="./images/2.png" id="imageDetailArticle" class="rounded float-left" alt="image ordinateur">
 			</div>
 
 			<div class="col-md-7 my-10">
@@ -46,11 +45,14 @@
 				</div>
 				
 				<p>Catégorie : ${article.categorie.libelle}</p>
-				
-				<p>Meilleur offre : ${article.encheres.get(0).montantEnchere} pts 
-				
-					par ${article.encheres.get(0).utilisateur.pseudo}</p>
-					
+				<c:choose>
+					<c:when test="${article.encheres.get(0).montantEnchere != null}">
+						<p>Meilleur offre : ${article.encheres.get(0).montantEnchere} pts par ${article.encheres.get(0).utilisateur.pseudo}</p>
+					</c:when>
+					<c:otherwise>
+						<p>Aucune enchère</p>
+					</c:otherwise>
+				</c:choose>
 				<p>Mise à prix : ${article.miseAPrix} points</p>
 
 				<p>Fin de l'enchère : <fmt:parseDate value="${ article.dateFinEncheres }" pattern="yyyy-MM-dd" var="parsedDateTime" type="both" />
@@ -66,7 +68,7 @@
 					<form method="post" action="encheres"
 						class="form-horizontal">
 						<input type="hidden" name="encherir" value="true">
-						<input type="hidden" name="noArticle" value="${article.noArticle}">
+						<input type="hidden" name="noArticle" value="${param.noArticle}">
 						<div class="d-sm-flex flex-row">
 							<div class="mt-3">
 								<label for="example-number-input">Ma proposition :</label>

@@ -146,12 +146,12 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 				ResultSet rs = pstmt.executeQuery();
 				List<Enchere> encheres = new ArrayList<>();
 				int noMeilleurEncherisseur = 0;
-				System.out.println("avant le if : "+ rs.getFetchSize() + " ");
+				System.out.println(" chemin 1 avant rs.next : "+ rs.getFetchSize() + " ");
 				if(rs.next()) {
 					
-						System.out.println("apres le if");
+						System.out.println("apres le rs.next");
 						encheres.add(new Enchere(rs.getInt(11), rs.getInt(12)));
-						System.out.println("enchereGetAticle " + encheres);
+						System.out.println("DAO enchere " + encheres);
 						article = new ArticleVendu(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getDate(4).toLocalDate(),
 								rs.getInt(5), rs.getInt(6), new Utilisateur(rs.getInt(7), rs.getString(8)), encheres,
 								new Categorie(rs.getInt(9), rs.getString(10)) , new Retrait(rs.getString(13),rs.getString(14) ,rs.getString(15)));
@@ -169,7 +169,7 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 					
 				article.getEncheres().remove(0);
 				article.getEncheres().add(enchere);
-				System.out.println("article = " + article);
+				System.out.println("DAO article  = " + article);
 				rs.close();
 				pstmt.close();
 				cnx.close();
@@ -178,12 +178,13 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 				}
 			}else {
 				
-				System.out.println("2");
+				
 				PreparedStatement pstmt = cnx.prepareStatement(sqlGetArticleSansEnchere);
 				pstmt.setInt(1, noArticle);
 				ResultSet rs = pstmt.executeQuery();
 				List<Enchere> encheres = new ArrayList<>();
 				int noMeilleurEncherisseur = 0;
+				System.out.println(" chemin 2 avant rs.next : "+ rs.getFetchSize() + " ");
 				if(rs.next()) {
 					
 												
