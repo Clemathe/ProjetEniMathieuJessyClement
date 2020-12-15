@@ -46,16 +46,19 @@ public class ServletMonProfil extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("DoPost Servlet MonProfil");
+		
 		Utilisateur utilisateur = new Utilisateur(); 
 		utilisateur = (Utilisateur) request.getSession(true).getAttribute("utilisateurCourant");
+		request.setAttribute("utilisateur", utilisateur);
 		
-			request.setAttribute("utilisateur", utilisateur);
+		//if // attribut vide =  entrée sur modifier profil
 			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/PageModifierProfil.jsp"); 
 			rd.forward(request, response);
 			System.out.println("renvoyer vers page modifier");	
 		
-			
+		//if // attribut modifier = lancer update
 		
+		//get parameters
 		
 	}
 

@@ -22,20 +22,10 @@
 	<h1 class="text-center my-5">Mon Profil</h1>
 	
 	<section class="my-2">
-	<c:if test="${modifier != null}">
-
-			<div class="container alert alert-danger text-align center" role="alert">
-				${errorConnection}</div>
-		</c:if>
-		<c:if test="${connect != null}">
-			
-			<div class="container alert alert-success text-align center" role="alert">
-				Vous êtes déconnecté</div>
-		</c:if>
 	
 	
 
-<form method="post"action="${pageContext.request.contextPath}/CreerCompte" class="form-horizontal">
+<form method="post"action="${pageContext.request.contextPath}/MonProfil" class="form-horizontal">
 		
 		<div class="saisie row my-2">
 			<label for="pseudo" class="col-md-2 col-form-label"> Pseudo : </label>
@@ -92,7 +82,7 @@
 		<label for="motDePasseActuel" class="col-md-2 col-form-label"> Mot de passe actuel : </label>
 			
 			<input class="form-controln col-md-4" type="password" id="motDePasse"
-				name="motDePasse" value ="${utilisateur.motDePasse}" required> 
+				name="motDePasse" value ="${param.motDePasse}" required> 
 		</div>
 
 		<div class="row my-2">
@@ -100,14 +90,14 @@
 			
 			<input class="form-controln col-md-4" type="password" id="motDePasse1"
 				name="motDePasse1" required
-				placeholder="${utilisateur.motDePasse}"> 
+				placeholder="${param.motDePasse1}"> 
 				
 			<label for="motDePasse" class="col-md-2 col-form-label"> Confirmation : </label>
 			
-			<input class="form-controln col-md-4" type="password" id="motDePasse"
-				name="motDePasse" value="${param.motDePasse}" required>
+			<input class="form-controln col-md-4" type="password" id="motDePasseNew"
+				name="motDePasseNew" value="${param.motDePasseNew}" required>
 		</div>
-		<div class="row my-2">
+		<div class="row my-5">
 		<label class="col-md-2 col-form-label">Credit :</label> 
 		${utilisateur.credit}
 		</div>
@@ -118,7 +108,7 @@
 				type="submit">Enregistrer</button>
 
 			<button class="btn btn-info my-5 mx-5 form-controln col-3"
-				type="reset" value="">Supprimer mon compte</button>
+				type="" value="">Supprimer mon compte</button>
 
 		</div>
 

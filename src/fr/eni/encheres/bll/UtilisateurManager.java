@@ -57,18 +57,19 @@ public class UtilisateurManager {
 
 		} else if (telephone == null || !telephone.matches("(0|(\\+33)|(0033))[1-9][0-9]{8}")) {
 			MessageErreur.add("erreur de saisie du numéro de téléphone : null ou format interdit");
-
 			
 		} else if (rue == null) {
 			MessageErreur.add("erreur de saisie de la rue : null ");
 
 		} else if (ville == null || !ville.matches("^[a-zA-Z]*$")) {
 			MessageErreur.add("erreur de saisie de la ville : null ou caractère interdit");
+		
 		} else if (codePostal == null || !codePostal.matches("^[0-9]{5}$")) {
 			MessageErreur.add("erreur de saisie du code postal : null ou caractère interdit");
 
 		} else if (!motDePasse.equals(motDePasse1)) {
 			MessageErreur.add("erreur de confirmation du mot de passe : veuillez entrer de nouveau votre mot de passe");
+	
 		} else if (motDePasse1 == null
 				|| !motDePasse1.matches("^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[-+!*$@%_])([-+!*$@%_\\w]{8,12})$")) {
 			MessageErreur.add(
@@ -89,6 +90,7 @@ public class UtilisateurManager {
 
 	public boolean creerUtilisateur(String pseudo, String nom, String prenom, String email, String telephone,
 			String rue, String codePostal, String ville, String motDePasse) throws SQLException {
+		
 		Boolean insertOK = false;
 		Utilisateur utilisateur = new Utilisateur();
 		utilisateur.setPseudo(pseudo);
