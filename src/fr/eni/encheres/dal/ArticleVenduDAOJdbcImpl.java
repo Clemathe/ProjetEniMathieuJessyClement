@@ -34,7 +34,22 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 					+ "UTILISATEURS.pseudo "
 					+ "FROM ARTICLES_VENDUS "
 					+ "JOIN UTILISATEURS ON ARTICLES_VENDUS.no_utilisateur = UTILISATEURS.no_utilisateur "
-					+ "WHERE nom_article LIKE \"%"+nomArticlePartiel+"%\""; 
+					+ "WHERE nom_article LIKE ?"; 
+			
+			try (Connection cnx = ConnectionProvider.getConnection();){
+				PreparedStatement pstmt = cnx.prepareStatement(ENCHERES_EN_COURS);
+				pstmt.setString(1,nomArticlePartiel);
+				ResultSet rs = pstmt.executeQuery();
+				while (rs.next()) {
+					ArticleVendu articleVendu= new ArticleVendu(rs.getInt(1), rs.getString(2),rs.getInt(3),rs.getDate(4).toLocalDate(),rs.getString(5));
+					enchereEnCours.add(articleVendu);
+				}
+			
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
 		}else {
 			ENCHERES_EN_COURS="SELECT "
 					+ "ARTICLES_VENDUS.no_article,"
@@ -45,11 +60,13 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 					+ "FROM ARTICLES_VENDUS "
 					+ "JOIN UTILISATEURS ON ARTICLES_VENDUS.no_utilisateur = UTILISATEURS.no_utilisateur "
 					+ "JOIN CATEGORIES ON ARTICLES_VENDUS.no_categorie = CATEGORIES.no_categorie "
-					+ "WHERE nom_article LIKE \"%"+nomArticlePartiel+"%\" AND libelle = \""+categorie+ "\"";
+					+ "WHERE nom_article LIKE ? AND libelle = ?";
 		}
 				 
 		try (Connection cnx = ConnectionProvider.getConnection();){
 			PreparedStatement pstmt = cnx.prepareStatement(ENCHERES_EN_COURS);
+			pstmt.setString(1, nomArticlePartiel);
+			pstmt.setString(2, categorie);
 			ResultSet rs = pstmt.executeQuery();
 			while (rs.next()) {
 				ArticleVendu articleVendu= new ArticleVendu(rs.getInt(1), rs.getString(2),rs.getInt(3),rs.getDate(4).toLocalDate(),rs.getString(5));
