@@ -5,6 +5,7 @@ import java.util.List;
 
 public class Utilisateur implements Serializable{
 	
+	
 	/**
 	 * La class Utilisateur respecte les règles d'un JavaBean:
 	 * -implémente l'interface Serializable
