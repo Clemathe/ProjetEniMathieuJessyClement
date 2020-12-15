@@ -14,14 +14,9 @@ public class ArticleVenduManager {
 	private static ArticleVenduDAO articleVenduDAO;
 	
 	
-	
 	public ArticleVenduManager() {
 		articleVenduDAO = DAOFactory.articleVenduDAO();
 	}
-	
-	
-	
-	
 	
 	public List<ArticleVendu> getEnchereEnCours(String categorie, String nomArticlePartiel){
 		
@@ -61,15 +56,18 @@ public class ArticleVenduManager {
 				auMoinsUneEnchere = false;
 			}
 			if(enchereLaPlusHaute < montantEnchere && auMoinsUneEnchere || !auMoinsUneEnchere && soldeUtilisateur > articleCourant.getMiseAPrix() ) {
-				System.out.println("etape2");
+				
 				UtilisateurManager uManager = new UtilisateurManager();
+				
 				Enchere nouvelleEnchere = new Enchere(LocalDate.now(), montantEnchere, articleCourant, utilisateurCourant);
 				try {
 					uManager.debiterUtilisateur(montantEnchere, utilisateurCourant);
+					
 					articleVenduDAO.enregistrerUneEnchere(nouvelleEnchere);
 					
-					uManager.rembourserUtilisateur(enchereLaPlusHaute, articleCourant.getEncheres().get(0).getUtilisateur());
-					
+					if (auMoinsUneEnchere) {
+						uManager.rembourserUtilisateur(enchereLaPlusHaute, articleCourant.getEncheres().get(0).getUtilisateur());
+					}
 					message = "Enchère enregistrée";
 					
 				} catch (Exception e) {
