@@ -18,7 +18,13 @@
 	<header>
 		<jsp:include page="./fragments/header.jsp"></jsp:include>
 	</header>
+	<div class="text-center my-5">
+	<c:if  test="${enchereMessage != null}">
 
+			<div class="container alert alert-info text-align center" role="alert">
+				${enchereMessage}</div>
+		</c:if>
+	</div>	
 	<h2 class="text-center my-5">Detail de la vente</h2>
 
 	<section class="my-1">

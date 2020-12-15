@@ -48,16 +48,19 @@ public class ArticleVenduManager {
 	public String Encherir(int montantEnchere, Utilisateur utilisateurCourant, int noArticle) {
 		int soldeUtilisateur = utilisateurCourant.getCredit();
 		ArticleVendu articleCourant = getArticleVendu(noArticle);
+		boolean auMoinsUneEnchere = true;
 		String message = null;
-		System.out.println(montantEnchere+ " "+ soldeUtilisateur);
-		//if (articleCourant.getEncheres().get(0))
-		
-		
-		if (soldeUtilisateur > montantEnchere) {
+	
+		if (soldeUtilisateur > montantEnchere ) {
+			int enchereLaPlusHaute = 0;
 			
-			int enchereLaPlusHaute = articleCourant.getEncheres().get(0).getMontantEnchere();
-			System.out.println("etape1");
-			if(enchereLaPlusHaute < montantEnchere ) {
+			try {
+				enchereLaPlusHaute = articleCourant.getEncheres().get(0).getMontantEnchere();
+				
+			} catch (Exception e) {
+				auMoinsUneEnchere = false;
+			}
+			if(enchereLaPlusHaute < montantEnchere && auMoinsUneEnchere || !auMoinsUneEnchere && soldeUtilisateur > articleCourant.getMiseAPrix() ) {
 				System.out.println("etape2");
 				UtilisateurManager uManager = new UtilisateurManager();
 				Enchere nouvelleEnchere = new Enchere(LocalDate.now(), montantEnchere, articleCourant, utilisateurCourant);
