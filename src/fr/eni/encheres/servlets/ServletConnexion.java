@@ -51,7 +51,7 @@ public class ServletConnexion extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
+		request.setCharacterEncoding("UTF-8");
 		UtilisateurManager UManager = new UtilisateurManager();
 
 		// authentification de l'utilisateur et récupération du login
@@ -86,13 +86,13 @@ public class ServletConnexion extends HttpServlet {
 
 	public String getAuthentication(HttpServletRequest request, HttpServletResponse response,
 			UtilisateurManager UManager) {
-
+		
 		String login = null;
 		String password = null;
 		String checkedLogin = null;
 
 		boolean matchingUserPassword = false;
-		boolean nouvelleConnexion = Boolean.parseBoolean(request.getParameter("nouvelleConnexion")) == true;
+		boolean nouvelleConnexion = Boolean.parseBoolean(request.getParameter("nouvelleConnexion")) == true; 
 		boolean fromCreationToConnection = request.getAttribute("loginCreated") != null;
 
 		if (nouvelleConnexion) {

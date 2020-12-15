@@ -7,9 +7,8 @@ import fr.eni.encheres.bo.Utilisateur;
 public interface UtilisateurDAO {
 	
 
-	public String getUserPassword(String login);
 
-	public Utilisateur getUserforSession(String login);
+	public Utilisateur getUserforSession(String login, String hashPassword) throws SQLException;
 
 	public void insertUtilisateur(Utilisateur utilisateur) throws SQLException, Exception;
 	

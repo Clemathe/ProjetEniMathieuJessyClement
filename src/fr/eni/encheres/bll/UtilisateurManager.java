@@ -7,6 +7,7 @@ import java.util.List;
 import fr.eni.encheres.bo.Utilisateur;
 import fr.eni.encheres.dal.DAOFactory;
 import fr.eni.encheres.dal.UtilisateurDAO;
+import fr.eni.test.bll.MD5Utils;
 
 public class UtilisateurManager {
 
@@ -18,17 +19,19 @@ public class UtilisateurManager {
 	public UtilisateurManager() {
 		utilisateurDAO = DAOFactory.getUtilisateurDAO();
 	}
+	
 
-
-	public boolean verificationUtilisateurMotDePasse(String login, String password) {
-		Boolean userPassOk = false;
-		String userPasswordBDD = UtilisateurManager.utilisateurDAO.getUserPassword(login);
-
-		if (userPasswordBDD != null && userPasswordBDD.trim().equals(password.trim())) {
-			userPassOk = true;
+	public Utilisateur verificationUtilisateurMotDePasse(String login, String password) {
+		
+		String hashPassword = MD5Utils.digest(password);
+		
+		try {
+			return utilisateurDAO.getUserforSession(login, hashPassword);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
 		}
-
-		return userPassOk;
+		
 
 	}
 
@@ -124,5 +127,6 @@ public class UtilisateurManager {
 		utilisateurDAO.debiterUtilisateur(montantEnchere, utilisateurCourant);
 		
 	}
+
 
 }

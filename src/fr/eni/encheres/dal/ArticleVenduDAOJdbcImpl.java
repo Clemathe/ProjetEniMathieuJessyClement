@@ -100,6 +100,7 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 		String sqlGetArticleAvecEnchere =  "SELECT ARTICLES_VENDUS.no_article,"
 				+ "ARTICLES_VENDUS.nom_article,"
 				+" ARTICLES_VENDUS.description,"
+				+" ARTICLES_VENDUS.date_debut_encheres,"
 		 		+" ARTICLES_VENDUS.date_fin_encheres,"
 		 		+" ARTICLES_VENDUS.prix_initial,"
 		 		+" ARTICLES_VENDUS.prix_vente,"
@@ -124,6 +125,7 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 		String sqlGetArticleSansEnchere =  "SELECT ARTICLES_VENDUS.no_article,"
 				+ " ARTICLES_VENDUS.nom_article,"
 				+ " ARTICLES_VENDUS.description,"
+				+" ARTICLES_VENDUS.date_debut_encheres,"
 				+ " ARTICLES_VENDUS.date_fin_encheres,"
 				+ " ARTICLES_VENDUS.prix_initial,"
 				+ " ARTICLES_VENDUS.prix_vente,"
@@ -154,13 +156,13 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 				if(rs.next()) {
 					
 						System.out.println("apres le rs.next");
-						encheres.add(new Enchere(rs.getInt(11), rs.getInt(12)));
+						encheres.add(new Enchere(rs.getInt(12), rs.getInt(13)));
 						System.out.println("DAO enchere " + encheres);
 						article = new ArticleVendu(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getDate(4).toLocalDate(),
-								rs.getInt(5), rs.getInt(6), new Utilisateur(rs.getInt(7), rs.getString(8)), encheres,
-								new Categorie(rs.getInt(9), rs.getString(10)) , new Retrait(rs.getString(13),rs.getString(14) ,rs.getString(15)));
+								rs.getDate(5).toLocalDate(),rs.getInt(6), rs.getInt(7), new Utilisateur(rs.getInt(8), rs.getString(9)), encheres,
+								new Categorie(rs.getInt(10), rs.getString(11)) , new Retrait(rs.getString(14),rs.getString(15) ,rs.getString(16)));
 						
-						noMeilleurEncherisseur = rs.getInt(11);
+						noMeilleurEncherisseur = rs.getInt(12);
 					
 				
 				String meilleurEncherisseur = getPseudoForArticleVendu(noMeilleurEncherisseur);
@@ -182,7 +184,6 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 				}
 			}else {
 				
-				
 				PreparedStatement pstmt = cnx.prepareStatement(sqlGetArticleSansEnchere);
 				pstmt.setInt(1, noArticle);
 				ResultSet rs = pstmt.executeQuery();
@@ -193,8 +194,8 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 					
 					System.out.println(" chemin 2 apres rs.next : ");			
 						article = new ArticleVendu(rs.getInt(1), rs.getString(2), rs.getString(3), (rs.getDate(4)).toLocalDate(),
-								rs.getInt(5), rs.getInt(6), new Utilisateur(rs.getInt(7), rs.getString(8)),
-								new Categorie(rs.getInt(9), rs.getString(10)) , new Retrait(rs.getString(11),rs.getString(12) ,rs.getString(13)));
+								(rs.getDate(5)).toLocalDate(), rs.getInt(6), rs.getInt(7), new Utilisateur(rs.getInt(8), rs.getString(9)),
+								new Categorie(rs.getInt(10), rs.getString(11)) , new Retrait(rs.getString(12),rs.getString(13) ,rs.getString(14)));
 
 				}System.out.println("DAO2 article  = " + article);
 				rs.close();
