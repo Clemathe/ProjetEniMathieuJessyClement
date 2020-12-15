@@ -86,6 +86,7 @@ public class ArticleVendu {
 		this.categorie = categorie;
 		this.lieuRetrait = lieuRetrait;
 	}
+	// GetArticleVendu avec Enchere 
 	public ArticleVendu(int noArticle, String nomArticle, String description, LocalDate dateFinEncheres, int miseAPrix, int prixVente,
 			 Utilisateur vendeur, List<Enchere> encheres, Categorie categorie,
 			Retrait lieuRetrait) {
@@ -100,6 +101,21 @@ public class ArticleVendu {
 		this.categorie = categorie;
 		this.lieuRetrait = lieuRetrait;
 	}
+	// GetArticleVendu sans Enchere 
+	public ArticleVendu(int noArticle, String nomArticle, String description, LocalDate dateFinEncheres, int miseAPrix, int prixVente,
+			 Utilisateur vendeur, Categorie categorie,
+			Retrait lieuRetrait) {
+		this.noArticle = noArticle;
+		this.nomArticle = nomArticle;
+		this.description = description;
+		this.dateFinEncheres = dateFinEncheres;
+		this.miseAPrix = miseAPrix;
+		this.prixVente = prixVente;
+		this.vendeur = vendeur;
+		this.categorie = categorie;
+		this.lieuRetrait = lieuRetrait;
+	}
+	
 	@Override
 	public String toString() {
 		return "ArticleVendu"
