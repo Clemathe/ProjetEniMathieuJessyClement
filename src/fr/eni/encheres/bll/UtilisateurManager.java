@@ -4,6 +4,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import fr.eni.encheres.bo.Utilisateur;
 import fr.eni.encheres.dal.DAOFactory;
 import fr.eni.encheres.dal.UtilisateurDAO;
@@ -112,6 +115,9 @@ public class UtilisateurManager {
 		return insertOK;
 	}
 
+	public void updateUtilisateur (Utilisateur utilisateur) throws SQLException {
+		utilisateurDAO.update(no_utilisateur);
+	}
 	public void insertUtilisateur(Utilisateur utilisateur) throws Exception {
 
 		utilisateurDAO.insertUtilisateur(utilisateur);
@@ -126,5 +132,6 @@ public class UtilisateurManager {
 		utilisateurDAO.debiterUtilisateur(montantEnchere, utilisateurCourant);
 		
 	}
-
+	
+	
 }

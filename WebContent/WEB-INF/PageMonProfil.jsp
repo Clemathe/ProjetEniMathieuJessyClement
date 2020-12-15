@@ -86,6 +86,7 @@
 				<div class=" my-5 text-center">
 				
 				<form method="post"action="${pageContext.request.contextPath}/MonProfil" >
+				<input type="hidden" name="modifierProfil" value="true" >
 				<button class="btn btn-info my-5 mx-5 form-controln col-3 "type="submit">Modifier</button>
 				</form>	
 					

@@ -184,26 +184,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 		return utilisateur;
 	}
 
-	@Override
-	public void update(int no_utilisateur) throws SQLException {
-		PreparedStatement pstmt = null;
-		Connection cnx = null;
-
-		try {
-			cnx = ConnectionProvider.getConnection();
-			try {
-				pstmt = cnx.prepareStatement(UPDATE);
-				pstmt.executeUpdate();
-
-			} catch (Exception e) {
-				// TODO: handle exception
-			}
-
-		} catch (Exception e) {
-			// TODO: handle exception
-		}
-
-	}
+	
 
 	@Override
 	public void rembourserUtilisateur(int enchereLaPlusHaute, Utilisateur user) {
@@ -260,6 +241,12 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 
 		}
 
+	}
+
+	@Override
+	public void update(Utilisateur utilisateur) throws SQLException {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

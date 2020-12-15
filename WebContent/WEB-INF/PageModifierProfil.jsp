@@ -26,6 +26,10 @@
 	
 
 <form method="post"action="${pageContext.request.contextPath}/MonProfil" class="form-horizontal">
+
+
+			<input type="hidden" name="enregsitrer" value="true" >
+			
 		
 		<div class="saisie row my-2">
 			<label for="pseudo" class="col-md-2 col-form-label"> Pseudo : </label>
@@ -76,6 +80,8 @@
 			
 			<input class="form-controln col-md-4" type="text" id="ville"
 				name="ville" value="${utilisateur.ville}" required>
+			
+			
 		</div>
 		
 		<div class="row my-2">
