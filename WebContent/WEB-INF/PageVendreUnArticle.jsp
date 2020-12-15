@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
     
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>  
-    
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>   
     
 <!DOCTYPE html>
 <html>
@@ -57,11 +57,11 @@
 			</div>
 			<div class="form-group">
 				<label for="dateDebutEncheres">Début de l'enchère: </label>
-				<input  type="datetime-local" id="dateDebutEncheres" class="form-control" name="dateDebutEncheres">
+				<input  type="date" id="dateDebutEncheres" class="form-control" name="dateDebutEncheres">
 			</div>
 			<div class="form-group">
 				<label for="dateFinEncheres">Fin de l'enchère: </label>
-				<input  type="datetime-local" id="dateFinEncheres" class="form-control" name="dateFinEncheres">
+				<input  type="date" id="dateFinEncheres" class="form-control" name="dateFinEncheres">
 			</div>	
 			</div>
 			<div class="col-3">

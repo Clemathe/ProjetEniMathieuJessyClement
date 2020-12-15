@@ -3,7 +3,7 @@
 <%-- <%@ page import=""%> --%>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>   
 <!DOCTYPE html>
 <html>
 
@@ -95,7 +95,8 @@
 				<div class="card-body">
 					<h5 class="card-title">${EEC.nomArticle}</h5>
 					<p class="card-text">Prix: ${EEC.prixVente} points<br /> 
-					Fin de l'enchère: ${EEC.dateFinEncheres}<br />
+					Fin de l'enchère:<fmt:parseDate value="${EEC.dateFinEncheres}" pattern="yyyy-MM-dd" var="parsedDateTime" type="both" />
+										<fmt:formatDate pattern="dd/MM/yyyy" value="${ parsedDateTime }" /></p><br>
 					Vendeur: ${EEC.pseudoVendeur}</p>
 					<div class="text-center">
 						<c:if test="${utilisateurCourant != null}">					
