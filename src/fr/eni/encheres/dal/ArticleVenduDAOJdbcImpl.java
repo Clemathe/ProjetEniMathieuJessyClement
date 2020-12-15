@@ -109,7 +109,7 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 			pstmt = cnx.prepareStatement(sqlGetArticleVendu);
 			pstmt.setInt(1, noArticle);
 			rs = pstmt.executeQuery();
-			System.out.println("no " + noArticle);
+		
 			List<Enchere> encheres = new ArrayList<>();
 			int noMeilleurEncherisseur = 0;
 			if(rs.next()) {
@@ -132,7 +132,6 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 			
 			Utilisateur user = new Utilisateur(noMeilleurEncherisseur, meilleurEncherisseur);
 			
-			System.out.println(article.getEncheres() != null);
 			
 			if (article.getEncheres().size()> 0) {
 				Enchere enchere = article.getEncheres().get(0);
