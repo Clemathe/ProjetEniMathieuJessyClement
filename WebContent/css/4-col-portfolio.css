@@ -8,6 +8,10 @@ body {
   padding-top: 54px;
   
 }
+#imageDetailArticle{
+	width: 18rem !important;
+}
+
 #creerUnCompte{
 	
 	margin-top: 30px;

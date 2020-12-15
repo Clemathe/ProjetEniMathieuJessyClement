@@ -43,6 +43,7 @@ public class ServletListesEncheresConnecte extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String achatVente = request.getParameter("achatsVentes");
+		System.out.println(achatVente);
 		if(achatVente.equalsIgnoreCase("vente")) {
 			request.setAttribute("vente", "vente");
 		}else if(achatVente.equalsIgnoreCase("achat")) {

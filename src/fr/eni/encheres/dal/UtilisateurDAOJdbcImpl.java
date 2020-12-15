@@ -16,17 +16,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	private static final String REMBOURSER_UTILISATEUR = "UPDATE Utilisateurs SET credit = credit + ? WHERE no_utilisateur = ?";
 	private static final String DEBITER_UTILISATEUR = "UPDATE Utilisateurs SET credit = credit - ? WHERE no_utilisateur = ?";
 
-	@Override
-	public Utilisateur getUtilisateurById() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
-	@Override
-	public boolean getExistingUser(String login, String email) {
-		// TODO Auto-generated method stub
-		return false;
-	}
 
 	@Override
 	public String getUserPassword(String login) {
@@ -254,11 +244,11 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 				try {
 					cnx = ConnectionProvider.getConnection();
 					pstmt = cnx.prepareStatement(DEBITER_UTILISATEUR);
-					
+					cnx.setAutoCommit(false);
 					pstmt.setInt(1, montantEnchere);		
 					pstmt.setInt(2, utilisateurCourant.getNoUtilisateur());
 					pstmt.executeUpdate();
-					System.out.println("b");
+					cnx.commit();
 					pstmt.close();
 					cnx.close();
 	}catch (SQLException e) {

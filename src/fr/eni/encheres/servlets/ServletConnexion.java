@@ -38,10 +38,11 @@ public class ServletConnexion extends HttpServlet {
 
 			RequestDispatcher rd = request.getRequestDispatcher("/accueil");
 			rd.forward(request, response);
-		}
+		}else {
 
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/PageConnexion.jsp");
 		rd.forward(request, response);
+		}
 	}
 
 	/**

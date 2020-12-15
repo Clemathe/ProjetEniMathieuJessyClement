@@ -117,38 +117,11 @@
 			
 	</form>					
 	</div>	
-		
-			<c:if test="${!empty achatvente}">
+<c:if test="${!empty vente}">
+<h1>Ventes</h1>
+			</c:if>
 
 
-<div class="row col-lg-12">
-
-	<c:forEach var="EEC" items="${enchereEnCours}">
-		<div class="col-lg-4 col-12 col-md-6">
-			<div class="card" >
-				<div class="card-header text-center">
-					<img src="./images/${EEC.noArticle}.png" class="card-img-top" alt="vente">
-				</div>
-				<div class="card-body">
-					<h5 class="card-title">${EEC.nomArticle}</h5>
-					<p class="card-text">Prix: ${EEC.prixVente} points<br /> 
-					Fin de l'enchère: ${EEC.dateFinEncheres}<br />
-					Vendeur: ${EEC.pseudoVendeur}</p>
-					<div class="text-center">
-						<c:if test="${utilisateurCourant != null}">					
-						<a href="encheres?noArticle=${EEC.noArticle}" class="btn btn-info">Accéder à la vente</a>
-						</c:if>
-						<c:if test="${utilisateurCourant == null}">
-						<a href="connexion" class="btn btn-info">Accéder à la vente</a>
-						</c:if>
-			    	</div>				
-				</div>  
-			</div>
-		</div>
-	</c:forEach>
-	</div>
-	</div>		
-	</c:if>	
 		
 		
 		
