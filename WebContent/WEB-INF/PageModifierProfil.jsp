@@ -17,22 +17,22 @@
 <body class="container">
 	<header>
 		<jsp:include page="./fragments/header.jsp"></jsp:include>
-	</header>
+	</header>	
+	
 	<h1 class="text-center my-5">Mon Profil</h1>
+	
 	<section class="my-2">
-	
-	
-	
-	<div class="saisie row my-2">
+	<c:if test="${modifier != null}">
 
-		<c:if test="${ Erreur != null}">
-
-			<div class="container alert alert-danger text-align center"
-				role="alert">${Erreur}</div>
+			<div class="container alert alert-danger text-align center" role="alert">
+				${errorConnection}</div>
 		</c:if>
-
-
-	</div>
+		<c:if test="${connect != null}">
+			
+			<div class="container alert alert-success text-align center" role="alert">
+				Vous êtes déconnecté</div>
+		</c:if>
+	
 	
 
 <form method="post"action="${pageContext.request.contextPath}/CreerCompte" class="form-horizontal">
@@ -118,7 +118,7 @@
 				type="submit">Enregistrer</button>
 
 			<button class="btn btn-info my-5 mx-5 form-controln col-3"
-				type="reset" value="${param.}">Supprimer mon compte</button>
+				type="reset" value="">Supprimer mon compte</button>
 
 		</div>
 

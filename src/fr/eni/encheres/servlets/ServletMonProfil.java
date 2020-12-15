@@ -22,23 +22,23 @@ public class ServletMonProfil extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
 		System.out.println("doget mon profil");
-		//
+	
 		Utilisateur utilisateur = new Utilisateur(); 
 		utilisateur = (Utilisateur) request.getSession(true).getAttribute("utilisateurCourant");
+		
 		
 		if(utilisateur == null) {
 			RequestDispatcher rd = request.getRequestDispatcher("/connexion"); 
 			rd.forward(request, response);
 			System.out.println("renvoyer vers page se connecter");
-		} else
 			
+		} else 
+		
 		request.setAttribute("utilisateur", utilisateur);
-		
-		
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/PageMonProfil.jsp"); 
-		rd.forward(request, response);
-		
+		rd.forward(request, response);	
 	}
 
 	/**
@@ -46,7 +46,16 @@ public class ServletMonProfil extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("DoPost Servlet MonProfil");
-		doGet(request, response);
+		Utilisateur utilisateur = new Utilisateur(); 
+		utilisateur = (Utilisateur) request.getSession(true).getAttribute("utilisateurCourant");
+		
+			request.setAttribute("utilisateur", utilisateur);
+			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/PageModifierProfil.jsp"); 
+			rd.forward(request, response);
+			System.out.println("renvoyer vers page modifier");	
+		
+			
+		
 		
 	}
 
