@@ -30,9 +30,8 @@ public class ServletListesEncheresConnecte extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Utilisateur utilisateurCourant = (Utilisateur)request.getSession().getAttribute("utilisateurCourant");  
 		int noUtilisateur = utilisateurCourant.getNoUtilisateur();
-		request.setAttribute("noUser", noUtilisateur);
 		ArticleVenduManager mesVentes = new ArticleVenduManager();
-		
+		request.setAttribute("mesVentes",mesVentes.getMesVentes(noUtilisateur));
 		
 		
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/PagesListeEncheresConnecte.jsp");
@@ -43,7 +42,12 @@ public class ServletListesEncheresConnecte extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		String achatVente = request.getParameter("achatsVentes");
+		if(achatVente.equalsIgnoreCase("vente")) {
+			request.setAttribute("vente", "vente");
+		}else if(achatVente.equalsIgnoreCase("achat")) {
+			request.setAttribute("achat", "achat");
+		}
 		doGet(request, response);
 	}
 

@@ -132,8 +132,8 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 			e.printStackTrace();
 		}
 		
-		
-		return null;
+		System.out.println(mesVentes.toString());
+		return mesVentes;
 	}
 //	,
 //						new Retrait(rs.getString(13),rs.getString(14),rs.getString(15)));
