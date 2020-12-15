@@ -41,12 +41,13 @@
 			<label for="pseudo" class="col-md-2 col-form-label"> Pseudo : </label>
 			
 			<input class="form-controln col-md-4" type="text" id="pseudo"
-				name="pseudo" value="${utilisateur.pseudo}"> 
-				
+				name="pseudo" value="${utilisateur.pseudo}" required> 
+			
+					
 			<label for="nom" class="col-md-2 col-form-label"> Nom : </label>
 			
 			<input class="form-controln col-md-4" type="text" id="nom"
-				name="pseudo" value="${utilisateur.nom}"> 
+				name="pseudo" value="${utilisateur.nom}"required> 
 		</div>
 
 
@@ -54,12 +55,12 @@
 			<label for="prenom" class="col-md-2 col-form-label"> Prénom : </label>
 			
 			<input class="form-controln col-md-4" type="text" id="prenom" 
-			name="prenom" value="${utilisateur.prenom}"> 
+			name="prenom" value="${utilisateur.prenom}"required> 
 			
 			<label for="email" class="col-md-2 col-form-label"> Email : </label>
 			
 			<input class="form-controln col-md-4" type="email" size="50" id="email"
-				name="email" value="${utilisateur.email}">
+				name="email" value="${utilisateur.email}"required>
 		</div>
 
 		<div class="row my-2">
@@ -72,38 +73,39 @@
 			<label for="rue" class="col-2 col-form-label"> Rue : </label>
 			
 			<input class="form-controln col-md-4" type="text" id="rue" name="rue"
-				value="${utilisateur.rue}">
+				value="${utilisateur.rue}"required>
 		</div>
 
 		<div class="row my-2">
 			<label for="codePostal" class="col-md-2 col-form-label"> Code Postal : </label>
 			
 			<input class="form-controln col-md-4" type="text" id="codePostal"
-				name="codePostal" value="${utilisateur.codePostal}"> 
+				name="codePostal" value="${utilisateur.codePostal}" required> 
+				
 			<label for="ville" class="col-md-2 col-form-label"> Ville : </label>
 			
 			<input class="form-controln col-md-4" type="text" id="ville"
-				name="ville" value="${utilisateur.ville}">
+				name="ville" value="${utilisateur.ville}" required>
 		</div>
 		
 		<div class="row my-2">
 		<label for="motDePasseActuel" class="col-md-2 col-form-label"> Mot de passe actuel : </label>
 			
 			<input class="form-controln col-md-4" type="password" id="motDePasse"
-				name="motDePasse" value ="${utilisateur.motDePasse}"> 
+				name="motDePasse" value ="${utilisateur.motDePasse}" required> 
 		</div>
 
 		<div class="row my-2">
 			<label for="motDePasse1" class="col-md-2 col-form-label"> Nouveau mot de passe : </label>
 			
 			<input class="form-controln col-md-4" type="password" id="motDePasse1"
-				name="motDePasse1" required="required"
+				name="motDePasse1" required
 				placeholder="${utilisateur.motDePasse}"> 
+				
 			<label for="motDePasse" class="col-md-2 col-form-label"> Confirmation : </label>
 			
 			<input class="form-controln col-md-4" type="password" id="motDePasse"
-				name="motDePasse" value="${param.motDePasse}" required="required"
-				placeholder="">
+				name="motDePasse" value="${param.motDePasse}" required>
 		</div>
 		<div class="row my-2">
 		<label class="col-md-2 col-form-label">Credit :</label> 
@@ -116,7 +118,7 @@
 				type="submit">Enregistrer</button>
 
 			<button class="btn btn-info my-5 mx-5 form-controln col-3"
-				type="reset">Supprimer mon compte</button>
+				type="reset" value="${param.}">Supprimer mon compte</button>
 
 		</div>
 

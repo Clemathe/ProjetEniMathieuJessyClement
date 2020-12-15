@@ -22,7 +22,7 @@ public class ServletMonProfil extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+		System.out.println("doget mon profil");
 		//
 		Utilisateur utilisateur = new Utilisateur(); 
 		utilisateur = (Utilisateur) request.getSession(true).getAttribute("utilisateurCourant");
@@ -47,6 +47,7 @@ public class ServletMonProfil extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("DoPost Servlet MonProfil");
 		doGet(request, response);
+		
 	}
 
 }

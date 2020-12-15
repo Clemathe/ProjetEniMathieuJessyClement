@@ -84,10 +84,12 @@
 
 
 				<div class=" my-5 text-center">
-					<a href= "ModifierProfil" class="btn btn-info">Modifier</a>
+				<form action="GET">
+				<button class="btn btn-info my-5 mx-5 form-controln col-3 "type="submit">Modifier</button>
+				</form>	
+					
 				</div>
-			</form>
-		</div>
+	
 	</section>
 
 	<footer>
