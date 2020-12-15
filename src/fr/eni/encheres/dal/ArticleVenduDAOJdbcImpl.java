@@ -89,10 +89,8 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 	
 	@Override
 	public ArticleVendu getArticleVendu(int noArticle) {
-		Connection cnx = null;
-		PreparedStatement pstmt = null;
 		
-		ResultSet rs = null;
+		
 		
 		ArticleVendu article = null;
 		String sqlGetArticleAvecEnchere =  "SELECT ARTICLES_VENDUS.no_article,"
@@ -138,71 +136,68 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 				+ " JOIN CATEGORIES ON ARTICLES_VENDUS.no_categorie = CATEGORIES.no_categorie"
 				+ " WHERE ARTICLES_VENDUS.no_article = ? "; 
 		 
-		try {
+		try (Connection cnx = ConnectionProvider.getConnection();) {
 			
-			cnx = ConnectionProvider.getConnection();
-			System.out.println("debut");
+			
+			System.out.println("DAO debut, numero article : "+ noArticle);
 			if (getMeilleurEnchere(noArticle) != null) {
-				pstmt = cnx.prepareStatement(sqlGetArticleAvecEnchere);
+				PreparedStatement pstmt = cnx.prepareStatement(sqlGetArticleAvecEnchere);
 				pstmt.setInt(1, noArticle);
-				rs = pstmt.executeQuery();
+				ResultSet rs = pstmt.executeQuery();
 				List<Enchere> encheres = new ArrayList<>();
 				int noMeilleurEncherisseur = 0;
+				System.out.println("avant le if : "+ rs.getFetchSize() + " ");
 				if(rs.next()) {
-					try{
-						System.out.println("1");
+					
+						System.out.println("apres le if");
 						encheres.add(new Enchere(rs.getInt(11), rs.getInt(12)));
-						article = new ArticleVendu(rs.getInt(1), rs.getString(2), rs.getString(3), LocalDate.parse(rs.getString(4)),
+						System.out.println("enchereGetAticle " + encheres);
+						article = new ArticleVendu(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getDate(4).toLocalDate(),
 								rs.getInt(5), rs.getInt(6), new Utilisateur(rs.getInt(7), rs.getString(8)), encheres,
 								new Categorie(rs.getInt(9), rs.getString(10)) , new Retrait(rs.getString(13),rs.getString(14) ,rs.getString(15)));
+						
 						noMeilleurEncherisseur = rs.getInt(11);
-						
-						
-					}catch (SQLException e){
-						//TODO Pour empêcher le déroulement suivant qui genererait une erreur si cette partie échouait
-						cnx.close();
-					}
-				}
+					
+				
 				String meilleurEncherisseur = getPseudoForArticleVendu(noMeilleurEncherisseur);
 				Utilisateur user = new Utilisateur(noMeilleurEncherisseur, meilleurEncherisseur);
 			
+				
 				Enchere enchere = article.getEncheres().get(0);
 		
 				enchere.setUtilisateur(user);
 					
 				article.getEncheres().remove(0);
 				article.getEncheres().add(enchere);
+				System.out.println("article = " + article);
+				rs.close();
+				pstmt.close();
+				cnx.close();
 				
+				
+				}
 			}else {
+				
 				System.out.println("2");
-				pstmt = cnx.prepareStatement(sqlGetArticleSansEnchere);
+				PreparedStatement pstmt = cnx.prepareStatement(sqlGetArticleSansEnchere);
 				pstmt.setInt(1, noArticle);
-				rs = pstmt.executeQuery();
+				ResultSet rs = pstmt.executeQuery();
 				List<Enchere> encheres = new ArrayList<>();
 				int noMeilleurEncherisseur = 0;
 				if(rs.next()) {
-					try{
+					
 												
-						article = new ArticleVendu(rs.getInt(1), rs.getString(2), rs.getString(3), LocalDate.parse(rs.getString(4)),
+						article = new ArticleVendu(rs.getInt(1), rs.getString(2), rs.getString(3), (rs.getDate(4)).toLocalDate(),
 								rs.getInt(5), rs.getInt(6), new Utilisateur(rs.getInt(7), rs.getString(8)),
 								new Categorie(rs.getInt(9), rs.getString(10)) , new Retrait(rs.getString(11),rs.getString(12) ,rs.getString(13)));
-												
-					}catch (SQLException e){
-						//TODO Pour empêcher le déroulement suivant qui genererait une erreur si cette partie échouait
-						cnx.close();
-					}
+
 				}
+				rs.close();
+				pstmt.close();
+				cnx.close();
 			}
 		}catch (Exception e) {
 			e.printStackTrace();
-		}finally {
-			try {
-				rs.close();
-				cnx.close();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
 			
 		}
 		
@@ -226,7 +221,7 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
+			System.out.println("meilleurEncherisseur " +meilleurEncherisseur);
 		return meilleurEncherisseur;
 
 	}
