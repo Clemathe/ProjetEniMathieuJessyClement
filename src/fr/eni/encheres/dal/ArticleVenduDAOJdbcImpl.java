@@ -109,17 +109,19 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 			pstmt = cnx.prepareStatement(sqlGetArticleVendu);
 			pstmt.setInt(1, noArticle);
 			rs = pstmt.executeQuery();
-			
+			System.out.println("no " + noArticle);
 			List<Enchere> encheres = new ArrayList<>();
 			int noMeilleurEncherisseur = 0;
 			if(rs.next()) {
 				try{
-			
+					System.out.println("debut");
 					encheres.add(new Enchere(rs.getInt(11), rs.getInt(12)));
 					article = new ArticleVendu(rs.getInt(1), rs.getString(2), rs.getString(3), LocalDate.parse(rs.getString(4)),
 							rs.getInt(5), rs.getInt(6), new Utilisateur(rs.getInt(7), rs.getString(8)), encheres,
 							new Categorie(rs.getInt(9), rs.getString(10)) , new Retrait(rs.getString(13),rs.getString(14) ,rs.getString(15)));
 					noMeilleurEncherisseur = rs.getInt(11);
+					
+					System.out.println("article dao "+article);
 					
 				}catch (SQLException e){
 					//TODO Pour empêcher le déroulement suivant qui genererait une erreur si cette partie échouait
@@ -129,14 +131,17 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 			String meilleurEncherisseur = getPseudoForArticleVendu(noMeilleurEncherisseur);
 			
 			Utilisateur user = new Utilisateur(noMeilleurEncherisseur, meilleurEncherisseur);
-		
-			Enchere enchere = article.getEncheres().get(0);
-
-			enchere.setUtilisateur(user);
 			
-			article.getEncheres().remove(0);
-			article.getEncheres().add(enchere);
+			System.out.println(article.getEncheres() != null);
 			
+			if (article.getEncheres().size()> 0) {
+				Enchere enchere = article.getEncheres().get(0);
+	
+				enchere.setUtilisateur(user);
+				
+				article.getEncheres().remove(0);
+				article.getEncheres().add(enchere);
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}finally {
@@ -196,6 +201,7 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 			pstmt.setInt(6, articleVendu.getMiseAPrix());
 			pstmt.setInt(7, articleVendu.getUtilisateur().getNoUtilisateur());
 			pstmt.setInt(8, articleVendu.getNoCategorie());
+			System.out.println("n cat" + articleVendu.getNoCategorie());
 			
 			pstmt.executeUpdate();
 			ResultSet rs = pstmt.getGeneratedKeys();
