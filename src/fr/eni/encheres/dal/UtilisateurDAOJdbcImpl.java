@@ -13,8 +13,8 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	private static final String INSERT_UTILISATEUR = "INSERT INTO UTILISATEURS (pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"; 
 	private static final String SELECT_BY_ID = "SELECT no_utilisateur, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur FROM UTILISATEURS where id=?"; 
 	private static final String UPDATE = "UPDATE UTILISATEURS set pseudo = ?, nom =?, prenom=?, email=?, telephone=?, rue=?, code_postal=?, ville=?, mot_de_passe=? where id=?"; 
-	private static final String REMBOURSER_UTILISATEUR = "UPDATE Utilisateurs SET credit = ? WHERE no_utilisateur = ?";
-	private static final String DEBITER_UTILISATEUR = "UPDATE Utilisateurs SET credit = ? WHERE no_utilisateur = ?";
+	private static final String REMBOURSER_UTILISATEUR = "UPDATE Utilisateurs SET credit = credit + ? WHERE no_utilisateur = ?";
+	private static final String DEBITER_UTILISATEUR = "UPDATE Utilisateurs SET credit = credit - ? WHERE no_utilisateur = ?";
 
 	@Override
 	public Utilisateur getUtilisateurById() {
@@ -253,16 +253,17 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 				try {
 					cnx = ConnectionProvider.getConnection();
 					pstmt = cnx.prepareStatement(DEBITER_UTILISATEUR);
-					cnx.setAutoCommit(false);
-					pstmt.setInt(1, -(montantEnchere));		
+					
+					pstmt.setInt(1, montantEnchere);		
 					pstmt.setInt(2, utilisateurCourant.getNoUtilisateur());
-					cnx.commit();
+					
+					System.out.println("b");
 					pstmt.close();
 					cnx.close();
 	}catch (SQLException e) {
 		e.printStackTrace();
 		try {
-			cnx.rollback();
+			
 			throw e;
 		} catch (SQLException e1) {
 			// TODO Auto-generated catch block

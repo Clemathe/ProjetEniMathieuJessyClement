@@ -71,7 +71,6 @@ public class ArticleVendu {
 		
 	}
 	
-	
 	public ArticleVendu(String nomArticle, String description, LocalDate dateFinEncheres, int miseAPrix, int prixVente,
 			boolean etatVente, Utilisateur acheteur, Utilisateur vendeur, List<Enchere> encheres, Categorie categorie,
 			Retrait lieuRetrait) {

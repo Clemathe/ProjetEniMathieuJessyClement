@@ -5,15 +5,15 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
   
     
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top d-flex">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top ">
 		<a class="navbar-brand mr-auto p-2" href="accueil">Les objets sont nos amis</a>
 		<button class="navbar-toggler" type="button" data-toggle="collapse"
 			data-target="#navbarColor01" aria-controls="navbarColor01"
 			aria-expanded="false" aria-label="Toggle navigation">
 			<span class="navbar-toggler-icon"></span>
 		</button>
-
-		<div class="collapse navbar-collapse ml-5 p-2" id="navbarColor01">
+	<div class="navbarColor01">
+		<div class="collapse navbar-collapse ml-5 p-2 " id="navbarColor01">
 			<ul class="navbar-nav mr-auto" id="navigation">
 			<c:if test="${utilisateurCourant == null }">
 				<li class="nav-item active  "><a class="nav-link" href="connexion">Se connecter <span class="sr-only">(current)</span>
@@ -34,6 +34,6 @@
 			
 			</c:if>
 			</ul>
-			
+			</div>
 		</div>
 	</nav>

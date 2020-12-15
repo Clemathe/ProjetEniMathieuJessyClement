@@ -47,13 +47,17 @@ public class ArticleVenduManager {
 
 	public String Encherir(int montantEnchere, Utilisateur utilisateurCourant, int noArticle) {
 		int soldeUtilisateur = utilisateurCourant.getCredit();
+		ArticleVendu articleCourant = getArticleVendu(noArticle);
 		String message = null;
 		System.out.println(montantEnchere+ " "+ soldeUtilisateur);
+		//if (articleCourant.getEncheres().get(0))
+		
+		
 		if (soldeUtilisateur > montantEnchere) {
-			ArticleVendu articleCourant = getArticleVendu(noArticle);
+			
 			int enchereLaPlusHaute = articleCourant.getEncheres().get(0).getMontantEnchere();
 			System.out.println("etape1");
-			if(enchereLaPlusHaute < montantEnchere) {
+			if(enchereLaPlusHaute < montantEnchere ) {
 				System.out.println("etape2");
 				UtilisateurManager uManager = new UtilisateurManager();
 				Enchere nouvelleEnchere = new Enchere(LocalDate.now(), montantEnchere, articleCourant, utilisateurCourant);

@@ -290,12 +290,7 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 
 	
 	
-	
-	
-	
-	
-	
-	
+
 	
 	
 	
