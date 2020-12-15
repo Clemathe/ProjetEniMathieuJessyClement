@@ -26,9 +26,6 @@
 	
 
 <form method="post"action="${pageContext.request.contextPath}/MonProfil" class="form-horizontal">
-
-
-			<input type="hidden" name="enregsitrer" value="true" >
 			
 		
 		<div class="saisie row my-2">
@@ -109,7 +106,8 @@
 		</div>
 		
 		<div class="d-flex justify-content-around">
-
+		<input type="hidden" name="modifier" value="false" >
+			<input type="hidden" name="enregsitrer" value="true" >
 			<button class="btn btn-info my-5 mx-5 form-controln col-3 "
 				type="submit">Enregistrer</button>
 

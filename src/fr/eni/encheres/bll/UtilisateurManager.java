@@ -115,14 +115,37 @@ public class UtilisateurManager {
 		return insertOK;
 	}
 
-	public void updateUtilisateur (Utilisateur utilisateur) throws SQLException {
-		utilisateurDAO.update(no_utilisateur);
-	}
 	public void insertUtilisateur(Utilisateur utilisateur) throws Exception {
 
 		utilisateurDAO.insertUtilisateur(utilisateur);
 
 	}
+	public String modifierUtilisateur(String pseudo, String nom, String prenom, String email, String telephone,
+			String rue, String codePostal, String ville, String motDePasse) throws Exception {
+		String statutUpdate = "validation de la modification";
+		Utilisateur utilisateur = new Utilisateur();
+		utilisateur.setPseudo(pseudo);
+		utilisateur.setNom(nom);
+		utilisateur.setPrenom(prenom);
+		utilisateur.setEmail(email);
+		utilisateur.setTelephone(telephone);
+		utilisateur.setRue(rue);
+		utilisateur.setVille(ville);
+		utilisateur.setCodePostal(codePostal);
+		utilisateur.setMotDePasse(motDePasse);
+		try {
+			utilisateurDAO.update(utilisateur);
+		} catch (Exception e) {
+			e.printStackTrace();
+			statutUpdate = "La modification de l'utilisateur n'a pas pu etre exécutée en base de données"; 
+		}
+				return statutUpdate;
+		
+	}
+	public void updateUtilisateur (Utilisateur utilisateur) throws SQLException {
+		utilisateurDAO.update(utilisateur);
+	}
+	
 
 	public void rembourserUtilisateur(int enchereLaPlusHaute, Utilisateur user) {
 		utilisateurDAO.rembourserUtilisateur(enchereLaPlusHaute, user);

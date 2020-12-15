@@ -22,26 +22,27 @@ public class ServletMonProfil extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
 		System.out.println("doget mon profil");
-	
-		Utilisateur utilisateur = new Utilisateur(); 
+
+		Utilisateur utilisateur = new Utilisateur();
 		utilisateur = (Utilisateur) request.getSession(true).getAttribute("utilisateurCourant");
-		
-		
-		if(utilisateur == null) {
-			RequestDispatcher rd = request.getRequestDispatcher("/connexion"); 
+
+		if (utilisateur == null) {
+			RequestDispatcher rd = request.getRequestDispatcher("/connexion");
 			rd.forward(request, response);
 			System.out.println("renvoyer vers page se connecter");
-			
-		} else 
-		
-		request.setAttribute("utilisateur", utilisateur);
-		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/PageMonProfil.jsp"); 
-		rd.forward(request, response);	
+
+		} else
+
+			request.setAttribute("utilisateur", utilisateur);
+		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/PageMonProfil.jsp");
+		rd.forward(request, response);
 	}
 
 	/**
@@ -50,9 +51,9 @@ public class ServletMonProfil extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("DoPost Servlet MonProfil");
 		
-		
-		
-		if (request.getParameter("modifierProfil") != null ) {
+		String modifierProfil = request.getParameter("modifierProfil"); 
+		 if (modifierProfil.equals("true") ) {
+			System.out.println("DoPost Servlet MonProfil if request.getParameter != null");
 			// entrer dans le formulaire PageModifierProfil.jsp
 			Utilisateur utilisateur = new Utilisateur(); 
 			utilisateur = (Utilisateur) request.getSession(true).getAttribute("utilisateurCourant");
@@ -60,19 +61,21 @@ public class ServletMonProfil extends HttpServlet {
 			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/PageModifierProfil.jsp"); 
 			rd.forward(request, response);			
 		} 
-		
-		if (request.getParameter("enregistrer") != null) {
+		 
+		System.out.println("DoPostServelt avant push enregistrer");
+		String enregistrer = request.getParameter("enregistrer"); 
+		if (request.getParameter("enregistrer").equals("true")) {
+			
 			//traitement update
 			System.out.println("DoPostServelt après push enregistrer");
-			
 			
 			// 1. Vérifier que le motDePasse saisie = mot de passe en dataBase de l'utilisateur courant. 
 			Utilisateur utilisateur = new Utilisateur(); 
 			UtilisateurManager utilisateurManager = new UtilisateurManager();
 			Boolean userPassOk = false; 
-			List<String> messageErreur = new ArrayList<>();
+			List<String> messageUtilisateur = new ArrayList<>();
 			try {
-				
+				System.out.println("DoPost Servlet MonProfil try/catch verification mot de passe");
 				String motDePasse = request.getParameter("motDePasse");
 				
 				utilisateur = (Utilisateur) request.getSession(true).getAttribute("utilisateurCourant");
@@ -81,9 +84,10 @@ public class ServletMonProfil extends HttpServlet {
 				userPassOk = utilisateurManager.verificationUtilisateurMotDePasse(login, motDePasse); 
 			} catch (Exception e) {
 				System.out.println();
-				messageErreur.add("le mot de passe saisie ne correspond pas à l'utilisateur"); 
+				messageUtilisateur.add("le mot de passe saisie ne correspond pas à l'utilisateur"); 
 			}
 			if (userPassOk != false ) {
+				System.out.println("DoPost Servlet MonProfil if userPass != false");
 				
 				String pseudo = request.getParameter("pseudo");
 				String nom = request.getParameter("nom");
@@ -97,42 +101,38 @@ public class ServletMonProfil extends HttpServlet {
 				String motDePasse1 = request.getParameter("motDePasseNew");
 				
 				//verifier l'intégrité des données du formulaire avant update
-				messageErreur.addAll(utilisateurManager.verificationSaisieUtilisateur(pseudo, nom, prenom, email, telephone, rue, codePostal, ville, motDePasse, motDePasse1)); 
+				messageUtilisateur.addAll(utilisateurManager.verificationSaisieUtilisateur(pseudo, nom, prenom, email, telephone, rue, codePostal, ville, motDePasse, motDePasse1)); 
+		
+				Boolean validationOK = utilisateurManager.validationCreationCompte(messageUtilisateur);
 				
-				
-				Boolean validationOK = utilisateurManager.validationCreationCompte(messageErreur);
+				// procéder à l'update en DBB si validationOK = true; 
+				String updatetOK = null; 
+				if (validationOK == true) {
+					System.out.println("DoPost Servlet MonProfil if validationOK = true");
+					 try {
+						 updatetOK = utilisateurManager.modifierUtilisateur(pseudo, nom, prenom, email, telephone, rue, codePostal, ville, motDePasse1); 
+						 System.out.println("try/catch utilisateurManager.modifierU");
+					} catch (Exception e) {
+						messageUtilisateur.add(updatetOK); 
+					}
+				}
 
-				
 			}
-			// appel verif 
-			
+			// affichage du messageUtilisateur 
+			System.out.println("DoPost Servlet MonProfil affichage du messageUtilisateur");
+			StringBuilder sb = new StringBuilder();
+				for (String s : messageUtilisateur) {
+					sb.append(s);
+					sb.append(" ");
+				}
+				System.out.println(sb.toString());
+			String message = sb.toString();
+			request.setAttribute("messageUtilisateur", message);
+			RequestDispatcher rd = request.getRequestDispatcher("WEB-INF/PageModifierProfil.jsp");
+			rd.forward(request, response);		
 		}
-			// ajouter un input hidden 
-			else // rester sur meme page et erreur
-			
-			
-			
-			
 		
-		
-		
-		
-		 // attribut modifier = lancer update
-		
-			// attribut vide =  entrée sur modifier profil
-			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/PageModifierProfil.jsp"); 
-			rd.forward(request, response);
-			System.out.println("renvoyer vers page modifier");	
-			
-			
-		
-		
-		// retour sur la page monProfil
-		request.setAttribute("utilisateur", utilisateur);
-		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/PageMonProfil.jsp"); 
-		rd.forward(request, response);	
-		System.out.println();
-		
+		 System.out.println("DoPostServelt en dehors de tous les if");
 	}
 
 }
