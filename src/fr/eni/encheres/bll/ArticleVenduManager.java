@@ -43,7 +43,7 @@ public class ArticleVenduManager {
 	public String Encherir(int montantEnchere, Utilisateur utilisateurCourant, int noArticle) {
 		int soldeUtilisateur = utilisateurCourant.getCredit();
 		ArticleVendu articleCourant = getArticleVendu(noArticle);
-		boolean auMoinsUneEnchere = true;
+		boolean auMoinsUneEnchere= false;
 		String message = null;
 		// L'encherisseur a il assez de crédit ?
 		if (soldeUtilisateur > montantEnchere ) {
@@ -51,12 +51,12 @@ public class ArticleVenduManager {
 			
 			try {  // L'article contient il déjà une enchère ?
 				enchereLaPlusHaute = articleCourant.getEncheres().get(0).getMontantEnchere();
-				
+				auMoinsUneEnchere = true;
 			} catch (Exception e) { 
 				auMoinsUneEnchere = false;
 			} // Deux possibilités : l'article contient une enchère et cette enchère est inférieure à celle de l'encherisseur. 
 				// Ou bien pas d'enchere dans l'article et enchère proposée supérieure au prix initial 
-			if(enchereLaPlusHaute < montantEnchere && auMoinsUneEnchere || !auMoinsUneEnchere && soldeUtilisateur > articleCourant.getMiseAPrix() ) {
+			if(( enchereLaPlusHaute < montantEnchere && auMoinsUneEnchere ) || ( !auMoinsUneEnchere && soldeUtilisateur > articleCourant.getMiseAPrix() )) {
 				
 				UtilisateurManager uManager = new UtilisateurManager();
 				// creation de l'objet enchère

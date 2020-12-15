@@ -13,10 +13,11 @@ public class CategorieDAOJdbcImpl implements CategorieDAO{
 	public int getCategorie(String libelle) {
 		int noCategorie =0;
 		
-		final String SELECT_CATEGORIE = "SELECT no_Categorie FROM CATEGORIES WHERE libelle = \""+libelle+"\"";
+		final String SELECT_CATEGORIE = "SELECT no_Categorie FROM CATEGORIES WHERE libelle = ?";
 		
 		try(Connection cnx = ConnectionProvider.getConnection()) {
 			PreparedStatement pstmt = cnx.prepareStatement(SELECT_CATEGORIE);
+			pstmt.setString(1, libelle);
 			ResultSet rs = pstmt.executeQuery();
 			
 			while(rs.next()) {
