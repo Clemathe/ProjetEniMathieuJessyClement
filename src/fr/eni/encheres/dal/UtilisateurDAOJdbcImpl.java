@@ -229,6 +229,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 					cnx.setAutoCommit(false);
 					pstmt.setInt(1, enchereLaPlusHaute);		
 					pstmt.setInt(2, user.getNoUtilisateur());
+					pstmt.executeUpdate();
 					cnx.commit();
 					pstmt.close();
 					cnx.close();
@@ -256,7 +257,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 					
 					pstmt.setInt(1, montantEnchere);		
 					pstmt.setInt(2, utilisateurCourant.getNoUtilisateur());
-					
+					pstmt.executeUpdate();
 					System.out.println("b");
 					pstmt.close();
 					cnx.close();
