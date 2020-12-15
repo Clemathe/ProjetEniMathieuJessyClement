@@ -45,35 +45,47 @@ public class ArticleVenduManager {
 		ArticleVendu articleCourant = getArticleVendu(noArticle);
 		boolean auMoinsUneEnchere = true;
 		String message = null;
-	
+		// L'encherisseur a il assez de crédit ?
 		if (soldeUtilisateur > montantEnchere ) {
 			int enchereLaPlusHaute = 0;
 			
-			try {
+			try {  // L'article contient il déjà une enchère ?
 				enchereLaPlusHaute = articleCourant.getEncheres().get(0).getMontantEnchere();
 				
-			} catch (Exception e) {
+			} catch (Exception e) { 
 				auMoinsUneEnchere = false;
-			}
+			} // Deux possibilités : l'article contient une enchère et cette enchère est inférieure à celle de l'encherisseur. 
+				// Ou bien pas d'enchere dans l'article et enchère proposée supérieure au prix initial 
 			if(enchereLaPlusHaute < montantEnchere && auMoinsUneEnchere || !auMoinsUneEnchere && soldeUtilisateur > articleCourant.getMiseAPrix() ) {
 				
 				UtilisateurManager uManager = new UtilisateurManager();
-				
+				// creation de l'objet enchère
 				Enchere nouvelleEnchere = new Enchere(LocalDate.now(), montantEnchere, articleCourant, utilisateurCourant);
+				
 				try {
-					uManager.debiterUtilisateur(montantEnchere, utilisateurCourant);
-					
 					articleVenduDAO.enregistrerUneEnchere(nouvelleEnchere);
 					
-					if (auMoinsUneEnchere) {
-						uManager.rembourserUtilisateur(enchereLaPlusHaute, articleCourant.getEncheres().get(0).getUtilisateur());
-					}
-					message = "Enchère enregistrée";
-					
 				} catch (Exception e) {
-					message = "Un problème s'est produit";
+					message = "L'enchère n'a pas pu être enregistrée";
+					
+					return message;
 				}
-			
+				try{
+					uManager.debiterUtilisateur(montantEnchere, utilisateurCourant);
+				}catch(Exception e){
+					//TODO Update BDD pour effacer enchère
+					message = "L'enchère n'a pas pu être enregistrée";
+					
+					return message;
+				}
+				try{
+					if (auMoinsUneEnchere) uManager.rembourserUtilisateur(enchereLaPlusHaute, articleCourant.getEncheres().get(0).getUtilisateur());
+				}catch(Exception e){
+					//TODO Update BDD pour effacer enchère et debit utilisateur
+				}
+						
+				message = "Enchère enregistrée";
+		
 			}else {
 				message = "Votre enchère est inférieure à l'enchère la plus haute";
 			}
