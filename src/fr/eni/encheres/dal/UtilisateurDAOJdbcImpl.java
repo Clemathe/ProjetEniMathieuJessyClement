@@ -20,7 +20,6 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 
 
 
-
 	@Override
 	public Utilisateur getUserforSession(String login, String hashPassword) throws SQLException {
 		Connection cnx = null;
