@@ -148,11 +148,5 @@ public class UtilisateurManager {
 		utilisateurDAO.debiterUtilisateur(montantEnchere, utilisateurCourant);
 		
 	}
-<<<<<<< HEAD
 
-
-=======
-	
-	
->>>>>>> branch 'master' of https://github.com/Clemathe/ProjetEniMathieuJessyClement.git
 }
