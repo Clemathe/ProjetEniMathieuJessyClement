@@ -58,22 +58,21 @@ public class ServletConnexion extends HttpServlet {
 		
 		request.setCharacterEncoding("UTF-8");
 		boolean nouvelleConnexion = Boolean.parseBoolean(request.getParameter("nouvelleConnexion")); 
-		boolean nouvelleCreation = request.getAttribute("nouvelleCreation") != null;
+		boolean creationUtilisateur = request.getAttribute("creationUtilisateur") != null;
 		String login = (String) request.getParameter("login");
 		String password = (String) request.getParameter("pass");
-		System.out.println("connexion "+nouvelleCreation);
+		System.out.println("connexion "+request.getAttribute("creationUtilisateur"));
+		System.out.println("connexion "+ creationUtilisateur);
 //		if (nouvelleConnexion) {
 //			 login = (String) request.getParameter("login");
 //			 password = (String) request.getParameter("pass");
 //			 
 //		}
-		if (nouvelleCreation) {
+		if (creationUtilisateur) {
 			 login = (String) request.getAttribute("loginCreated");
 			 password = (String) request.getAttribute("passwordCreated");
 		}
 		UtilisateurManager UManager = new UtilisateurManager();
-		
-		
 		
 			try {Utilisateur utilisateurCourant = UManager.getUtilisateurPourSession(login, password);
 	

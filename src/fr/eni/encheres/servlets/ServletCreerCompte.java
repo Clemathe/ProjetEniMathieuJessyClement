@@ -101,21 +101,12 @@ public class ServletCreerCompte extends HttpServlet {
 
 		// renvoie des attributs si insertUtilisateur is true
 		else {
-			request.setAttribute("nouvelleCreation", "true");
-			request.setAttribute("loginCreated", pseudo);
-			request.setAttribute("passwordCreated", MD5Utils.digest(motDePasse));
-			System.out.println("envoi vers accueil");
-//			UtilisateurManager UManager = new UtilisateurManager();
-//			Utilisateur utilisateurCourant = UManager.getUtilisateurPourSession(email, MD5Utils.digest(motDePasse));
-//			
-//			HttpSession sessionCourante = request.getSession(true);
-//			
-//			// Création du profil de l'utilisateur et stockage en session
-//			sessionCourante.setAttribute("utilisateurCourant", utilisateurCourant);
-//			
-//			// Attribut pour afficher une alerte de connexion réussie
-//			request.setAttribute("nouvelleConnexion", "true");
-
+			request.setAttribute("creationUtilisateur", "true");
+			request.setAttribute("loginCreated", email);
+			request.setAttribute("passwordCreated", motDePasse);
+			
+			System.out.println("envoi vers accueil "+ motDePasse + " " +email);
+			
 			RequestDispatcher rd = request.getRequestDispatcher("/connexion");
 			rd.forward(request, response);
 
