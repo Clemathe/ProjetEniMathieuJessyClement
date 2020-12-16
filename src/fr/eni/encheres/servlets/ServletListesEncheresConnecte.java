@@ -63,13 +63,24 @@ public class ServletListesEncheresConnecte extends HttpServlet {
 			//récupérer les ventes en Cours
 			if(ventesEnCours.equals("vEnCours")) {
 			ArticleVenduManager mesVentesEnCours = new ArticleVenduManager();
-			List<ArticleVendu> ventes = mesVentesEnCours.getVentesEnCours(noUtilisateur, ceJour);
-			System.out.println(ventes.toString());
-			request.setAttribute("mesVentesEnCours",ventes);
-			
+			List<ArticleVendu> listVentesEnCours = mesVentesEnCours.getVentesEnCours(noUtilisateur, ceJour);
+			System.out.println(listVentesEnCours.toString());
+			request.setAttribute("mesVentesEnCours",listVentesEnCours);
 			}
-			
-			
+			//récupérer les Ventes non debutées 
+			if(ventesNonDebutees.equals("vNonDebutees")) {
+			ArticleVenduManager mesVentesNonDebutees = new ArticleVenduManager();
+			List<ArticleVendu> listVentesNonDebutees = mesVentesNonDebutees.getVentesNonDebutees(noUtilisateur, ceJour);
+			System.out.println(listVentesNonDebutees.toString());
+			request.setAttribute("ventesNonDebutees",listVentesNonDebutees);
+			}
+			//récupérer les Ventes non debutées 
+			if(ventesTerminees.equals("vTerminees")) {
+			ArticleVenduManager mesVentesTerminees = new ArticleVenduManager();
+			List<ArticleVendu> listVentesTerminees = mesVentesTerminees.getVentesNonDebutees(noUtilisateur, ceJour);
+			System.out.println(listVentesTerminees.toString());
+			request.setAttribute("ventesNonDebutees",listVentesTerminees);
+			}
 			
 			
 			
