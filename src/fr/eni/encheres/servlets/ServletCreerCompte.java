@@ -98,7 +98,7 @@ public class ServletCreerCompte extends HttpServlet {
 
 		// renvoie des attributs si insertUtilisateur is true
 		else 
-		request.setAttribute("loginCreated", pseudo);
+		
 		request.setAttribute("creationUtilisateur", "true"); 
 		request.setAttribute("loginCreated", email);
         request.setAttribute("passwordCreated", motDePasse);

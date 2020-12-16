@@ -56,7 +56,7 @@ public class ServletVendreUnArticle extends HttpServlet {
 		String rue = (String)request.getParameter("rue");
 		String codePostal = (String)request.getParameter("codePostal");
 		String ville = (String)request.getParameter("ville");
-		
+		System.out.println(miseAPrix);
 		//recuperation des informations manquantes pour créer un ArticleVendu en BDD
 		//Recuperation du noUtilisateur à partir de la session en cours 
 		Utilisateur utilisateurCourant = (Utilisateur)request.getSession().getAttribute("utilisateurCourant");
@@ -80,6 +80,11 @@ public class ServletVendreUnArticle extends HttpServlet {
 		ArticleVendu articleAVendre = new ArticleVendu(nomArticle,description,dateDebutEnchere,dateFinEnchere,miseAPrix,noCategorie,utilisateur,lieuRetrait);
 		ArticleVenduManager articleVendu = new ArticleVenduManager();
 		articleVendu.insertArticleVendu(articleAVendre);
+		
+		
+		
+		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/PagesListeEncheresConnecte.jsp");
+		rd.forward(request, response);
 		
 	}
 	

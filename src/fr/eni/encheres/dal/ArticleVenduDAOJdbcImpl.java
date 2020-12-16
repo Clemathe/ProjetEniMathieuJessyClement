@@ -467,7 +467,8 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 						rs.getDate(3).toLocalDate(),rs.getDate(4).toLocalDate(),rs.getInt(5), rs.getInt(6)); 
 				mesVentesEnCours.add(articleVendu);
 			}
-		
+			pstmt.close();
+			cnx.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -488,15 +489,15 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 				+ "ARTICLES_VENDUS.date_debut_encheres, "
 				+ "ARTICLES_VENDUS.date_fin_encheres, "
 				+" ARTICLES_VENDUS.prix_initial, "
-				+ " ARTICLES_VENDUS.prix_vente "
-				+" FROM ARTICLES_VENDUS"
-				+" WHERE ((no_utilisateur = ?) AND (date_debut_encheres >  ? )"; 
+				+"ARTICLES_VENDUS.prix_vente "
+				+" FROM ARTICLES_VENDUS "
+				+" WHERE ((no_utilisateur = ?) AND (date_debut_encheres >  ? ))"; 
 		
 		try (Connection cnx = ConnectionProvider.getConnection()){
 			PreparedStatement pstmt = cnx.prepareStatement(SELECT_MES_VENTES_EN_COURS);
 			pstmt.setInt(1,noUtilisateur);
 			pstmt.setDate(2, Date.valueOf(ceJour));
-			pstmt.setDate(3, Date.valueOf(ceJour));
+			
 			ResultSet rs = pstmt.executeQuery();
 			while (rs.next()) {
 				
@@ -504,7 +505,8 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 						rs.getDate(3).toLocalDate(),rs.getDate(4).toLocalDate(),rs.getInt(5), rs.getInt(6)); 
 				ventesNonDebutees.add(articleVendu);
 			}
-		
+			pstmt.close();
+			cnx.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -527,13 +529,13 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 				+" ARTICLES_VENDUS.prix_initial, "
 				+ " ARTICLES_VENDUS.prix_vente "
 				+" FROM ARTICLES_VENDUS"
-				+" WHERE ((no_utilisateur = ?) AND (date_fin_encheres < ? )"; 
+				+" WHERE ((no_utilisateur = ?) AND (date_fin_encheres < ? ))"; 
 		
 		try (Connection cnx = ConnectionProvider.getConnection()){
 			PreparedStatement pstmt = cnx.prepareStatement(SELECT_MES_VENTES_EN_COURS);
 			pstmt.setInt(1,noUtilisateur);
 			pstmt.setDate(2, Date.valueOf(ceJour));
-			pstmt.setDate(3, Date.valueOf(ceJour));
+		
 			ResultSet rs = pstmt.executeQuery();
 			while (rs.next()) {
 				
@@ -541,7 +543,8 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 						rs.getDate(3).toLocalDate(),rs.getDate(4).toLocalDate(),rs.getInt(5), rs.getInt(6)); 
 				ventesTerminees.add(articleVendu);
 			}
-		
+			pstmt.close();
+			cnx.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

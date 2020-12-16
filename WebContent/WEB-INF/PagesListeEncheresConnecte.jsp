@@ -112,14 +112,13 @@
 			
 					
 	
-<c:if test="${!empty mesVentes}">
-<h2>Mes Ventes</h2>
+<c:if test="${mesVentes != null}">
+<h2>Mes ventes</h2>
 </c:if>
-<c:if test="${!empty mesVentesEnCours}">
-
-<div class="row col-lg-12">
-
-	<c:forEach var="vec" items="${mesVentesEnCours}">
+<c:if test="${!empty ventesEnCours }">
+	<h2>Mes ventes en cours</h2>
+	<div class="row col-lg-12">
+	<c:forEach var="vec" items="${ventesEnCours}">
 		<div class="col-lg-4 col-12 col-md-6">
 			<div class="card" >
 				<div class="card-header text-center">
@@ -140,27 +139,57 @@
 		</div>
 	</c:forEach>
 	</div>
+</c:if>	
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-			</c:if>	
+<c:if test="${!empty ventesNonDebutees }">
+<h2>Mes ventes non débutées</h2>
+	<div class="row col-lg-12">
+	<c:forEach var="vnd" items="${ventesNonDebutees}">
+		<div class="col-lg-4 col-12 col-md-6">
+			<div class="card" >
+				<div class="card-header text-center">
+					Vente non débutées
+				</div>
+				<div class="card-body">
+					<h5 class="card-title">${vnd.nomArticle}</h5>
+					<p class="card-text">Mise a prix: ${vnd.miseAPrix} points<br>
+										prix de vente: ${vnd.prixVente}<br>
+										Mis aux enchères le ${vnd.dateDebutEncheres}<br>
+										Fin de l'enchère le ${vnd.dateFinEncheres}<br>
+					</p>
+					<div class="text-center">
+					<a href="" class="btn btn-info">Annuler la vente</a>
+					<a href="" class="btn btn-info">Modifier la vente</a>	
+					</div>		
+				</div>  
+			</div>
+		</div>
+	</c:forEach>
+	</div>
+</c:if>	
+<c:if test="${ !empty ventesTerminees }">
+<h2>Mes ventes terminées</h2>
+	<div class="row col-lg-12">
+	<c:forEach var="vt" items="${ventesTerminees}">
+		<div class="col-lg-4 col-12 col-md-6">
+			<div class="card" >
+				<div class="card-header text-center">
+					Vente terminée
+				</div>
+				<div class="card-body">
+					<h5 class="card-title">${vt.nomArticle}</h5>
+					<p class="card-text">Mise a prix: ${vt.miseAPrix} points<br>
+										prix de vente: ${vt.prixVente}<br>
+										Mis aux enchères le ${vt.dateDebutEncheres}<br>
+										Fin de l'enchère le ${vt.dateFinEncheres}<br>
+					</p>
+						
+				</div>  
+			</div>
+		</div>
+	</c:forEach>
+	</div>
+</c:if>				
 		
 		
 		
