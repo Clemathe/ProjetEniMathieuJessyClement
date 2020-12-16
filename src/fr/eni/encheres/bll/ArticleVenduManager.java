@@ -27,7 +27,10 @@ public class ArticleVenduManager {
 		
 		return ArticleVenduManager.articleVenduDAO.getToutesEncheresEnCours();
 	}
-	
+	public List<ArticleVendu> getMesVentes (int noUtilisateur){
+		
+		return ArticleVenduManager.articleVenduDAO.getMesVentes(noUtilisateur);
+	}
 
 	public ArticleVendu getArticleVendu(int noArticle) {
 		

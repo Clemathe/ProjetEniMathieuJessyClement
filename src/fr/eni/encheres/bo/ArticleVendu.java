@@ -25,7 +25,7 @@ public class ArticleVendu {
 	private int noCategorie;
 	
 	private int noUtilisateur;
-	
+	private Enchere enchere;
 	
 
 	
@@ -69,6 +69,21 @@ public class ArticleVendu {
 		setDateDebutEncheres(dateFinEncheres);
 		setPseudoVendeur(pseudoVendeur);
 		
+	}
+	//utilisé dans mesVentes
+	public ArticleVendu(String nomArticle, String description, LocalDate dateDebutEncheres,
+			LocalDate dateFinEncheres, int miseAPrix, int prixVente, Enchere enchere, 
+			Categorie categorie, Retrait lieuRetrait) {
+		
+		this.nomArticle = nomArticle;
+		this.description = description;
+		this.dateDebutEncheres = dateDebutEncheres;
+		this.dateFinEncheres = dateFinEncheres;
+		this.miseAPrix = miseAPrix;
+		this.prixVente = prixVente;
+		this.enchere = enchere;
+		this.categorie = categorie;
+		this.lieuRetrait = lieuRetrait;
 	}
 	
 	public ArticleVendu(String nomArticle, String description, LocalDate dateFinEncheres, int miseAPrix, int prixVente,

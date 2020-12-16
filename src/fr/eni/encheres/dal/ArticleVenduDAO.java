@@ -16,4 +16,6 @@ public interface ArticleVenduDAO {
 	public List<ArticleVendu> getToutesEncheresEnCours();
 
 	public boolean enregistrerUneEnchere(Enchere nouvelleEnchere);
+
+	public List<ArticleVendu> getMesVentes(int noUtilisateur);
 }
