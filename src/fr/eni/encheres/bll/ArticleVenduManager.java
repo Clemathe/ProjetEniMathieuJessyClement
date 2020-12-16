@@ -101,6 +101,7 @@ public class ArticleVenduManager {
 		
 		return message;
 	}
+	
 
 
 	public List<ArticleVendu> getVentesEnCours (int noUtilisateur, LocalDate ceJour) {

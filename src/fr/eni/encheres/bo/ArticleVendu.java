@@ -115,12 +115,13 @@ public class ArticleVendu {
 		this.lieuRetrait = lieuRetrait;
 	}
 	// GetArticleVendu avec Enchere 
-	public ArticleVendu(int noArticle, String nomArticle, String description, LocalDate dateFinEncheres, int miseAPrix, int prixVente,
+	public ArticleVendu(int noArticle, String nomArticle, String description,LocalDate dateDebutEncheres, LocalDate dateFinEncheres, int miseAPrix, int prixVente,
 			 Utilisateur vendeur, List<Enchere> encheres, Categorie categorie,
 			Retrait lieuRetrait) {
 		this.noArticle = noArticle;
 		this.nomArticle = nomArticle;
 		this.description = description;
+		this.dateDebutEncheres = dateDebutEncheres;
 		this.dateFinEncheres = dateFinEncheres;
 		this.miseAPrix = miseAPrix;
 		this.prixVente = prixVente;
@@ -130,12 +131,13 @@ public class ArticleVendu {
 		this.lieuRetrait = lieuRetrait;
 	}
 	// GetArticleVendu sans Enchere 
-	public ArticleVendu(int noArticle, String nomArticle, String description, LocalDate dateFinEncheres, int miseAPrix, int prixVente,
+	public ArticleVendu(int noArticle, String nomArticle, String description,LocalDate dateDebutEncheres, LocalDate dateFinEncheres, int miseAPrix, int prixVente,
 			 Utilisateur vendeur, Categorie categorie,
 			Retrait lieuRetrait) {
 		this.noArticle = noArticle;
 		this.nomArticle = nomArticle;
 		this.description = description;
+		this.dateDebutEncheres = dateDebutEncheres;
 		this.dateFinEncheres = dateFinEncheres;
 		this.miseAPrix = miseAPrix;
 		this.prixVente = prixVente;
@@ -143,6 +145,9 @@ public class ArticleVendu {
 		this.categorie = categorie;
 		this.lieuRetrait = lieuRetrait;
 	}
+	
+
+	
 	
 	@Override
 	public String toString() {

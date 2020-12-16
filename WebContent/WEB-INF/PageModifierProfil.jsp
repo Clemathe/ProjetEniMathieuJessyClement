@@ -17,33 +17,36 @@
 <body class="container">
 	<header>
 		<jsp:include page="./fragments/header.jsp"></jsp:include>
-	</header>	
-	
+	</header>
 	<h1 class="text-center my-5">Mon Profil</h1>
-	
 	<section class="my-2">
 	
-	<c:if test="${ Erreur != null}">
+	
+	
+	<div class="saisie row my-2">
 
-			<div class="container alert alert-danger text-align center" role="alert">
-			${messageUtilisateur}</div>
+		<c:if test="${ Erreur != null}">
+
+			<div class="container alert alert-danger text-align center"
+				role="alert">${Erreur}</div>
 		</c:if>
 
-<form method="post"action="${pageContext.request.contextPath}/MonProfil" class="form-horizontal">
-			
+
+	</div>
+	
+
+<form method="post"action="${pageContext.request.contextPath}/CreerCompte" class="form-horizontal">
 		
 		<div class="saisie row my-2">
-		
 			<label for="pseudo" class="col-md-2 col-form-label"> Pseudo : </label>
 			
 			<input class="form-controln col-md-4" type="text" id="pseudo"
-				name="pseudo" value="${utilisateur.pseudo}" required> 
-			
-					
+				name="pseudo" value="${utilisateur.pseudo}"> 
+				
 			<label for="nom" class="col-md-2 col-form-label"> Nom : </label>
 			
 			<input class="form-controln col-md-4" type="text" id="nom"
-				name="pseudo" value="${utilisateur.nom}"required> 
+				name="pseudo" value="${utilisateur.nom}"> 
 		</div>
 
 
@@ -51,12 +54,12 @@
 			<label for="prenom" class="col-md-2 col-form-label"> Prénom : </label>
 			
 			<input class="form-controln col-md-4" type="text" id="prenom" 
-			name="prenom" value="${utilisateur.prenom}"required> 
+			name="prenom" value="${utilisateur.prenom}"> 
 			
 			<label for="email" class="col-md-2 col-form-label"> Email : </label>
 			
 			<input class="form-controln col-md-4" type="email" size="50" id="email"
-				name="email" value="${utilisateur.email}"required>
+				name="email" value="${utilisateur.email}">
 		</div>
 
 		<div class="row my-2">
@@ -69,58 +72,51 @@
 			<label for="rue" class="col-2 col-form-label"> Rue : </label>
 			
 			<input class="form-controln col-md-4" type="text" id="rue" name="rue"
-				value="${utilisateur.rue}"required>
+				value="${utilisateur.rue}">
 		</div>
 
 		<div class="row my-2">
 			<label for="codePostal" class="col-md-2 col-form-label"> Code Postal : </label>
 			
 			<input class="form-controln col-md-4" type="text" id="codePostal"
-				name="codePostal" value="${utilisateur.codePostal}" required> 
-				
+				name="codePostal" value="${utilisateur.codePostal}"> 
 			<label for="ville" class="col-md-2 col-form-label"> Ville : </label>
 			
 			<input class="form-controln col-md-4" type="text" id="ville"
-				name="ville" value="${utilisateur.ville}" required>
-			
-			
+				name="ville" value="${utilisateur.ville}">
 		</div>
 		
 		<div class="row my-2">
 		<label for="motDePasseActuel" class="col-md-2 col-form-label"> Mot de passe actuel : </label>
 			
 			<input class="form-controln col-md-4" type="password" id="motDePasse"
-				name="motDePasse" value ="${param.motDePasse}" required> 
+				name="motDePasse" value ="${utilisateur.motDePasse}"> 
 		</div>
 
 		<div class="row my-2">
 			<label for="motDePasse1" class="col-md-2 col-form-label"> Nouveau mot de passe : </label>
 			
 			<input class="form-controln col-md-4" type="password" id="motDePasse1"
-				name="motDePasse1" required
-				placeholder="${param.motDePasse1}"> 
-				
+				name="motDePasse1" required="required"
+				placeholder="${utilisateur.motDePasse}"> 
 			<label for="motDePasse" class="col-md-2 col-form-label"> Confirmation : </label>
 			
-			<input class="form-controln col-md-4" type="password" id="motDePasseNew"
-				name="motDePasseNew" value="${param.motDePasseNew}" required>
+			<input class="form-controln col-md-4" type="password" id="motDePasse"
+				name="motDePasse" value="${param.motDePasse}" required="required"
+				placeholder="">
 		</div>
-		<div class="row my-5">
+		<div class="row my-2">
 		<label class="col-md-2 col-form-label">Credit :</label> 
 		${utilisateur.credit}
 		</div>
 		
-	<div>
-	<input type="hidden" name="enregistrer" value="true" >
-	<input type="hidden" name="no_utilsateur" value="${utilisateur.noUtilisateur}" >
-	</div>
-			<div class="d-flex justify-content-around">
+		<div class="d-flex justify-content-around">
+
 			<button class="btn btn-info my-5 mx-5 form-controln col-3 "
 				type="submit">Enregistrer</button>
-				
 
 			<button class="btn btn-info my-5 mx-5 form-controln col-3"
-				type="" value="">Supprimer mon compte</button>
+				type="reset">Supprimer mon compte</button>
 
 		</div>
 

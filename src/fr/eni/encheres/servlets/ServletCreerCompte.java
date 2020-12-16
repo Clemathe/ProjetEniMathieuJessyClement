@@ -102,6 +102,7 @@ public class ServletCreerCompte extends HttpServlet {
 		RequestDispatcher rd = request.getRequestDispatcher("/connexion");
 		rd.forward(request, response);
 
+		
 	}
 
 }

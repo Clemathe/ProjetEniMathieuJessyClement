@@ -7,9 +7,8 @@ import fr.eni.encheres.bo.Utilisateur;
 public interface UtilisateurDAO {
 	
 
-	public String getUserPassword(String login);
 
-	public Utilisateur getUserforSession(String login);
+	public Utilisateur getUserforSession(String login, String hashPassword) throws SQLException;
 
 	public void insertUtilisateur(Utilisateur utilisateur) throws SQLException, Exception;
 	
@@ -21,7 +20,12 @@ public interface UtilisateurDAO {
 
 	public void debiterUtilisateur(int montantEnchere, Utilisateur utilisateurCourant);
 	
-	public void supprimerUtilisateur (int no_utilisateur) throws SQLException; 
+	public void supprimerUtilisateur (int no_utilisateur) throws SQLException;
+
+
+
+
+
 
 
 }

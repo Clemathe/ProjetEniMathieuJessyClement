@@ -7,7 +7,6 @@ import java.sql.SQLException;
 
 
 
-
 public class CategorieDAOJdbcImpl implements CategorieDAO{
 	@Override
 	public int getCategorie(String libelle) {

@@ -1,4 +1,7 @@
+
+
 package fr.eni.encheres.servlets;
+
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -14,9 +17,6 @@ import javax.servlet.http.HttpServletResponse;
 import fr.eni.encheres.bll.UtilisateurManager;
 import fr.eni.encheres.bo.Utilisateur;
 
-/**
- * Servlet implementation class ServletMonProfil
- */
 @WebServlet("/MonProfil")
 public class ServletMonProfil extends HttpServlet {
 	private static final long serialVersionUID = 1L;

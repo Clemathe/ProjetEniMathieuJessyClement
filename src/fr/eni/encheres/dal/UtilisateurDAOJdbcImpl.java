@@ -14,96 +14,57 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	private static final String REMBOURSER_UTILISATEUR = "UPDATE Utilisateurs SET credit = credit + ? WHERE no_utilisateur = ?";
 	private static final String DEBITER_UTILISATEUR = "UPDATE Utilisateurs SET credit = credit - ? WHERE no_utilisateur = ?";
 	private static final String SUPPRIMER_UTILISATEUR = "DELETE FROM utilisateurs WHERE no_utilisateur = ?";
+	private static final String SELECT_USER_SESSION_EMAIL = "SELECT no_utilisateur, pseudo,nom , prenom, email, telephone, rue, code_postal, ville, credit, administrateur FROM  Utilisateurs WHERE email = ? and mot_de_passe = ?";
+	private static final String SELECT_USER_SESSION_LOGIN = "SELECT no_utilisateur, pseudo,nom , prenom, email, telephone, rue, code_postal, ville, credit, administrateur FROM  Utilisateurs WHERE email = ? and mot_de_passe = ?";
+		
+		@Override
+		public Utilisateur getUserforSession(String login, String hashPassword) throws SQLException {
+			Connection cnx = null;
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+			Utilisateur user = null;
 
-	@Override
-	public String getUserPassword(String login) {
-		Connection cnx = null;
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-		String userPassword = null;
-
-		try {
-			cnx = ConnectionProvider.getConnection();
-
-			if (login.matches("^[\\w.-]+@[\\w.-]+\\.[a-z]{2,}$")) {
-
-				String sql = "SELECT mot_de_passe FROM utilisateurs AS u WHERE u.email = ?";
-				pstmt = cnx.prepareStatement(sql);
-				pstmt.setString(1, "email");
-				pstmt.setString(2, login.trim());
-				rs = pstmt.executeQuery();
-				System.out.println(login);
-			} else {
-				String sql = "SELECT mot_de_passe FROM utilisateurs AS u WHERE u.pseudo = ?";
-				pstmt = cnx.prepareStatement(sql);
-				pstmt.setString(1, login);
-				rs = pstmt.executeQuery();
-			}
-			System.out.println(login);
-			if (rs.next()) {
-				userPassword = rs.getString("mot_de_passe");
-			}
-			System.out.println(userPassword);
-		} catch (Exception e) {
-			e.printStackTrace();
-			// TODO: handle exception
-		} finally {
 			try {
-				cnx.close();
+				cnx = ConnectionProvider.getConnection();
+			
+				if (login.matches("^[\\w.-]+@[\\w.-]+\\.[a-z]{2,}$")) {
+					System.out.println(login+ " 1 " + hashPassword);
+					pstmt = cnx.prepareStatement(SELECT_USER_SESSION_EMAIL);
+					pstmt.setString(1, login);
+					pstmt.setString(2, hashPassword);
+					rs = pstmt.executeQuery();
+					System.out.println(login+ " 2 " + hashPassword);
+					
+				} else {
+				
+					pstmt = cnx.prepareStatement(SELECT_USER_SESSION_LOGIN);
+					pstmt.setString(1, login.trim());
+					pstmt.setString(2, hashPassword);
+					rs = pstmt.executeQuery();
+				}
+				
+				if (rs.next()) {
+					System.out.println(login+ " 3 " + hashPassword);
+					user = new Utilisateur(rs.getInt("no_utilisateur"),rs.getString("pseudo"),rs.getString("nom"),
+							rs.getString("prenom"),rs.getString("email"),rs.getString("telephone"),rs.getString("rue"),
+							rs.getString("code_postal"),hashPassword, rs.getString("ville"), rs.getInt("credit"), rs.getBoolean("administrateur"));
+					
+				}
+				
+				System.out.println(user);
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
+				throw e;
+			} finally {
+				try {
+					cnx.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
 			}
+			return user;
 		}
-		return userPassword;
-	}
-
-	@Override
-	public Utilisateur getUserforSession(String login) {
-		Connection cnx = null;
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-		Utilisateur user = null;
-
-		try {
-			cnx = ConnectionProvider.getConnection();
-
-			if (login.matches("^[\\w.-]+@[\\w.-]+\\.[a-z]{2,}$")) {
-
-				String sql = "SELECT * FROM utilisateurs WHERE email = ?";
-				pstmt = cnx.prepareStatement(sql);
-				pstmt.setString(1, login.trim());
-				rs = pstmt.executeQuery();
-				System.out.println(login);
-			} else {
-				String sql = "SELECT * FROM utilisateurs WHERE pseudo = ?";
-				pstmt = cnx.prepareStatement(sql);
-				pstmt.setString(1, login);
-				rs = pstmt.executeQuery();
-			}
-
-			if (rs.next()) {
-				user = new Utilisateur(rs.getInt("no_utilisateur"), rs.getString("pseudo"), rs.getString("nom"),
-						rs.getString("prenom"), rs.getString("email"), rs.getString("telephone"), rs.getString("rue"),
-						rs.getString("code_postal"), rs.getString("ville"), rs.getString("mot_de_passe"),
-						rs.getInt("credit"), rs.getBoolean("administrateur"));
-
-			}
-
-			System.out.println(user);
-		} catch (Exception e) {
-			// TODO: handle exception
-			e.printStackTrace();
-		} finally {
-			try {
-				cnx.close();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-		return user;
-	}
+	
 
 	@Override
 	public void insertUtilisateur(Utilisateur utilisateur) throws Exception {
@@ -306,4 +267,5 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 		}
 
 	}
+
 }

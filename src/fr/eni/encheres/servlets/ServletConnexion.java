@@ -28,7 +28,8 @@ public class ServletConnexion extends HttpServlet {
 			throws ServletException, IOException {
 		
 		Boolean deconnection = Boolean.parseBoolean(request.getParameter("disconnect"));
-
+		Boolean loginCreated = (request.getParameter("loginCreated") != null);
+		
 		if (deconnection == true) {
 			// déconnection de la session
 			request.getSession().invalidate();
@@ -38,7 +39,10 @@ public class ServletConnexion extends HttpServlet {
 
 			RequestDispatcher rd = request.getRequestDispatcher("/accueil");
 			rd.forward(request, response);
-		}else {
+			
+	
+		}
+		else {
 
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/PageConnexion.jsp");
 		rd.forward(request, response);
@@ -51,67 +55,54 @@ public class ServletConnexion extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
+		
+		request.setCharacterEncoding("UTF-8");
+		boolean nouvelleConnexion = Boolean.parseBoolean(request.getParameter("nouvelleConnexion")); 
+		boolean creationUtilisateur = request.getAttribute("creationUtilisateur") != null;
+		String login = (String) request.getParameter("login");
+		String password = (String) request.getParameter("pass");
+		System.out.println("connexion "+request.getAttribute("creationUtilisateur"));
+		System.out.println("connexion "+ creationUtilisateur);
+//		if (nouvelleConnexion) {
+//			 login = (String) request.getParameter("login");
+//			 password = (String) request.getParameter("pass");
+//			 
+//		}
+		if (creationUtilisateur) {
+			 login = (String) request.getAttribute("loginCreated");
+			 password = (String) request.getAttribute("passwordCreated");
+		}
 		UtilisateurManager UManager = new UtilisateurManager();
-
-		// authentification de l'utilisateur et récupération du login
-		String userLogin = getAuthentication(request, response, UManager);
-
-		// Si l'utilisateur a été authentifié, son login est retourné sinon celui ci est nul
-		if (userLogin != null) {
-			// Création d'une nouvelle session
-			HttpSession sessionCourante = request.getSession(true);
-
-			// Création du profil de l'utilisateur et stockage en session
-			Utilisateur utilisateurCourant = UManager.getUtilisateurPourSession(userLogin);
-			sessionCourante.setAttribute("utilisateurCourant", utilisateurCourant);
-			
 		
-			// Attribut pour afficher une alerte de connexion réussie
-			request.setAttribute("nouvelleConnexion", "true");
-
-			RequestDispatcher rd = getServletContext().getRequestDispatcher("/ServletAccueil");
-			rd.forward(request, response);
-
-		} else {
-
-			String errorConnection = "Identifiant ou mot de passe incorrect";
-			request.setAttribute("errorConnection", errorConnection);
-
-			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/PageConnexion.jsp");
-			rd.forward(request, response);
-		}
-
-	}
-
-	public String getAuthentication(HttpServletRequest request, HttpServletResponse response,
-			UtilisateurManager UManager) {
-
-		String login = null;
-		String password = null;
-		String checkedLogin = null;
-
-		boolean matchingUserPassword = false;
-		boolean nouvelleConnexion = Boolean.parseBoolean(request.getParameter("nouvelleConnexion")) == true;
-		boolean fromCreationToConnection = request.getAttribute("loginCreated") != null;
-
-		if (nouvelleConnexion) {
-
-			login = (String) request.getParameter("login");
-			password = (String) request.getParameter("pass");
-			matchingUserPassword = UManager.verificationUtilisateurMotDePasse(login, password);
-
-		} else if (fromCreationToConnection) {
-
-			login = (String) request.getAttribute("loginCreated");
-			//password = (String) request.getAttribute("pass");
-			matchingUserPassword = true;
-		}
+			try {Utilisateur utilisateurCourant = UManager.getUtilisateurPourSession(login, password);
+	
+				if(utilisateurCourant != null) {
+					HttpSession sessionCourante = request.getSession(true);
 		
-		if (matchingUserPassword) {
-			checkedLogin = login;
-		}
-
-		return checkedLogin;
+					// Création du profil de l'utilisateur et stockage en session
+					sessionCourante.setAttribute("utilisateurCourant", utilisateurCourant);
+					
+					// Attribut pour afficher une alerte de connexion réussie
+					request.setAttribute("nouvelleConnexion", "true");
+		
+					RequestDispatcher rd = getServletContext().getRequestDispatcher("/ServletAccueil");
+					rd.forward(request, response);
+		
+				}else {
+		
+					String errorConnection = "Identifiant ou mot de passe incorrect";
+					request.setAttribute("errorConnection", errorConnection);
+		
+					RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/PageConnexion.jsp");
+					rd.forward(request, response);
+				}
+			}catch (Exception e) {
+				// Sinon je retourne à la page d'ajout pour indiquer les problèmes:
+				e.printStackTrace();
+				request.setAttribute("erreurs", e.getMessage());
+				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/login.jsp");
+				rd.forward(request, response);
+			}
+		//}
 	}
 }

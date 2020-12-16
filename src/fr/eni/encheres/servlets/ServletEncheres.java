@@ -57,6 +57,7 @@ public class ServletEncheres extends HttpServlet {
 		
 		if(sessionUtilisateur) {
 			if(encherir) {
+			try {
 				System.out.println("servlet enchere noArticle "+request.getParameter("noArticle"));
 				int montant = Integer.parseInt(request.getParameter("montant"));
 				int noArticle = Integer.parseInt(request.getParameter("noArticle"));
@@ -66,8 +67,11 @@ public class ServletEncheres extends HttpServlet {
 				request.setAttribute("enchereMessage", enchereMessage);
 				
 				//Rechargement de la session utilisateur pour mettre a jour le solde
-				utilisateurCourant = uManager.getUtilisateurPourSession(utilisateurCourant.getPseudo());
+				utilisateurCourant = uManager.getUtilisateurPourSession(utilisateurCourant.getPseudo(), utilisateurCourant.getMotDePasse());
 				request.getSession().setAttribute("utilisateurCourant", utilisateurCourant);
+				doGet(request, response);
+			} catch (Exception e) {
+				
 				doGet(request, response);			
 			}
 		}else {
@@ -76,4 +80,6 @@ public class ServletEncheres extends HttpServlet {
 	
 
 	}
+	}
 }
+
