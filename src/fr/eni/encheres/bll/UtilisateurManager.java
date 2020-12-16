@@ -4,6 +4,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import fr.eni.encheres.bo.Utilisateur;
 import fr.eni.encheres.dal.DAOFactory;
 import fr.eni.encheres.dal.UtilisateurDAO;
@@ -57,18 +60,19 @@ public class UtilisateurManager {
 
 		} else if (telephone == null || !telephone.matches("(0|(\\+33)|(0033))[1-9][0-9]{8}")) {
 			MessageErreur.add("erreur de saisie du numéro de téléphone : null ou format interdit");
-
 			
 		} else if (rue == null) {
 			MessageErreur.add("erreur de saisie de la rue : null ");
 
 		} else if (ville == null || !ville.matches("^[a-zA-Z]*$")) {
 			MessageErreur.add("erreur de saisie de la ville : null ou caractère interdit");
+		
 		} else if (codePostal == null || !codePostal.matches("^[0-9]{5}$")) {
 			MessageErreur.add("erreur de saisie du code postal : null ou caractère interdit");
 
 		} else if (!motDePasse.equals(motDePasse1)) {
 			MessageErreur.add("erreur de confirmation du mot de passe : veuillez entrer de nouveau votre mot de passe");
+	
 		} else if (motDePasse1 == null
 				|| !motDePasse1.matches("^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[-+!*$@%_])([-+!*$@%_\\w]{8,12})$")) {
 			MessageErreur.add(
@@ -89,6 +93,7 @@ public class UtilisateurManager {
 
 	public boolean creerUtilisateur(String pseudo, String nom, String prenom, String email, String telephone,
 			String rue, String codePostal, String ville, String motDePasse) throws SQLException {
+		
 		Boolean insertOK = false;
 		Utilisateur utilisateur = new Utilisateur();
 		utilisateur.setPseudo(pseudo);
@@ -115,6 +120,32 @@ public class UtilisateurManager {
 		utilisateurDAO.insertUtilisateur(utilisateur);
 
 	}
+	public String modifierUtilisateur(String pseudo, String nom, String prenom, String email, String telephone,
+			String rue, String codePostal, String ville, String motDePasse) throws Exception {
+		String statutUpdate = "validation de la modification";
+		Utilisateur utilisateur = new Utilisateur();
+		utilisateur.setPseudo(pseudo);
+		utilisateur.setNom(nom);
+		utilisateur.setPrenom(prenom);
+		utilisateur.setEmail(email);
+		utilisateur.setTelephone(telephone);
+		utilisateur.setRue(rue);
+		utilisateur.setVille(ville);
+		utilisateur.setCodePostal(codePostal);
+		utilisateur.setMotDePasse(motDePasse);
+		try {
+			utilisateurDAO.update(utilisateur);
+		} catch (Exception e) {
+			e.printStackTrace();
+			statutUpdate = "La modification de l'utilisateur n'a pas pu etre exécutée en base de données"; 
+		}
+				return statutUpdate;
+		
+	}
+	public void updateUtilisateur (Utilisateur utilisateur) throws SQLException {
+		utilisateurDAO.update(utilisateur);
+	}
+	
 
 	public void rembourserUtilisateur(int enchereLaPlusHaute, Utilisateur user) {
 		utilisateurDAO.rembourserUtilisateur(enchereLaPlusHaute, user);
@@ -124,5 +155,6 @@ public class UtilisateurManager {
 		utilisateurDAO.debiterUtilisateur(montantEnchere, utilisateurCourant);
 		
 	}
-
+	
+	
 }
