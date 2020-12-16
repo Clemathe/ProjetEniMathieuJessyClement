@@ -29,8 +29,8 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 
 				String sql = "SELECT mot_de_passe FROM utilisateurs AS u WHERE u.email = ?";
 				pstmt = cnx.prepareStatement(sql);
-
-				pstmt.setString(1, login.trim());
+				pstmt.setString(1, "email");
+				pstmt.setString(2, login.trim());
 				rs = pstmt.executeQuery();
 				System.out.println(login);
 			} else {
@@ -246,7 +246,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	public void update(Utilisateur utilisateur) throws SQLException {
 
 		try (Connection cnx = ConnectionProvider.getConnection()) {
-
+			System.out.println("dans update DAOJDBCIMPL");
 			try {
 
 				cnx.setAutoCommit(false);
@@ -272,7 +272,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 				cnx.commit();
 				pstmt.close();
 				cnx.close();
-
+				System.out.println("cnx.close update DAOJDBCIMPL");
 			} catch (Exception e) {
 				e.printStackTrace();
 				cnx.rollback();
@@ -282,7 +282,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 			throw e;
 
 		}
-
+		System.out.println("fin update DAOJDBCIMPL");
 	}
 
 	@Override
