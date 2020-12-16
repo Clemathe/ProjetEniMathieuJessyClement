@@ -70,17 +70,17 @@
 			<label class="form-check-label" for="achatsVentes">Mes achats</label>
 				
 					<div class="custom-control custom-switch">
-						<input type="checkbox" class="custom-control-input" id="encheresOuvertes" value="eOuvertes">
+						<input type="checkbox" class="custom-control-input" id="encheresOuvertes" name="encheresOuvertes" value="eOuvertes">
 						<label class="custom-control-label" for="encheresOuvertes">Enchères ouvertes</label>
 					</div>
 					
 					<div class="custom-control custom-switch">
-						<input type="checkbox"  class="custom-control-input" id="encheresEnCours" value="eEnCours">
+						<input type="checkbox"  class="custom-control-input" id="encheresEnCours" name="encheresEnCours" value="eEnCours">
 						<label class="custom-control-label"  for="encheresEnCours"> Mes enchères en cours</label>
 					</div>
 					
 					<div class="custom-control custom-switch">
-						<input type="checkbox"  class="custom-control-input" id="encheresRemportees" value="eRemportees">
+						<input type="checkbox"  class="custom-control-input" id="encheresRemportees" name="encheresRemportees"value="eRemportees">
 						<label class="custom-control-label"  for="encheresRemportees"> Mes enchères remportées</label>
 					</div>
 		</div>	
@@ -90,17 +90,17 @@
  				<label class="form-check-label" for="achatsVentes">Mes ventes</label>
 		
  					<div class="custom-control custom-switch">
- 						<input type="checkbox" class="custom-control-input" id="ventesEnCours" value="vEnCours">
+ 						<input type="checkbox" class="custom-control-input" id="ventesEnCours" name="ventesEnCours" value="vEnCours">
  						<label class="custom-control-label" for="ventesEnCours">Mes ventes en cours</label>
    				</div>
    				
    				<div class="custom-control custom-switch">
-   					<input type="checkbox"  class="custom-control-input" id="ventesNonDebutees" value="vNonDebutees">
+   					<input type="checkbox"  class="custom-control-input" id="ventesNonDebutees" name="ventesNonDebutees" value="vNonDebutees">
    					<label class="custom-control-label"  for="ventesNonDebutees"> ventes non débutées</label>
    				</div>
    				
    				<div class="custom-control custom-switch">
-   					<input type="checkbox"  class="custom-control-input" id="ventesTerminees" value="vTerminees">
+   					<input type="checkbox"  class="custom-control-input" id="ventesTerminees" name="ventesTerminees" value="vTerminees">
    					<label class="custom-control-label"  for="ventesTerminees"> ventes terminées</label>
    				</div>
 		</div>
@@ -112,23 +112,29 @@
 			
 					
 	
-<c:if test="${!empty vente}">
-<h1>Ventes</h1>
+<c:if test="${!empty mesVentes}">
+<h2>Mes Ventes</h2>
+</c:if>
+<c:if test="${!empty mesVentesEnCours}">
 
 <div class="row col-lg-12">
 
-	<c:forEach var="v" items="${mesVentes}">
+	<c:forEach var="vec" items="${mesVentesEnCours}">
 		<div class="col-lg-4 col-12 col-md-6">
 			<div class="card" >
 				<div class="card-header text-center">
 					Vente en cours
 				</div>
 				<div class="card-body">
-					<h5 class="card-title">${v.nomArticle}</h5>
-					<p class="card-text">Prix: ${v.prixVente} points<br /> 
-					Fin de l'enchère: ${v.dateFinEncheres}<br />
+					<h5 class="card-title">${vec.nomArticle}</h5>
+					<p class="card-text">Mise a prix: ${vec.miseAPrix} points<br>
+										prix de vente: ${vec.prixVente}<br>
+										Mis aux enchères le ${vec.dateDebutEncheres}<br>
+										Fin de l'enchère le ${vec.dateFinEncheres}<br>
 					</p>
-								
+					<div class="text-center">
+					<a href="encheres?noArticle=${vec.noArticle}" class="btn btn-info">Accéder à la vente</a>	
+					</div>		
 				</div>  
 			</div>
 		</div>

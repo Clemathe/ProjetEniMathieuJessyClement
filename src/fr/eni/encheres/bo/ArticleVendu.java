@@ -85,6 +85,19 @@ public class ArticleVendu {
 		this.categorie = categorie;
 		this.lieuRetrait = lieuRetrait;
 	}
+	//utilisé dans getVentesEnCours / ventesnondebutees
+	public ArticleVendu(int noArticle, String nomArticle, LocalDate dateDebutEncheres,
+			LocalDate dateFinEncheres, int miseAPrix, int prixVente) {
+		this.noArticle=noArticle;
+		this.nomArticle = nomArticle;
+		this.dateDebutEncheres = dateDebutEncheres;
+		this.dateFinEncheres = dateFinEncheres;
+		this.miseAPrix = miseAPrix;
+		this.prixVente = prixVente;
+		
+	}
+	
+	
 	
 	public ArticleVendu(String nomArticle, String description, LocalDate dateFinEncheres, int miseAPrix, int prixVente,
 			boolean etatVente, Utilisateur acheteur, Utilisateur vendeur, List<Enchere> encheres, Categorie categorie,

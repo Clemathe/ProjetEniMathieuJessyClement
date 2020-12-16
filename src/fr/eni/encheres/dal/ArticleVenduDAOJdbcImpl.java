@@ -442,6 +442,54 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 		return succes;
 	}
 
+	@Override
+	public List<ArticleVendu> getVentesEnCours(int noUtilisateur, LocalDate ceJour) {
+		List<ArticleVendu> mesVentesEnCours = new ArrayList<ArticleVendu>();
+		String SELECT_MES_VENTES_EN_COURS =
+				"SELECT "
+				+ "ARTICLES_VENDUS.no_article,"
+				+ "ARTICLES_VENDUS.nom_article,"
+				+ "ARTICLES_VENDUS.date_debut_encheres, "
+				+ "ARTICLES_VENDUS.date_fin_encheres, "
+				+" ARTICLES_VENDUS.prix_initial, "
+				+ " ARTICLES_VENDUS.prix_vente "
+				+" FROM ARTICLES_VENDUS"
+				+" WHERE ((no_utilisateur = ?) AND (date_debut_encheres <  ? )AND (date_fin_encheres >  ? )) "; 
+		
+		try (Connection cnx = ConnectionProvider.getConnection()){
+			PreparedStatement pstmt = cnx.prepareStatement(SELECT_MES_VENTES_EN_COURS);
+			pstmt.setInt(1,noUtilisateur);
+			pstmt.setDate(2, Date.valueOf(ceJour));
+			pstmt.setDate(3, Date.valueOf(ceJour));
+			ResultSet rs = pstmt.executeQuery();
+			while (rs.next()) {
+				
+				ArticleVendu articleVendu= new ArticleVendu(rs.getInt(1),rs.getString(2),
+						rs.getDate(3).toLocalDate(),rs.getDate(4).toLocalDate(),rs.getInt(5), rs.getInt(6)); 
+				mesVentesEnCours.add(articleVendu);
+			}
+		
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	
+		return mesVentesEnCours;
+	}
+
+	@Override
+	public List<ArticleVendu> getVentesNonDebutees(int noUtilisateur, LocalDate ceJour) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<ArticleVendu> getVentesTerminees(int noUtilisateur, LocalDate ceJour) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	
 
 

@@ -1,5 +1,6 @@
 package fr.eni.encheres.dal;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import fr.eni.encheres.bo.ArticleVendu;
@@ -18,4 +19,11 @@ public interface ArticleVenduDAO {
 	public boolean enregistrerUneEnchere(Enchere nouvelleEnchere);
 
 	public List<ArticleVendu> getMesVentes(int noUtilisateur);
+	
+	
+	public List<ArticleVendu> getVentesEnCours(int noUtilisateur, LocalDate ceJour);
+	
+	public List<ArticleVendu> getVentesNonDebutees(int noUtilisateur, LocalDate ceJour);
+	
+	public List<ArticleVendu> getVentesTerminees(int noUtilisateur, LocalDate ceJour);
 }
