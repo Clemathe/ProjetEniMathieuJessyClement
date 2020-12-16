@@ -80,7 +80,7 @@
 
 <c:if test="${!empty enchereEnCours}">
 <div class=" text-center" >
-<h2>Notre application recense plus de ${enchereEnCours.size()} enchères.</h2>
+<h2>Notre site vous propose de nombreuses enchères.</h2>
 <h3>Voici celles qui sont en cours et sur lesquelles vous pouvez enchérir !</h3>
 <br />	
 </div>
