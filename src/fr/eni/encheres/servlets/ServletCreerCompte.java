@@ -98,9 +98,15 @@ public class ServletCreerCompte extends HttpServlet {
 
 		// renvoie des attributs si insertUtilisateur is true
 		else 
-			request.setAttribute("loginCreated", pseudo);
-		RequestDispatcher rd = request.getRequestDispatcher("/connexion");
-		rd.forward(request, response);
+		request.setAttribute("loginCreated", pseudo);
+		request.setAttribute("creationUtilisateur", "true"); 
+		request.setAttribute("loginCreated", email);
+        request.setAttribute("passwordCreated", motDePasse);
+       
+        System.out.println("envoi vers accueil "+ motDePasse + " " +email);
+       
+        RequestDispatcher rd = request.getRequestDispatcher("/connexion");
+        rd.forward(request, response);
 
 		
 	}
