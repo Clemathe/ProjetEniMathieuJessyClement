@@ -28,5 +28,4 @@ public class MD5Utils {
 			throw new IllegalArgumentException(e);
 		}
 	}
-	
 }

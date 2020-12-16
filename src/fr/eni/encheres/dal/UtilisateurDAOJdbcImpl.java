@@ -5,70 +5,67 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-
 import fr.eni.encheres.bo.Utilisateur;
 
-
 public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
-	private static final String INSERT_UTILISATEUR = "INSERT INTO UTILISATEURS (pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"; 
-	private static final String SELECT_BY_ID = "SELECT no_utilisateur, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur FROM UTILISATEURS where id=?"; 
-	private static final String UPDATE = "UPDATE UTILISATEURS set pseudo = ?, nom =?, prenom=?, email=?, telephone=?, rue=?, code_postal=?, ville=?, mot_de_passe=? where id=?"; 
+	private static final String INSERT_UTILISATEUR = "INSERT INTO UTILISATEURS (pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+	private static final String SELECT_BY_ID = "SELECT no_utilisateur, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur FROM UTILISATEURS where id=?";
+	private static final String UPDATE = "UPDATE UTILISATEURS set pseudo = ?, nom =?, prenom=?, email=?, telephone=?, rue=?, code_postal=?, ville=?, mot_de_passe=? where no_utilisateur=?";
 	private static final String REMBOURSER_UTILISATEUR = "UPDATE Utilisateurs SET credit = credit + ? WHERE no_utilisateur = ?";
 	private static final String DEBITER_UTILISATEUR = "UPDATE Utilisateurs SET credit = credit - ? WHERE no_utilisateur = ?";
+	private static final String SUPPRIMER_UTILISATEUR = "DELETE FROM utilisateurs WHERE no_utilisateur = ?";
 	private static final String SELECT_USER_SESSION_EMAIL = "SELECT no_utilisateur, pseudo,nom , prenom, email, telephone, rue, code_postal, ville, credit, administrateur FROM  Utilisateurs WHERE email = ? and mot_de_passe = ?";
 	private static final String SELECT_USER_SESSION_LOGIN = "SELECT no_utilisateur, pseudo,nom , prenom, email, telephone, rue, code_postal, ville, credit, administrateur FROM  Utilisateurs WHERE email = ? and mot_de_passe = ?";
-	private static final String SUPPRIMER_UTILISATEUR = "DELETE FROM utilisateurs WHERE no_utilisateur = ?";
-	
-	
-	@Override
-	public Utilisateur getUserforSession(String login, String hashPassword) throws SQLException {
-		Connection cnx = null;
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-		Utilisateur user = null;
-
-		try {
-			cnx = ConnectionProvider.getConnection();
 		
-			if (login.matches("^[\\w.-]+@[\\w.-]+\\.[a-z]{2,}$")) {
-				System.out.println(login+ " 1 " + hashPassword);
-				pstmt = cnx.prepareStatement(SELECT_USER_SESSION_EMAIL);
-				//pstmt.setString(1, "email");
-				pstmt.setString(1, login);
-				pstmt.setString(2, hashPassword);
-				rs = pstmt.executeQuery();
-				System.out.println(login+ " 2 " + hashPassword);
-				
-			} else {
-			
-				pstmt = cnx.prepareStatement(SELECT_USER_SESSION_LOGIN);
-				//pstmt.setString(1, "pseudo");
-				pstmt.setString(1, login.trim());
-				pstmt.setString(2, hashPassword);
-				rs = pstmt.executeQuery();
-			}
-			
-			if (rs.next()) {
-				System.out.println(login+ " 3 " + hashPassword);
-				user = new Utilisateur(rs.getInt("no_utilisateur"),rs.getString("pseudo"),rs.getString("nom"),
-						rs.getString("prenom"),rs.getString("email"),rs.getString("telephone"),rs.getString("rue"),
-						rs.getString("code_postal"),hashPassword, rs.getString("ville"), rs.getInt("credit"), rs.getBoolean("administrateur"));
-				
-			}
-			
-			System.out.println(user);
-		} catch (SQLException e) {
-			e.printStackTrace();
-			throw e;
-		} finally {
+		@Override
+		public Utilisateur getUserforSession(String login, String hashPassword) throws SQLException {
+			Connection cnx = null;
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+			Utilisateur user = null;
+
 			try {
-				cnx.close();
+				cnx = ConnectionProvider.getConnection();
+			
+				if (login.matches("^[\\w.-]+@[\\w.-]+\\.[a-z]{2,}$")) {
+					System.out.println(login+ " 1 " + hashPassword);
+					pstmt = cnx.prepareStatement(SELECT_USER_SESSION_EMAIL);
+					pstmt.setString(1, login);
+					pstmt.setString(2, hashPassword);
+					rs = pstmt.executeQuery();
+					System.out.println(login+ " 2 " + hashPassword);
+					
+				} else {
+				
+					pstmt = cnx.prepareStatement(SELECT_USER_SESSION_LOGIN);
+					pstmt.setString(1, login.trim());
+					pstmt.setString(2, hashPassword);
+					rs = pstmt.executeQuery();
+				}
+				
+				if (rs.next()) {
+					System.out.println(login+ " 3 " + hashPassword);
+					user = new Utilisateur(rs.getInt("no_utilisateur"),rs.getString("pseudo"),rs.getString("nom"),
+							rs.getString("prenom"),rs.getString("email"),rs.getString("telephone"),rs.getString("rue"),
+							rs.getString("code_postal"),hashPassword, rs.getString("ville"), rs.getInt("credit"), rs.getBoolean("administrateur"));
+					
+				}
+				
+				System.out.println(user);
 			} catch (SQLException e) {
 				e.printStackTrace();
+				throw e;
+			} finally {
+				try {
+					cnx.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
 			}
+			return user;
 		}
-		return user;
-	}
+	
+
 	@Override
 	public void insertUtilisateur(Utilisateur utilisateur) throws Exception {
 
@@ -210,7 +207,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	public void update(Utilisateur utilisateur) throws SQLException {
 
 		try (Connection cnx = ConnectionProvider.getConnection()) {
-
+			System.out.println("dans update DAOJDBCIMPL");
 			try {
 
 				cnx.setAutoCommit(false);
@@ -236,7 +233,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 				cnx.commit();
 				pstmt.close();
 				cnx.close();
-
+				System.out.println("cnx.close update DAOJDBCIMPL");
 			} catch (Exception e) {
 				e.printStackTrace();
 				cnx.rollback();
@@ -246,7 +243,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 			throw e;
 
 		}
-
+		System.out.println("fin update DAOJDBCIMPL");
 	}
 
 	@Override

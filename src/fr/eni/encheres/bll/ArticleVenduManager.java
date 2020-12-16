@@ -102,4 +102,25 @@ public class ArticleVenduManager {
 		return message;
 	}
 	
+
+
+	public List<ArticleVendu> getVentesEnCours (int noUtilisateur, LocalDate ceJour) {
+		
+		return ArticleVenduManager.articleVenduDAO.getVentesEnCours(noUtilisateur, ceJour);
+	}
+	
+	public List<ArticleVendu> getVentesNonDebutees (int noUtilisateur, LocalDate ceJour) {
+		
+		return ArticleVenduManager.articleVenduDAO.getVentesNonDebutees(noUtilisateur, ceJour);
+	}
+
+	public List<ArticleVendu> getVentesTerminees (int noUtilisateur, LocalDate ceJour) {
+		
+		return ArticleVenduManager.articleVenduDAO.getVentesTerminees(noUtilisateur, ceJour);
+	}
+
+
+
+
+
 }

@@ -51,10 +51,8 @@ public class ServletVendreUnArticle extends HttpServlet {
 		String description = (String)request.getParameter("description");
 		String categorieLibelle = (String)request.getParameter("categorieLibelle");
 		int miseAPrix = Integer.parseInt(request.getParameter("miseAPrix"));
-		
 		LocalDate dateDebutEnchere = LocalDate.parse(request.getParameter("dateDebutEncheres"));
 		LocalDate dateFinEnchere = LocalDate.parse(request.getParameter("dateFinEncheres"));
-		
 		String rue = (String)request.getParameter("rue");
 		String codePostal = (String)request.getParameter("codePostal");
 		String ville = (String)request.getParameter("ville");

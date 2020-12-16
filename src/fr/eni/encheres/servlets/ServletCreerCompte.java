@@ -14,11 +14,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
-import fr.eni.encheres.bll.MD5Utils;
 import fr.eni.encheres.bll.UtilisateurManager;
-import fr.eni.encheres.bo.Utilisateur;
 
 
 /**
@@ -100,17 +97,10 @@ public class ServletCreerCompte extends HttpServlet {
 			}
 
 		// renvoie des attributs si insertUtilisateur is true
-		else {
-			request.setAttribute("creationUtilisateur", "true");
-			request.setAttribute("loginCreated", email);
-			request.setAttribute("passwordCreated", motDePasse);
-			
-			System.out.println("envoi vers accueil "+ motDePasse + " " +email);
-			
-			RequestDispatcher rd = request.getRequestDispatcher("/connexion");
-			rd.forward(request, response);
-
-		}
+		else 
+			request.setAttribute("loginCreated", pseudo);
+		RequestDispatcher rd = request.getRequestDispatcher("/connexion");
+		rd.forward(request, response);
 
 		
 	}
