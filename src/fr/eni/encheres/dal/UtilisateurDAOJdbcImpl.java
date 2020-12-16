@@ -271,7 +271,4 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 
 	}
 
-
-
-
 }

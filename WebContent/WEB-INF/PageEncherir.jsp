@@ -11,7 +11,6 @@
 <head>
 <jsp:include page="/WEB-INF/fragments/head.jsp"></jsp:include>
 
-
 </head>
 
 <body class="container">

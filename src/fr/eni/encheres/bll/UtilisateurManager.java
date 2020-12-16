@@ -148,5 +148,4 @@ public class UtilisateurManager {
 		utilisateurDAO.debiterUtilisateur(montantEnchere, utilisateurCourant);
 		
 	}
-
 }

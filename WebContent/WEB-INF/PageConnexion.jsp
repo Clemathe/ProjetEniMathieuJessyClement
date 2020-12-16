@@ -68,7 +68,7 @@
 		<section class="my-5">
 		
 			<div class="form-group" id="creerUnCompte">
-				<a href=""><button class="btn btn-info btn-lg col-12">Créer un
+				<a href="CreerCompte"><button class="btn btn-info btn-lg col-12">Créer un
 						compte</button></a>
 			</div>
 			

@@ -167,7 +167,7 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 				+" JOIN RETRAITS ON ARTICLES_VENDUS.no_article = RETRAITS.no_article"
 		 		+" JOIN CATEGORIES ON ARTICLES_VENDUS.no_categorie = CATEGORIES.no_categorie"
 		 		+" JOIN ENCHERES ON ARTICLES_VENDUS.no_article = ENCHERES.no_article"
-		 		+" WHERE ARTICLES_VENDUS.no_article = ? and ENCHERES.montant_enchere = "
+		 		+" WHERE ARTICLES_VENDUS.no_article = 22 and ENCHERES.montant_enchere = "
 		 		+" (SELECT MAX(montant_enchere) FROM ARTICLES_VENDUS"
 		 		+" JOIN ENCHERES ON ARTICLES_VENDUS.no_article=ENCHERES.no_article)"; 
 		 
@@ -195,9 +195,11 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 			
 			
 			System.out.println("DAO debut, numero article : "+ noArticle);
+			
 			if (getMeilleurEnchere(noArticle) != null) {
+				
 				PreparedStatement pstmt = cnx.prepareStatement(sqlGetArticleAvecEnchere);
-				pstmt.setInt(1, noArticle);
+//				pstmt.setInt(1, noArticle);
 				ResultSet rs = pstmt.executeQuery();
 				List<Enchere> encheres = new ArrayList<>();
 				int noMeilleurEncherisseur = 0;
@@ -441,7 +443,6 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 	}
 
 
-	
 	
 	
 	

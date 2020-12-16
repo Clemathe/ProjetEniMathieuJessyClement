@@ -106,5 +106,4 @@ public class ServletConnexion extends HttpServlet {
 		//}
 	}
 
-	
 }

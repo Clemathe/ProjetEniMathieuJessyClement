@@ -42,4 +42,5 @@ public class ServletListesEncheresConnecte extends HttpServlet {
 		doGet(request, response);
 	}
 
+	
 }

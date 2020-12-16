@@ -86,8 +86,7 @@ public class ServletVendreUnArticle extends HttpServlet {
 	}
 	
 	
-	
-	
+
 	
 
 }

@@ -28,4 +28,5 @@ public class ServletIndex extends HttpServlet {
 		doGet(request, response);
 	}
 
+	
 }
