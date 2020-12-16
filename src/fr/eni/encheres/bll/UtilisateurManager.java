@@ -34,12 +34,14 @@ public class UtilisateurManager {
 
 	public List<String> verificationSaisieUtilisateur(String pseudo, String nom, String prenom, String email,
 			String telephone, String rue, String codePostal, String ville, String motDePasse, String motDePasse1) {
+		
 		List<String> MessageErreur = new ArrayList<>();
+		
 		if (pseudo == null || !pseudo.matches("[a-zA-Z0-9]+")) {
 			MessageErreur.add("erreur de saisie du pseudonyme : null ou caractères interdit");
 
 		} else if (nom == null || !nom.matches("^[a-zA-Z]*$")) {
-			MessageErreur.add("erreur de saisie du Nom : null ou caractère interdit");
+			//MessageErreur.add("erreur de saisie du Nom : null ou caractère interdit");
 
 		} else if (prenom == null || !prenom.matches("^[a-zA-Z]*$")) {
 			MessageErreur.add("erreur de saisie du Prenom : null ou caractère interdit");
@@ -53,8 +55,8 @@ public class UtilisateurManager {
 		} else if (rue == null) {
 			MessageErreur.add("erreur de saisie de la rue : null ");
 
-		} else if (ville == null || !ville.matches("^[a-zA-Z]*$")) {
-			MessageErreur.add("erreur de saisie de la ville : null ou caractère interdit");
+		//} else if (ville == null || !ville.matches("^[a-zA-Z]*$")) {
+		//	MessageErreur.add("erreur de saisie de la ville : null ou caractère interdit");
 		
 		} else if (codePostal == null || !codePostal.matches("^[0-9]{5}$")) {
 			MessageErreur.add("erreur de saisie du code postal : null ou caractère interdit");
@@ -66,7 +68,6 @@ public class UtilisateurManager {
 				|| !motDePasse1.matches("^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[-+!*$@%_])([-+!*$@%_\\w]{8,12})$")) {
 			MessageErreur.add(
 					"le mot de passe doit contenir entre 8 et 12 caractères, au moins une lettre (minuscule ou majuscule), au moins un chiffre, au moins un caractère spécial");
-
 		}
 		return MessageErreur;
 
@@ -144,5 +145,9 @@ public class UtilisateurManager {
 	public void debiterUtilisateur(int montantEnchere, Utilisateur utilisateurCourant) {
 		utilisateurDAO.debiterUtilisateur(montantEnchere, utilisateurCourant);
 		
+	}
+	
+	public void supprimer(int no_utilisateur) throws SQLException {
+		utilisateurDAO.supprimerUtilisateur(no_utilisateur);
 	}
 }
