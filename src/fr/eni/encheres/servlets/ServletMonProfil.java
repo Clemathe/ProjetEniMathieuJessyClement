@@ -68,7 +68,7 @@ public class ServletMonProfil extends HttpServlet {
 		System.out.println("DoPostServelt avant push enregistrer");
 		
 		boolean enregistrer = request.getParameter("enregistrer") != null; 
-		
+		System.out.println(request.getParameter("enregistrer"));
 		if (enregistrer) {
 			
 			//traitement update
@@ -92,6 +92,7 @@ public class ServletMonProfil extends HttpServlet {
 				messageUtilisateur.add("le mot de passe saisie ne correspond pas à l'utilisateur"); 
 			}
 			if (userPassOk != false ) {
+				
 				System.out.println("DoPost Servlet MonProfil if userPass != false");
 				
 				String pseudo = request.getParameter("pseudo");
@@ -137,7 +138,7 @@ public class ServletMonProfil extends HttpServlet {
 			rd.forward(request, response);		
 		}
 		
-		if (supprimer) {
+		/*if (supprimer) {
 			
 			/* afficher message êtes vous sûr de vouloir supprimer votre profil ? 
 			String alerteSupression = " êtes vous sûr de vouloir supprimer votre profil ? "; 
@@ -148,12 +149,13 @@ public class ServletMonProfil extends HttpServlet {
 			// traitement supprimer
 			String no_utilsateur = request.getParameter("no_utilisateur"); 
 			
+			System.out.println("DoPostServelt en dehors de tous les if");
 			
-			
-			// 
-		}
+	}// 
 		
-		 System.out.println("DoPostServelt en dehors de tous les if");
+
+		
+		 
 	}
 
-}
+
