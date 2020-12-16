@@ -1,6 +1,8 @@
 package fr.eni.encheres.servlets;
 
 import java.io.IOException;
+import java.time.LocalDate;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -10,7 +12,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import fr.eni.encheres.bll.ArticleVenduManager;
 import fr.eni.encheres.bll.UtilisateurManager;
+import fr.eni.encheres.bo.ArticleVendu;
 import fr.eni.encheres.bo.Utilisateur;
 
 /**
@@ -84,8 +88,16 @@ public class ServletConnexion extends HttpServlet {
 					
 					// Attribut pour afficher une alerte de connexion réussie
 					request.setAttribute("nouvelleConnexion", "true");
-		
-					RequestDispatcher rd = getServletContext().getRequestDispatcher("/ServletAccueil");
+					
+					//renvoie a la jsp Accueil
+					ArticleVenduManager enchereEnCours = new ArticleVenduManager();
+					List<ArticleVendu> enchere = enchereEnCours.getToutesEncheresEnCours();
+					System.out.println(enchere.toString());
+					request.setAttribute("enchereEnCours", enchereEnCours.getToutesEncheresEnCours());
+					LocalDate today = LocalDate.now();		
+					request.setAttribute("today", today);
+					
+					RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/PageAccueilNonConnecte.jsp");
 					rd.forward(request, response);
 		
 				}else {

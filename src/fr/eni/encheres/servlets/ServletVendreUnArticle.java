@@ -80,11 +80,15 @@ public class ServletVendreUnArticle extends HttpServlet {
 		ArticleVendu articleAVendre = new ArticleVendu(nomArticle,description,dateDebutEnchere,dateFinEnchere,miseAPrix,noCategorie,utilisateur,lieuRetrait);
 		ArticleVenduManager articleVendu = new ArticleVenduManager();
 		articleVendu.insertArticleVendu(articleAVendre);
+		//fin du traitement
 		
-		
-		
-		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/PagesListeEncheresConnecte.jsp");
+		//renvoie vers la page d'accueil
+		ArticleVenduManager enchereEnCours = new ArticleVenduManager();
+		request.setAttribute("enchereEnCours", enchereEnCours.getToutesEncheresEnCours());
+		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/PageAccueilNonConnecte.jsp");
 		rd.forward(request, response);
+		
+		
 		
 	}
 	
