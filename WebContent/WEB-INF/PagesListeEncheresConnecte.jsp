@@ -89,7 +89,7 @@
 
 
 			<div class="col-lg-4 form-check">
-  				<input type="radio" class="form-check-input" id="achatsVentes" name="achatsVentes" value="vente">
+  				<input type="radio" class="form-check-input" id="achatsVentes" name="achatsVentes" value="vente"checked>
   				<label class="form-check-label" for="achatsVentes">Mes ventes</label>
 			
   					<div class="custom-control custom-switch">
@@ -98,13 +98,13 @@
     				</div>
     				
     				<div class="custom-control custom-switch">
-    					<input type="checkbox"  class="custom-control-input" id="encheresEnCours">
-    					<label class="custom-control-label"  for="encheresEnCours"> ventes non débutées</label>
+    					<input type="checkbox"  class="custom-control-input" id="ventesNonDebutees">
+    					<label class="custom-control-label"  for="ventesNonDebutees"> ventes non débutées</label>
     				</div>
     				
     				<div class="custom-control custom-switch">
-    					<input type="checkbox"  class="custom-control-input" id="encheresRemportees">
-    					<label class="custom-control-label"  for="encheresRemportees"> ventes terminées</label>
+    					<input type="checkbox"  class="custom-control-input" id="ventesTerminees">
+    					<label class="custom-control-label"  for="ventesTerminees"> ventes terminées</label>
     				</div>
     			
 			
