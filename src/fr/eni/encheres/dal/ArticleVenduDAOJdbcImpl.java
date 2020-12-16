@@ -107,11 +107,10 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 				+" RETRAITS.rue,"
 				+" RETRAITS.code_postal,"
 				+" RETRAITS.ville"
-				+ "FROM ARTICLES_VENDUS"
-				+" JOIN CATEGORIES ON ARTICLES_VENDUS.no_categorie = CATEGORIES.no_categorie"
-				+" JOIN ENCHERES ON ARTICLES_VENDUS.no_article = ENCHERES.no_article"
-				+" JOIN RETRAITS ON ARTICLES_VENDUS.no_article = RETRAITS.no_article"
-				+ "WHERE no_utilisateur = ? and ENCHERES.montant_enchere = "
+				+" FROM ARTICLES_VENDUS"
+				+" JOIN CATEGORIES ON ARTICLES_VENDUS.no_categorie = CATEGORIES.no_categorie JOIN ENCHERES ON ARTICLES_VENDUS.no_article = ENCHERES.no_article "
+				+" JOIN RETRAITS ON ARTICLES_VENDUS.no_article = RETRAITS.no_article "
+				+" WHERE ARTICLES_VENDUS.no_utilisateur = ? and ENCHERES.montant_enchere = "
 				+" (SELECT MAX(montant_enchere) FROM ARTICLES_VENDUS"
 		 		+" JOIN ENCHERES ON ARTICLES_VENDUS.no_article=ENCHERES.no_article)"; 
 		

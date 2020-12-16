@@ -41,88 +41,123 @@
 		
 	<div class="text-center"><h2>Liste de mes Ventes en cours</h2></div>	
 		
-	<div class="">
-	<form  class="row align-items-start" action="" method="post">
-		<div class="col-lg-4">
+	
+<form  class="row align-items-start" action="" method="post">
+	<div class="col-lg-4">
 		<label class="col-form-label" for="nomArticlePartiel">Filtres :</label>
 		<input type="search"  name="nomArticlePartiel" id="recherche" 
 				placeholder="Le nom de l'article contient" class="form-control">	
-		</div>
+	</div>
 
-		<div class="col-lg-4">		
+	<div class="col-lg-4">		
 		<label class="col-form-label" for="categories">Catégories :</label>
-			<select  name="categories" id="categories" class="custom-select form-control">
-				<option value="Toutes" selected>Toutes</option>
-				<option value="Informatique">Informatique</option>
-				<option value="Ameublement" >Ameublement</option>
-				<option value="Vetement" >Vêtements</option>
-				<option value="Sport&Loisirs" >Sports et Loisirs</option>
-			</select>
-		</div>
-		<br />	
-		<div class="col-lg-4">	
+		<select  name="categories" id="categories" class="custom-select form-control">
+			<option value="Toutes" selected>Toutes</option>
+			<option value="Informatique">Informatique</option>
+			<option value="Ameublement" >Ameublement</option>
+			<option value="Vetement" >Vêtements</option>
+			<option value="Sport&Loisirs" >Sports et Loisirs</option>
+		</select>
+	</div>
+	<br />	
+	<div class="col-lg-4">	
 		<br />
 		<input type="submit" value="rechercher" class="btn-lg btn-info btn-block" >
-		</div>
+	</div>
 		
-			<div class="col-lg-4 form-check">
-  				<input type="radio" class="form-check-input" id="achatsVentes" name="achatsVentes" value="achat" >
-  				<label class="form-check-label" for="achatsVentes">Mes achats</label>
-  					
-  					<div class="custom-control custom-switch">
-  						<input type="checkbox" class="custom-control-input" id="encheresOuvertes" value="">
-  						<label class="custom-control-label" for="encheresOuvertes">Enchères ouvertes</label>
-    				</div>
-    				
-    				<div class="custom-control custom-switch">
-    					<input type="checkbox"  class="custom-control-input" id="encheresEnCours">
-    					<label class="custom-control-label"  for="encheresEnCours"> Mes enchères en cours</label>
-    				</div>
-    				
-    				<div class="custom-control custom-switch">
-    					<input type="checkbox"  class="custom-control-input" id="encheresRemportees">
-    					<label class="custom-control-label"  for="encheresRemportees"> Mes enchères remportées</label>
-    				</div>
-    		</div>	
+		<div class="col-lg-4 form-check">
+			<input type="radio" class="form-check-input" id="achatsVentes" name="achatsVentes" value="achat" >
+			<label class="form-check-label" for="achatsVentes">Mes achats</label>
 				
+					<div class="custom-control custom-switch">
+						<input type="checkbox" class="custom-control-input" id="encheresOuvertes" value="eOuvertes">
+						<label class="custom-control-label" for="encheresOuvertes">Enchères ouvertes</label>
+					</div>
+					
+					<div class="custom-control custom-switch">
+						<input type="checkbox"  class="custom-control-input" id="encheresEnCours" value="eEnCours">
+						<label class="custom-control-label"  for="encheresEnCours"> Mes enchères en cours</label>
+					</div>
+					
+					<div class="custom-control custom-switch">
+						<input type="checkbox"  class="custom-control-input" id="encheresRemportees" value="eRemportees">
+						<label class="custom-control-label"  for="encheresRemportees"> Mes enchères remportées</label>
+					</div>
+		</div>	
+
+		<div class="col-lg-4 form-check">
+ 				<input type="radio" class="form-check-input" id="achatsVentes" name="achatsVentes" value="vente"checked>
+ 				<label class="form-check-label" for="achatsVentes">Mes ventes</label>
+		
+ 					<div class="custom-control custom-switch">
+ 						<input type="checkbox" class="custom-control-input" id="ventesEnCours" value="vEnCours">
+ 						<label class="custom-control-label" for="ventesEnCours">Mes ventes en cours</label>
+   				</div>
+   				
+   				<div class="custom-control custom-switch">
+   					<input type="checkbox"  class="custom-control-input" id="ventesNonDebutees" value="vNonDebutees">
+   					<label class="custom-control-label"  for="ventesNonDebutees"> ventes non débutées</label>
+   				</div>
+   				
+   				<div class="custom-control custom-switch">
+   					<input type="checkbox"  class="custom-control-input" id="ventesTerminees" value="vTerminees">
+   					<label class="custom-control-label"  for="ventesTerminees"> ventes terminées</label>
+   				</div>
+		</div>
+</form>	
+	
 			
 
-
-			<div class="col-lg-4 form-check">
-  				<input type="radio" class="form-check-input" id="achatsVentes" name="achatsVentes" value="vente"checked>
-  				<label class="form-check-label" for="achatsVentes">Mes ventes</label>
-			
-  					<div class="custom-control custom-switch">
-  						<input type="checkbox" class="custom-control-input" id="ventesEnCours" value="true">
-  						<label class="custom-control-label" for="ventesEnCours">Mes ventes en cours</label>
-    				</div>
-    				
-    				<div class="custom-control custom-switch">
-    					<input type="checkbox"  class="custom-control-input" id="ventesNonDebutees">
-    					<label class="custom-control-label"  for="ventesNonDebutees"> ventes non débutées</label>
-    				</div>
-    				
-    				<div class="custom-control custom-switch">
-    					<input type="checkbox"  class="custom-control-input" id="ventesTerminees">
-    					<label class="custom-control-label"  for="ventesTerminees"> ventes terminées</label>
-    				</div>
-    			
 			
 			
-			</div>
-				</div>
-			
-
-			
-			
-	</form>					
-	</div>	
+					
+	
 <c:if test="${!empty vente}">
 <h1>Ventes</h1>
+
+<div class="row col-lg-12">
+
+	<c:forEach var="v" items="${mesVentes}">
+		<div class="col-lg-4 col-12 col-md-6">
+			<div class="card" >
+				<div class="card-header text-center">
+					Vente en cours
+				</div>
+				<div class="card-body">
+					<h5 class="card-title">${v.nomArticle}</h5>
+					<p class="card-text">Prix: ${v.prixVente} points<br /> 
+					Fin de l'enchère: ${v.dateFinEncheres}<br />
+					</p>
+								
+				</div>  
+			</div>
+		</div>
+	</c:forEach>
+	</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 			</c:if>
 
 
-		
+
 		
 		
 		
