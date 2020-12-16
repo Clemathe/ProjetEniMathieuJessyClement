@@ -148,6 +148,7 @@ public class UtilisateurManager {
 	}
 	
 	public void supprimer(int no_utilisateur) throws SQLException {
+		System.out.println("supprimerManager");
 		utilisateurDAO.supprimerUtilisateur(no_utilisateur);
 	}
 }

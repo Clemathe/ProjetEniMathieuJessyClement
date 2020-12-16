@@ -5,6 +5,7 @@ import java.io.IOException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -61,8 +62,14 @@ public class ServletConnexion extends HttpServlet {
 		boolean creationUtilisateur = request.getAttribute("creationUtilisateur") != null;
 		String login = (String) request.getParameter("login");
 		String password = (String) request.getParameter("pass");
+		String seSouvenir = request.getParameter("rememberMe"); 
 		System.out.println("connexion "+request.getAttribute("creationUtilisateur"));
 		System.out.println("connexion "+ creationUtilisateur);
+		if (seSouvenir != null) {
+			Cookie cookieLogin = new Cookie("login", login); 
+			cookieLogin.setMaxAge(200000);
+			response.addCookie(cookieLogin);
+		}
 //		if (nouvelleConnexion) {
 //			 login = (String) request.getParameter("login");
 //			 password = (String) request.getParameter("pass");
@@ -100,7 +107,7 @@ public class ServletConnexion extends HttpServlet {
 				// Sinon je retourne à la page d'ajout pour indiquer les problèmes:
 				e.printStackTrace();
 				request.setAttribute("erreurs", e.getMessage());
-				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/login.jsp");
+				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/PageAccueilNonConnecte.jsp");
 				rd.forward(request, response);
 			}
 		//}

@@ -251,12 +251,13 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 		try (Connection cnx = ConnectionProvider.getConnection()){
 			
 			try {
-				cnx.setAutoCommit(false);
+				
 				PreparedStatement pstmt = cnx.prepareStatement(SUPPRIMER_UTILISATEUR); 
 				pstmt.setInt(1, no_utilisateur);
 				pstmt.executeUpdate(); 
 				cnx.close();
 				
+				System.out.println("utilisateur DAOJDBCIMPL fin de supprimer");
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
