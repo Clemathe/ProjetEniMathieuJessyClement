@@ -30,6 +30,9 @@ public class ServletConnexion extends HttpServlet {
 		
 		Boolean deconnection = Boolean.parseBoolean(request.getParameter("disconnect"));
 		Boolean loginCreated = (request.getParameter("loginCreated") != null);
+		Cookie[] cookies = request.getCookies(); 
+		Cookie cookieLogin = null; 
+		
 		
 		if (deconnection == true) {
 			// déconnection de la session
@@ -42,6 +45,19 @@ public class ServletConnexion extends HttpServlet {
 			rd.forward(request, response);
 			
 	
+		} if (cookies!=null) {
+			for(Cookie c : cookies) {
+				if(c.getName().equals("login")) {
+					cookieLogin = c; 
+					break; 
+				}
+			}
+		} 
+		if (cookieLogin != null) {
+			request.getSession().setAttribute("login", cookieLogin.getValue());
+			RequestDispatcher rd = request.getRequestDispatcher("/accueil");
+			rd.forward(request, response);
+			
 		}
 		else {
 

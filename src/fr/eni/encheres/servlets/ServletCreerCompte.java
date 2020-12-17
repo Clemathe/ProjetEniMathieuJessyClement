@@ -84,7 +84,7 @@ public class ServletCreerCompte extends HttpServlet {
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
-		
+		//dans try
 		if (insertOK == false) {
 
 			String messageErreurDal = "échec creation de l'utilisateur :  pseudo et/ou email déjà utilisé(s )";

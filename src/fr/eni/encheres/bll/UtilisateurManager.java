@@ -100,7 +100,7 @@ public class UtilisateurManager {
 			utilisateurDAO.insertUtilisateur(utilisateur);
 			insertOK = true;
 		} catch (Exception e) {
-
+// là pour message dal
 			e.printStackTrace();
 		}
 		return insertOK;
