@@ -53,7 +53,8 @@ public class ArticleVenduManager {
 		// La date de fin d'enchere est elle atteinte ?
 		if ( echeanceEnchere.compareTo(LocalDate.now()) > 0 ) {
 			// L'encherisseur est-il different du vendeur ?
-			if(utilisateurCourant.getNoUtilisateur() != articleCourant.getNoUtilisateur()) {
+			
+			if(utilisateurCourant.getNoUtilisateur() != articleCourant.getVendeur().getNoUtilisateur()) {
 				// L'encherisseur a-t-il assez de crédit ?
 				if (soldeUtilisateur > montantEnchere ) {
 					// Son offre est elle superieur au prix actuel ?

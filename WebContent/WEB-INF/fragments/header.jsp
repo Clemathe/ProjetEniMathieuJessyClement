@@ -22,7 +22,13 @@
 				</a></li>
 			</c:if>
 			
-			<c:if test="${utilisateurCourant != null }">	
+			<c:if test="${utilisateurCourant != null }">
+			
+		 
+		
+				<li class="nav-item active "><p class="nav-link"><c:set var="credit" scope="request" value="someValue"/> 
+			<c:out default="None" escapeXml="true" value="${utilisateurCourant.credit > 1 ? 'Crédits : ' : 'Crédit : '}${utilisateurCourant.credit}" /> <span class="sr-only">(current)</span>
+				</li>	
 				<li class="nav-item active "><a class="nav-link" href="mesEncheres">Enchères<span class="sr-only">(current)</span>
 				</a></li>
 				<li class="nav-item active "><a class="nav-link" href="vendre">Vendre un article<span class="sr-only">(current)</span>
