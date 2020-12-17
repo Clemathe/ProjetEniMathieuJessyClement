@@ -45,7 +45,7 @@ public class Utilisateur implements Serializable{
 		this.codePostal = codePostal;
 		this.ville = ville;
 		this.motDePasse = motDePasse;
-		this.credit = 0;
+		this.credit = 10;
 		this.administrateur = false; 
 	}
 

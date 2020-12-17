@@ -10,7 +10,7 @@ import fr.eni.encheres.bo.Utilisateur;
 public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	private static final String INSERT_UTILISATEUR = "INSERT INTO UTILISATEURS (pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 	private static final String SELECT_BY_ID = "SELECT no_utilisateur, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur FROM UTILISATEURS where id=?";
-	private static final String UPDATE = "UPDATE UTILISATEURS set  pseudo = ?, nom =?, prenom=?, email=?, telephone=?, rue=?, code_postal=?, ville=?, mot_de_passe=? where no_utilisateur=?";
+	private static final String UPDATE = "UPDATE UTILISATEURS set  pseudo = ?, nom =?, prenom=?, email=?, telephone=?, rue=?, code_postal=?, ville=?, mot_de_passe=? where pseudo=?";
 	private static final String REMBOURSER_UTILISATEUR = "UPDATE Utilisateurs SET credit = credit + ? WHERE no_utilisateur = ?";
 	private static final String DEBITER_UTILISATEUR = "UPDATE Utilisateurs SET credit = credit - ? WHERE no_utilisateur = ?";
 	private static final String SUPPRIMER_UTILISATEUR = "DELETE FROM utilisateurs WHERE no_utilisateur = ?";
@@ -210,10 +210,10 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 			System.out.println("dans update DAOJDBCIMPL");
 			try {
 
-				cnx.setAutoCommit(false);
-				PreparedStatement pstmt = cnx.prepareStatement(UPDATE, PreparedStatement.RETURN_GENERATED_KEYS);
+			
+				PreparedStatement pstmt = cnx.prepareStatement(UPDATE);
 				
-				
+	
 				pstmt.setString(1, utilisateur.getPseudo());
 				pstmt.setString(2, utilisateur.getNom());
 				pstmt.setString(3, utilisateur.getPrenom());
@@ -229,7 +229,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 				System.out.println(utilisateur);
 				
 				rs.close();
-				cnx.commit();
+			
 				pstmt.close();
 				cnx.close();
 				System.out.println("cnx.close update DAOJDBCIMPL");
@@ -267,5 +267,9 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 		}
 // test gihub commit
 	}
+	
 
+	public void beginTransaction() {
+		
+	}
 }
