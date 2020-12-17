@@ -265,7 +265,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-// test gihub
+// test gihub commit
 	}
 
 }
