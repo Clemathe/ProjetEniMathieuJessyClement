@@ -104,7 +104,7 @@
 					</form>
 				</div>
 				</c:if>
-				<a href="accueil"><button class=" btn btn-info btn-lg mt-5">Retour</button></a>
+				<a href="accueil"><button class=" btn btn-info mt-5">Retour</button></a>
 			</div>
 		</div>
 	</section>
