@@ -52,50 +52,42 @@ public class ArticleVenduManager {
 		String message = null;
 		// La date de fin d'enchere est elle atteinte ?
 		if ( echeanceEnchere.compareTo(LocalDate.now()) > 0 ) {
-			// L'encherisseur a il assez de crédit ?
-			if (soldeUtilisateur > montantEnchere ) {
-				// Son offre est elle superieur au prix actuel ?
-				if( montantEnchere > prixActuel) {
-					
-					UtilisateurManager uManager = new UtilisateurManager();
-					// creation de l'objet enchère
-					Enchere nouvelleEnchere = new Enchere(LocalDate.now(), montantEnchere, articleCourant, utilisateurCourant);
-					
-					try {
-						articleVenduDAO.enregistrerUneEnchere(nouvelleEnchere);
+			// L'encherisseur est-il different du vendeur ?
+			if(utilisateurCourant.getNoUtilisateur() != articleCourant.getNoUtilisateur()) {
+				// L'encherisseur a-t-il assez de crédit ?
+				if (soldeUtilisateur > montantEnchere ) {
+					// Son offre est elle superieur au prix actuel ?
+					if( montantEnchere > prixActuel) {
 						
-					} catch (Exception e) {
+						UtilisateurManager uManager = new UtilisateurManager();
+						// creation de l'objet enchère
+						Enchere nouvelleEnchere = new Enchere(LocalDate.now(), montantEnchere, articleCourant, utilisateurCourant);
 						
-						message = "L'enchère n'a pas pu être enregistrée";
-						
-						return message;
-					}
-					try{
-						uManager.debiterUtilisateur(montantEnchere, utilisateurCourant);
-						
-					}catch(Exception e){
-						//TODO Update BDD pour effacer enchère
-						message = "L'enchère n'a pas pu être enregistrée";
-						
-						return message;
-					}
-					try{
-						articleVenduDAO.mettreAJourLePrixDeVente(montantEnchere, noArticle);
-						if (auMoinsUneEnchere) uManager.rembourserUtilisateur(prixActuel, articleCourant.getEncheres().get(0).getUtilisateur());
-					}catch(Exception e){
-						//TODO Update BDD pour effacer enchère et débit utilisateur
-						message = "L'enchère n'a pas pu être enregistrée";
-					}
+						try {
+							//TODO Begin transcation
+							articleVenduDAO.enregistrerUneEnchere(nouvelleEnchere);
+							uManager.debiterUtilisateur(montantEnchere, utilisateurCourant);
+							articleVenduDAO.mettreAJourLePrixDeVente(montantEnchere, noArticle);
+							if (auMoinsUneEnchere) uManager.rembourserUtilisateur(prixActuel, articleCourant.getEncheres().get(0).getUtilisateur());
+							//TODO Commit Transcation
+						} catch (Exception e) {
 							
-					message = "Enchère enregistrée";
-			
-				}else {
-					message = "Votre enchère est inférieure à l'enchère la plus haute ou à la mise à prix";
-				}
+							message = "L'enchère n'a pas pu être enregistrée";
+							
+							return message;
+						}
+								
+						message = "Enchère enregistrée";
+				
+					}else {
+						message = "Votre enchère est inférieure à l'enchère la plus haute ou à la mise à prix";
+					}
+			}else {
+					message = "Vous n'avez pas suffisament de crédit";
+			}
 		}else {
-				message = "Vous n'avez pas suffisament de crédit";
+			message = "Vous ne pouvez pas enchérir sur votre vente";
 		}
-	
 	}else {
 		message = "L'enchère est déjà terminée";
 		
@@ -135,4 +127,63 @@ public class ArticleVenduManager {
 		return auMoinsUne;
 
 	}
+	//JSP liste mes enchères : verif Checkbox
+	
+	public String radioBtn (String achatsVentes) {
+	
+	String quelRadioCoche = null;
+		
+	System.out.println("Controle Valeur RadioBouton dans article Manager : "+achatsVentes);
+	if (achatsVentes.equalsIgnoreCase("vente")) {
+		quelRadioCoche = "ventes";
+	}else if(achatsVentes.equalsIgnoreCase("vente")) {
+		quelRadioCoche = "achats";
+	}
+	return quelRadioCoche;
+	}
+	
+	
+	public List<ArticleVendu> getVentes (int noUtilisateur, String ventes){
+		List<ArticleVendu> ventesAAfficher = null;
+		LocalDate ceJour = LocalDate.now();
+		System.out.println("controle type de vente : "+ventes);
+		
+		if (ventes.equals("vEnCours")) {
+			ventesAAfficher = new ArticleVenduManager().getVentesEnCours(noUtilisateur, ceJour);
+		}
+		if (ventes.equals("vNonDebutees")) {
+			
+			ventesAAfficher = new ArticleVenduManager().getVentesNonDebutees(noUtilisateur, ceJour);
+		}
+		if (ventes.equals("vTerminees")) {
+			ventesAAfficher = new ArticleVenduManager().getVentesTerminees(noUtilisateur, ceJour);
+		}
+		
+		
+		return ventesAAfficher;
+	}
+	
+	public List<ArticleVendu> getToutesMesVentes (int noUtilisateur) {
+		
+		return ArticleVenduManager.articleVenduDAO.getToutesMesVentes(noUtilisateur);
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }

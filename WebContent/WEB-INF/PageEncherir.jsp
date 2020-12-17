@@ -92,8 +92,8 @@
 							</div>
 
 							<div class="p-2">
-								<input class="col-form-label" type="number" value="1"
-									name="montant" min="1" max="999" id="example-number-input">
+								<input class="col-form-label" type="number" value="${article.prixVente + 1}"
+									name="montant" min="1" max="9999" id="example-number-input">
 							</div>
 
 							<div class="p-2">

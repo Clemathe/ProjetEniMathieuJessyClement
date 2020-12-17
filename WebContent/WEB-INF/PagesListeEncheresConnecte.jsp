@@ -108,15 +108,39 @@
 	
 			
 
-			
+<br>		
 			
 					
 	
-<c:if test="${mesVentes != null}">
-<h2>Mes ventes</h2>
+<c:if test="${!empty toutesMesVentes}">
+	<div class="text-center"><h3>Mes ventes</h3></div>
+		<div class="row col-lg-12">
+		<c:forEach var="tmv" items="${toutesMesVentes}">
+			<div class="col-lg-4 col-12 col-md-6">
+				<div class="card" >
+					<div class="card-header text-center">
+						Vente en cours
+					</div>
+					<div class="card-body">
+						<h5 class="card-title">${tmv.nomArticle}</h5>
+						<p class="card-text">Mise a prix: ${tmv.miseAPrix} points<br>
+											prix de vente: ${tmv.prixVente}<br>
+											Mis aux enchères le ${tmv.dateDebutEncheres}<br>
+											Fin de l'enchère le ${tmv.dateFinEncheres}<br>
+						</p>
+						<div class="text-center">
+						<a href="encheres?noArticle=${tmv.noArticle}" class="btn btn-info">Accéder</a>	
+						</div>		
+					</div>  
+				</div>
+				<br> 
+			</div>
+		</c:forEach>
+	</div>
 </c:if>
+
 <c:if test="${!empty ventesEnCours }">
-	<h2>Mes ventes en cours</h2>
+	<div class="text-center"><h3>Mes ventes en cours</h3></div>
 	<div class="row col-lg-12">
 	<c:forEach var="vec" items="${ventesEnCours}">
 		<div class="col-lg-4 col-12 col-md-6">
@@ -125,14 +149,14 @@
 					Vente en cours
 				</div>
 				<div class="card-body">
-					<h5 class="card-title">${vec.nomArticle}</h5>
+					<h5 class="card-title text-center">${vec.nomArticle}</h5>
 					<p class="card-text">Mise a prix: ${vec.miseAPrix} points<br>
 										prix de vente: ${vec.prixVente}<br>
 										Mis aux enchères le ${vec.dateDebutEncheres}<br>
 										Fin de l'enchère le ${vec.dateFinEncheres}<br>
 					</p>
 					<div class="text-center">
-					<a href="encheres?noArticle=${vec.noArticle}" class="btn btn-info">Accéder à la vente</a>	
+					<a href="encheres?noArticle=${vec.noArticle}" class="btn btn-info">Accéder</a>	
 					</div>		
 				</div>  
 			</div>
@@ -143,7 +167,7 @@
 </c:if>	
 
 <c:if test="${!empty ventesNonDebutees }">
-<h2>Mes ventes non débutées</h2>
+<div class="text-center"><h3>Mes ventes non débutées</h3></div>
 	<div class="row col-lg-12">
 	<c:forEach var="vnd" items="${ventesNonDebutees}">
 		<div class="col-lg-4 col-12 col-md-6">
@@ -152,25 +176,29 @@
 					Vente non débutées
 				</div>
 				<div class="card-body">
-					<h5 class="card-title">${vnd.nomArticle}</h5>
+					<h5 class="card-title text-center">${vnd.nomArticle}</h5>
 					<p class="card-text">Mise a prix: ${vnd.miseAPrix} points<br>
 										prix de vente: ${vnd.prixVente}<br>
 										Mis aux enchères le ${vnd.dateDebutEncheres}<br>
 										Fin de l'enchère le ${vnd.dateFinEncheres}<br>
 					</p>
-					<div class="text-center">
-					<a href="" class="btn btn-info">Annuler la vente</a>
-					<a href="" class="btn btn-info">Modifier la vente</a>	
-					</div>		
+					<div class="row">
+					<div class="col-6 text-center">
+					<a href="" class="btn btn-info">Modifier</a>	
+					</div>
+					<div class="col-6 text-center">
+					<a href="" class="btn btn-info">Annuler</a>
+					</div>
+					</div>			
 				</div> 
-				<br> 
 			</div>
+			<br>
 		</div>
 	</c:forEach>
 	</div>
 </c:if>	
 <c:if test="${ !empty ventesTerminees }">
-<h2>Mes ventes terminées</h2>
+<div class="text-center"><h3>Mes ventes terminées</h3></div>
 	<div class="row col-lg-12">
 	<c:forEach var="vt" items="${ventesTerminees}">
 		<div class="col-lg-4 col-12 col-md-6">
@@ -179,7 +207,7 @@
 					Vente terminée
 				</div>
 				<div class="card-body">
-					<h5 class="card-title">${vt.nomArticle}</h5>
+					<h5 class="card-title text-center">${vt.nomArticle}</h5>
 					<p class="card-text">Mise a prix: ${vt.miseAPrix} points<br>
 										prix de vente: ${vt.prixVente}<br>
 										Mis aux enchères le ${vt.dateDebutEncheres}<br>
@@ -187,8 +215,8 @@
 					</p>
 						
 				</div> 
-				<br>  
 			</div>
+			<br>
 		</div>
 	</c:forEach>
 	</div>

@@ -32,4 +32,6 @@ public interface ArticleVenduDAO {
 
 	void mettreAJourLePrixDeVente(int prixDeVente, int no_article) throws SQLException;
 
+	List<ArticleVendu> getToutesMesVentes(int noUtilisateur);
+
 }
