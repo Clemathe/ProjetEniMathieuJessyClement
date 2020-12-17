@@ -12,7 +12,7 @@
  <header>
         <jsp:include page="./fragments/header.jsp"></jsp:include>
     </header>
- <h1 class="text-center my-5">Mon Profil</h1>
+ <h1 class="text-center my-3">Mon Profil</h1>
 
  
 

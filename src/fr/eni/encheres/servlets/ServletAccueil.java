@@ -1,6 +1,8 @@
 package fr.eni.encheres.servlets;
 
 import java.io.IOException;
+import java.time.LocalDate;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -10,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import fr.eni.encheres.bll.ArticleVenduManager;
+import fr.eni.encheres.bo.ArticleVendu;
 import fr.eni.encheres.bo.Utilisateur;
 
 /**
@@ -27,9 +30,11 @@ public class ServletAccueil extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		ArticleVenduManager enchereEnCours = new ArticleVenduManager();
+		List<ArticleVendu> enchere = enchereEnCours.getToutesEncheresEnCours();
+		System.out.println(enchere.toString());
 		request.setAttribute("enchereEnCours", enchereEnCours.getToutesEncheresEnCours());
-		
-		
+		LocalDate today = LocalDate.now();		
+		request.setAttribute("today", today);
 		
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/PageAccueilNonConnecte.jsp");
 		rd.forward(request, response);
@@ -60,6 +65,9 @@ public class ServletAccueil extends HttpServlet {
 
 			request.setAttribute("enchereEnCours", enchereEnCours.getEnchereEnCours(categorie, nomArticlePartiel));
 
+			
+			LocalDate today = LocalDate.now();		
+			request.setAttribute("today", today);
 			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/PageAccueilNonConnecte.jsp");
 			rd.forward(request, response);
 

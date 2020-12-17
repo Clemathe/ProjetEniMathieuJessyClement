@@ -45,7 +45,7 @@
 	<div class="text-center"><h2>Nouvelle Vente</h2></div>
 	
 
-<br />
+<br>
 
 <div class="row">
 	<div class="col-3"></div>

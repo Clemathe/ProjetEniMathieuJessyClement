@@ -41,7 +41,7 @@ public class UtilisateurManager {
 			MessageErreur.add("erreur de saisie du pseudonyme : null ou caractères interdit");
 
 		} else if (nom == null || !nom.matches("^[a-zA-Z]*$")) {
-			//MessageErreur.add("erreur de saisie du Nom : null ou caractère interdit");
+			//MessageErreur.add("erreur de saisie du Nom : null ou caractère interdit") à faire;
 
 		} else if (prenom == null || !prenom.matches("^[a-zA-Z]*$")) {
 			MessageErreur.add("erreur de saisie du Prenom : null ou caractère interdit");

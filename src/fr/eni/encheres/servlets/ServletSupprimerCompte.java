@@ -46,6 +46,7 @@ public class ServletSupprimerCompte extends HttpServlet {
 	}
 
 	/**
+	 * jess
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */

@@ -11,7 +11,7 @@
 <head>
 <meta charset="UTF-8">
 <jsp:include page="/WEB-INF/fragments/head.jsp"></jsp:include>
-<title>Creer un compte utilisateur</title>
+<title>Creer un compte</title>
 </head>
 
 <body class="container">

@@ -62,11 +62,12 @@ public class ArticleVendu {
 		this.lieuRetrait = lieuRetrait;
 	}
 	//utilisé dans page d'accueil
-	public ArticleVendu(int noArticle, String nomArticle, int PrixVente, LocalDate dateFinEncheres, String pseudoVendeur) {
+	public ArticleVendu(int noArticle, String nomArticle, int PrixVente, LocalDate dateDebutEncheres,LocalDate dateFinEncheres, String pseudoVendeur) {
 		setNoArticle(noArticle); 
 		setNomArticle(nomArticle);
-		setPrixVente(PrixVente);;
-		setDateDebutEncheres(dateFinEncheres);
+		setPrixVente(PrixVente);
+		setDateDebutEncheres(dateDebutEncheres);
+		setDateFinEncheres(dateFinEncheres);
 		setPseudoVendeur(pseudoVendeur);
 		
 	}

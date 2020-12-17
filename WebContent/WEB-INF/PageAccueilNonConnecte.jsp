@@ -80,13 +80,16 @@
 
 <c:if test="${!empty enchereEnCours}">
 <div class=" text-center" >
-<h2>Il y'a actuellement ${enchereEnCours.size()} enchères sur notre site.</h2>
+<h2>Notre site vous propose de nombreuses enchères.</h2>
+<h3>Voici celles qui sont en cours et sur lesquelles vous pouvez enchérir !</h3>
 <br />	
 </div>
 
 <div class="row col-lg-12">
-
+	
 	<c:forEach var="EEC" items="${enchereEnCours}">
+	<c:if test="${EEC.dateDebutEncheres < today }">
+	<c:if test="${EEC.dateFinEncheres > today }">
 		<div class="col-lg-4 col-12 col-md-6">
 			<div class="card" >
 				<div class="card-header text-center">
@@ -95,7 +98,7 @@
 				<div class="card-body">
 					<h5 class="card-title">${EEC.nomArticle}</h5>
 					<p class="card-text">Prix: ${EEC.prixVente} points<br /> 
-					Fin de l'enchère: ${EEC.dateFinEncheres}<br />
+					Fin de l'enchère: ${EEC.dateDebutEncheres}<br />
 					Vendeur: ${EEC.pseudoVendeur}</p>
 					<div class="text-center">
 						<c:if test="${utilisateurCourant != null}">					
@@ -107,10 +110,13 @@
 			    	</div>				
 				</div>  
 			</div>
+			<br> 
 		</div>
+		</c:if>
+		</c:if>
 	</c:forEach>
 	</div>
-	</div>
+	
 
 
 

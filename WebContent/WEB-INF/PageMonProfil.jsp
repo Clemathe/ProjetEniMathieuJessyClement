@@ -38,7 +38,7 @@
     <jsp:useBean id="utilisateur" scope="request" class="fr.eni.encheres.bo.Utilisateur"></jsp:useBean>
         
         <!--  faire le traitement : si l'utilisateur qui visite la page n'est pas propréitaire de ce profil
-        alors masquer les informations personnelles  -->
+        alors masquer les informations personnelles js -->
 
  
 

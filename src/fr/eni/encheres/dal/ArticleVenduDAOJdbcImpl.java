@@ -23,25 +23,28 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 	public List<ArticleVendu> getenchereEnCours(String categorie, String nomArticlePartiel) {
 		
 		List<ArticleVendu> enchereEnCours = new ArrayList<ArticleVendu>();
-		String ENCHERES_EN_COURS;
+		
 		
 		if(categorie.equals("Toutes")) {
-			ENCHERES_EN_COURS="SELECT "
+			String TOUTES_ENCHERES_EN_COURS="SELECT "
 					+ "ARTICLES_VENDUS.no_article,"
 					+ "ARTICLES_VENDUS.nom_article, "
 					+ "ARTICLES_VENDUS.prix_vente, "
+					+ "ARTICLES_VENDUS.date_debut_encheres, "
 					+ "ARTICLES_VENDUS.date_fin_encheres, "
 					+ "UTILISATEURS.pseudo "
 					+ "FROM ARTICLES_VENDUS "
 					+ "JOIN UTILISATEURS ON ARTICLES_VENDUS.no_utilisateur = UTILISATEURS.no_utilisateur "
-					+ "WHERE nom_article LIKE ?"; 
+					+ "WHERE nom_article LIKE  ? "; 
+			
+			String concat= "%"+nomArticlePartiel+"%";
 			
 			try (Connection cnx = ConnectionProvider.getConnection();){
-				PreparedStatement pstmt = cnx.prepareStatement(ENCHERES_EN_COURS);
-				pstmt.setString(1,nomArticlePartiel);
+				PreparedStatement pstmt = cnx.prepareStatement(TOUTES_ENCHERES_EN_COURS);
+				pstmt.setString(1,concat);
 				ResultSet rs = pstmt.executeQuery();
 				while (rs.next()) {
-					ArticleVendu articleVendu= new ArticleVendu(rs.getInt(1), rs.getString(2),rs.getInt(3),rs.getDate(4).toLocalDate(),rs.getString(5));
+					ArticleVendu articleVendu= new ArticleVendu(rs.getInt(1), rs.getString(2),rs.getInt(3),rs.getDate(4).toLocalDate(),rs.getDate(5).toLocalDate(),rs.getString(6));
 					enchereEnCours.add(articleVendu);
 				}
 				rs.close();
@@ -53,23 +56,27 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 			}
 			
 		}else {
-			ENCHERES_EN_COURS="SELECT "
+			String ENCHERES_EN_COURS="SELECT "
 					+ "ARTICLES_VENDUS.no_article,"
 					+ "ARTICLES_VENDUS.nom_article, "
 					+ "ARTICLES_VENDUS.prix_vente, "
+					+ "ARTICLES_VENDUS.date_debut_encheres, "
 					+ "ARTICLES_VENDUS.date_fin_encheres, "
 					+ "UTILISATEURS.pseudo "
 					+ "FROM ARTICLES_VENDUS "
 					+ "JOIN UTILISATEURS ON ARTICLES_VENDUS.no_utilisateur = UTILISATEURS.no_utilisateur "
 					+ "JOIN CATEGORIES ON ARTICLES_VENDUS.no_categorie = CATEGORIES.no_categorie "
-					+ "WHERE nom_article LIKE \"%"+nomArticlePartiel+"%\" AND libelle = \""+categorie+ "\"";
-		}
+					+ "WHERE nom_article LIKE ? AND libelle = ? ";
+			
+			String concat= "%"+nomArticlePartiel+"%";
 				 
 		try (Connection cnx = ConnectionProvider.getConnection();){
 			PreparedStatement pstmt = cnx.prepareStatement(ENCHERES_EN_COURS);
+			pstmt.setString(1,concat);
+			pstmt.setString(2, categorie);
 			ResultSet rs = pstmt.executeQuery();
 			while (rs.next()) {
-				ArticleVendu articleVendu= new ArticleVendu(rs.getInt(1), rs.getString(2),rs.getInt(3),rs.getDate(4).toLocalDate(),rs.getString(5));
+				ArticleVendu articleVendu= new ArticleVendu(rs.getInt(1), rs.getString(2),rs.getInt(3),rs.getDate(4).toLocalDate(),rs.getDate(5).toLocalDate(),rs.getString(6));
 				enchereEnCours.add(articleVendu);
 			}
 			rs.close();
@@ -80,7 +87,7 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 			e.printStackTrace();
 		}
 		
-		
+		}
 		
 		System.out.println(enchereEnCours);
 		
@@ -385,6 +392,7 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 					+ "ARTICLES_VENDUS.no_article,"
 					+ "ARTICLES_VENDUS.nom_article, "
 					+ "ARTICLES_VENDUS.prix_vente, "
+					+ "ARTICLES_VENDUS.date_debut_encheres, "
 					+ "ARTICLES_VENDUS.date_fin_encheres, "
 					+ "UTILISATEURS.pseudo "
 					+ "FROM ARTICLES_VENDUS "
@@ -394,7 +402,7 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 			PreparedStatement pstmt = cnx.prepareStatement(ENCHERES_EN_COURS);
 			ResultSet rs = pstmt.executeQuery();
 			while (rs.next()) {
-				ArticleVendu articleVendu= new ArticleVendu(rs.getInt(1), rs.getString(2),rs.getInt(3),rs.getDate(4).toLocalDate(),rs.getString(5));
+				ArticleVendu articleVendu= new ArticleVendu(rs.getInt(1), rs.getString(2),rs.getInt(3),rs.getDate(4).toLocalDate(),rs.getDate(5).toLocalDate(),rs.getString(6));
 				enchereEnCours.add(articleVendu);
 			}
 			rs.close();
@@ -467,7 +475,8 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 						rs.getDate(3).toLocalDate(),rs.getDate(4).toLocalDate(),rs.getInt(5), rs.getInt(6)); 
 				mesVentesEnCours.add(articleVendu);
 			}
-		
+			pstmt.close();
+			cnx.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -479,14 +488,78 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 
 	@Override
 	public List<ArticleVendu> getVentesNonDebutees(int noUtilisateur, LocalDate ceJour) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		List<ArticleVendu> ventesNonDebutees = new ArrayList<ArticleVendu>();
+		String SELECT_MES_VENTES_EN_COURS =
+				"SELECT "
+				+ "ARTICLES_VENDUS.no_article,"
+				+ "ARTICLES_VENDUS.nom_article,"
+				+ "ARTICLES_VENDUS.date_debut_encheres, "
+				+ "ARTICLES_VENDUS.date_fin_encheres, "
+				+" ARTICLES_VENDUS.prix_initial, "
+				+"ARTICLES_VENDUS.prix_vente "
+				+" FROM ARTICLES_VENDUS "
+				+" WHERE ((no_utilisateur = ?) AND (date_debut_encheres >  ? ))"; 
+		
+		try (Connection cnx = ConnectionProvider.getConnection()){
+			PreparedStatement pstmt = cnx.prepareStatement(SELECT_MES_VENTES_EN_COURS);
+			pstmt.setInt(1,noUtilisateur);
+			pstmt.setDate(2, Date.valueOf(ceJour));
+			
+			ResultSet rs = pstmt.executeQuery();
+			while (rs.next()) {
+				
+				ArticleVendu articleVendu= new ArticleVendu(rs.getInt(1),rs.getString(2),
+						rs.getDate(3).toLocalDate(),rs.getDate(4).toLocalDate(),rs.getInt(5), rs.getInt(6)); 
+				ventesNonDebutees.add(articleVendu);
+			}
+			pstmt.close();
+			cnx.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	
+		return ventesNonDebutees;
 	}
 
 	@Override
 	public List<ArticleVendu> getVentesTerminees(int noUtilisateur, LocalDate ceJour) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		List<ArticleVendu> ventesTerminees = new ArrayList<ArticleVendu>();
+		String SELECT_MES_VENTES_EN_COURS =
+				"SELECT "
+				+ "ARTICLES_VENDUS.no_article,"
+				+ "ARTICLES_VENDUS.nom_article,"
+				+ "ARTICLES_VENDUS.date_debut_encheres, "
+				+ "ARTICLES_VENDUS.date_fin_encheres, "
+				+" ARTICLES_VENDUS.prix_initial, "
+				+ " ARTICLES_VENDUS.prix_vente "
+				+" FROM ARTICLES_VENDUS"
+				+" WHERE ((no_utilisateur = ?) AND (date_fin_encheres < ? ))"; 
+		
+		try (Connection cnx = ConnectionProvider.getConnection()){
+			PreparedStatement pstmt = cnx.prepareStatement(SELECT_MES_VENTES_EN_COURS);
+			pstmt.setInt(1,noUtilisateur);
+			pstmt.setDate(2, Date.valueOf(ceJour));
+		
+			ResultSet rs = pstmt.executeQuery();
+			while (rs.next()) {
+				
+				ArticleVendu articleVendu= new ArticleVendu(rs.getInt(1),rs.getString(2),
+						rs.getDate(3).toLocalDate(),rs.getDate(4).toLocalDate(),rs.getInt(5), rs.getInt(6)); 
+				ventesTerminees.add(articleVendu);
+			}
+			pstmt.close();
+			cnx.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block jessy dit coucou
+			e.printStackTrace();
+		}
+		
+	
+		return ventesTerminees;
 	}
 
 	

@@ -129,14 +129,9 @@
 			class="form-horizontal">
 			<input type="hidden" name="supprimer" value="supprimer">
 			<button class="btn btn-info my-5 mx-5 form-controln col-3" type=""
-				value="">Supprimer mon compte</button>
+				value="">Supprimer compte</button>
 		</form>		
 		</div>
-
-
-
-
-
 
 
 	</section>
