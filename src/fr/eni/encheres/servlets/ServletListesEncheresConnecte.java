@@ -31,7 +31,8 @@ public class ServletListesEncheresConnecte extends HttpServlet {
 		Utilisateur utilisateurCourant = (Utilisateur)request.getSession().getAttribute("utilisateurCourant");  
 		int noUtilisateur = utilisateurCourant.getNoUtilisateur();
 		request.setAttribute("noUser", noUtilisateur);
-		
+		List<ArticleVendu> listToutesMesVentes = new ArticleVenduManager().getToutesMesVentes(noUtilisateur);
+		request.setAttribute("toutesMesVentes", listToutesMesVentes);
 		
 		
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/PagesListeEncheresConnecte.jsp");
@@ -45,56 +46,41 @@ public class ServletListesEncheresConnecte extends HttpServlet {
 		Utilisateur utilisateurCourant = (Utilisateur)request.getSession().getAttribute("utilisateurCourant");  
 		int noUtilisateur = utilisateurCourant.getNoUtilisateur();
 		
-		
 		//recuperation de quel radioBtn est coché ?
-		String achatVente = request.getParameter("achatsVentes");
-		//recuperation des checkBox
-		String ventesEnCours = request.getParameter("ventesEnCours");
-		String ventesNonDebutees = request.getParameter("ventesNonDebutees");
-		String ventesTerminees = request.getParameter("ventesTerminees");
+		String achatsVentes = request.getParameter("achatsVentes");
+		String quelBtnRadioActif = new ArticleVenduManager().radioBtn(achatsVentes);
 		
-		String encheresOuvertes = request.getParameter("encheresOuvertes");
-		String encheresEnCours = request.getParameter("encheresEnCours");
-		String encheresRemportees = request.getParameter("encheresRemportees");
-		
-		System.out.println(achatVente);
-		//radiobtn VENTE
-		if(achatVente.equalsIgnoreCase("vente")) {
-			LocalDate ceJour = LocalDate.now();
-			System.out.println(ceJour);
+		if (quelBtnRadioActif.equalsIgnoreCase("ventes")){
 			
-			//récupérer les ventes en Cours
-			if(ventesEnCours.equals("vEnCours")) {
-			ArticleVenduManager mesVentesEnCours = new ArticleVenduManager();
-			List<ArticleVendu> listVentesEnCours = mesVentesEnCours.getVentesEnCours(noUtilisateur, ceJour);
-			System.out.println(listVentesEnCours.toString());
-			request.setAttribute("mesVentesEnCours",listVentesEnCours);
+			
+			String ventesEnCours = request.getParameter("ventesEnCours");
+			String ventesNonDebutees = request.getParameter("ventesNonDebutees");
+			String ventesTerminees = request.getParameter("ventesTerminees");
+			
+			if(ventesEnCours == null & ventesNonDebutees == null & ventesTerminees == null) {
+				
+				List<ArticleVendu> listToutesMesVentes = new ArticleVenduManager().getToutesMesVentes(noUtilisateur);
+				request.setAttribute("toutesMesVentes", listToutesMesVentes);
+			}else {
+			//recuperation des checkBox
+			
+				if(ventesEnCours !=null) {
+				List<ArticleVendu> listVentesEnCours = new ArticleVenduManager().getVentes(noUtilisateur, ventesEnCours);
+				request.setAttribute("ventesEnCours",listVentesEnCours);
+				}
+				
+				
+				if(ventesNonDebutees !=null) {
+				List<ArticleVendu> listVentesNonDebutees = new ArticleVenduManager().getVentes(noUtilisateur, ventesNonDebutees);
+				request.setAttribute("ventesNonDebutees",listVentesNonDebutees);
+				} 
+				
+				
+				if(ventesTerminees !=null) {
+				List<ArticleVendu> listVentesTerminees = new ArticleVenduManager().getVentes(noUtilisateur, ventesTerminees);
+				request.setAttribute("ventesTerminees",listVentesTerminees);
+				}
 			}
-			//récupérer les Ventes non debutées 
-			if(ventesNonDebutees.equals("vNonDebutees")) {
-			ArticleVenduManager mesVentesNonDebutees = new ArticleVenduManager();
-			List<ArticleVendu> listVentesNonDebutees = mesVentesNonDebutees.getVentesNonDebutees(noUtilisateur, ceJour);
-			System.out.println(listVentesNonDebutees.toString());
-			request.setAttribute("ventesNonDebutees",listVentesNonDebutees);
-			}
-			//récupérer les Ventes non debutées 
-			if(ventesTerminees.equals("vTerminees")) {
-			ArticleVenduManager mesVentesTerminees = new ArticleVenduManager();
-			List<ArticleVendu> listVentesTerminees = mesVentesTerminees.getVentesNonDebutees(noUtilisateur, ceJour);
-			System.out.println(listVentesTerminees.toString());
-			request.setAttribute("ventesNonDebutees",listVentesTerminees);
-			}
-			
-			
-			
-			
-			
-			
-			
-			
-			
-		}else if(achatVente.equalsIgnoreCase("achat")) {
-			request.setAttribute("achat", "achat");
 		}
 		
 		
@@ -104,6 +90,15 @@ public class ServletListesEncheresConnecte extends HttpServlet {
 		
 		
 		
+		String encheresOuvertes = request.getParameter("encheresOuvertes");
+		String encheresEnCours = request.getParameter("encheresEnCours");
+		String encheresRemportees = request.getParameter("encheresRemportees");
+		
+		 RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/PagesListeEncheresConnecte.jsp");
+	     rd.forward(request, response);
+		
+		
+	}
 		
 		
 		
@@ -111,8 +106,34 @@ public class ServletListesEncheresConnecte extends HttpServlet {
 		
 		
 		
-		doGet(request, response);
+		
+		
+			
+			
+			
+			
+			
+			
+			
+			
+		
 	}
 
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 	
-}
+	
+
+	
+

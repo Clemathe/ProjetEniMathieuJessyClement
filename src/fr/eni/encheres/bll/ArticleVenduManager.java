@@ -135,4 +135,63 @@ public class ArticleVenduManager {
 		return auMoinsUne;
 
 	}
+	//JSP liste mes enchères : verif Checkbox
+	
+	public String radioBtn (String achatsVentes) {
+	
+	String quelRadioCoche = null;
+		
+	System.out.println("Controle Valeur RadioBouton dans article Manager : "+achatsVentes);
+	if (achatsVentes.equalsIgnoreCase("vente")) {
+		quelRadioCoche = "ventes";
+	}else if(achatsVentes.equalsIgnoreCase("vente")) {
+		quelRadioCoche = "achats";
+	}
+	return quelRadioCoche;
+	}
+	
+	
+	public List<ArticleVendu> getVentes (int noUtilisateur, String ventes){
+		List<ArticleVendu> ventesAAfficher = null;
+		LocalDate ceJour = LocalDate.now();
+		System.out.println("controle type de vente : "+ventes);
+		
+		if (ventes.equals("vEnCours")) {
+			ventesAAfficher = new ArticleVenduManager().getVentesEnCours(noUtilisateur, ceJour);
+		}
+		if (ventes.equals("vNonDebutees")) {
+			
+			ventesAAfficher = new ArticleVenduManager().getVentesNonDebutees(noUtilisateur, ceJour);
+		}
+		if (ventes.equals("vTerminees")) {
+			ventesAAfficher = new ArticleVenduManager().getVentesTerminees(noUtilisateur, ceJour);
+		}
+		
+		
+		return ventesAAfficher;
+	}
+	
+	public List<ArticleVendu> getToutesMesVentes (int noUtilisateur) {
+		
+		return ArticleVenduManager.articleVenduDAO.getToutesMesVentes(noUtilisateur);
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }
