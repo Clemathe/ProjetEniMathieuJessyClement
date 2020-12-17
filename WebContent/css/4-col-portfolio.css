@@ -8,6 +8,14 @@ body {
   padding-top: 54px;
   
 }
+#credit{
+	color:#17a2b8;
+	font-size: small;
+	
+	margin-top: 3px;
+	margin-bottom: -10px
+}
+
 #imageDetailArticle{
 	width: 18rem !important;
 }
