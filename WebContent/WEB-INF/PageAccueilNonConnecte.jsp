@@ -110,6 +110,7 @@
 			    	</div>				
 				</div>  
 			</div>
+			<br> 
 		</div>
 		</c:if>
 		</c:if>

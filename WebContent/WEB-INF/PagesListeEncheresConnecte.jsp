@@ -136,6 +136,7 @@
 					</div>		
 				</div>  
 			</div>
+			<br> 
 		</div>
 	</c:forEach>
 	</div>
@@ -161,7 +162,8 @@
 					<a href="" class="btn btn-info">Annuler la vente</a>
 					<a href="" class="btn btn-info">Modifier la vente</a>	
 					</div>		
-				</div>  
+				</div> 
+				<br> 
 			</div>
 		</div>
 	</c:forEach>
@@ -184,7 +186,8 @@
 										Fin de l'enchère le ${vt.dateFinEncheres}<br>
 					</p>
 						
-				</div>  
+				</div> 
+				<br>  
 			</div>
 		</div>
 	</c:forEach>
