@@ -6,8 +6,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.time.format.FormatStyle;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -146,135 +144,135 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 		return mesVentes;
 	}
 	
-	@Override
-	public ArticleVendu getArticleVendu(int noArticle) {
-		
-		
-		
-		ArticleVendu article = null;
-		String sqlGetArticleAvecEnchere =  "SELECT ARTICLES_VENDUS.no_article,"
-				+ "ARTICLES_VENDUS.nom_article,"
-				+" ARTICLES_VENDUS.description,"
-				+" ARTICLES_VENDUS.date_debut_encheres,"
-		 		+" ARTICLES_VENDUS.date_fin_encheres,"
-		 		+" ARTICLES_VENDUS.prix_initial,"
-		 		+" ARTICLES_VENDUS.prix_vente,"
-		 		+" ARTICLES_VENDUS.no_utilisateur as no_vendeur,"
-				+" UTILISATEURS.pseudo as vendeur,"
-		 		+" CATEGORIES.no_categorie,"
-		 		+" CATEGORIES.libelle,"
-		 		+" ENCHERES.no_utilisateur as encherisseur,"
-		 		+" ENCHERES.montant_enchere,"
-				+" RETRAITS.rue,"
-				+" RETRAITS.code_postal,"
-				+" RETRAITS.ville"
-		 		+" FROM ARTICLES_VENDUS "
-				+" JOIN UTILISATEURS ON ARTICLES_VENDUS.no_utilisateur = UTILISATEURS.no_utilisateur"
-				+" JOIN RETRAITS ON ARTICLES_VENDUS.no_article = RETRAITS.no_article"
-		 		+" JOIN CATEGORIES ON ARTICLES_VENDUS.no_categorie = CATEGORIES.no_categorie"
-		 		+" JOIN ENCHERES ON ARTICLES_VENDUS.no_article = ENCHERES.no_article"
-		 		+" WHERE ARTICLES_VENDUS.no_article = 22 and ENCHERES.montant_enchere = "
-		 		+" (SELECT MAX(montant_enchere) FROM ARTICLES_VENDUS"
-		 		+" JOIN ENCHERES ON ARTICLES_VENDUS.no_article=ENCHERES.no_article)"; 
-		 
-		String sqlGetArticleSansEnchere =  "SELECT ARTICLES_VENDUS.no_article,"
-				+ " ARTICLES_VENDUS.nom_article,"
-				+ " ARTICLES_VENDUS.description,"
-				+" ARTICLES_VENDUS.date_debut_encheres,"
-				+ " ARTICLES_VENDUS.date_fin_encheres,"
-				+ " ARTICLES_VENDUS.prix_initial,"
-				+ " ARTICLES_VENDUS.prix_vente,"
-				+ " ARTICLES_VENDUS.no_utilisateur as numéro_vendeur,"
-				+ " UTILISATEURS.pseudo as vendeur,"
-				+ " CATEGORIES.no_categorie,"
-				+ " CATEGORIES.libelle,"
-				+ " RETRAITS.rue,"
-				+ " RETRAITS.code_postal,"
-				+ " RETRAITS.ville"
-				+ " FROM ARTICLES_VENDUS"
-				+ " JOIN UTILISATEURS ON ARTICLES_VENDUS.no_utilisateur = UTILISATEURS.no_utilisateur"
-				+ " JOIN RETRAITS ON ARTICLES_VENDUS.no_article = RETRAITS.no_article"
-				+ " JOIN CATEGORIES ON ARTICLES_VENDUS.no_categorie = CATEGORIES.no_categorie"
-				+ " WHERE ARTICLES_VENDUS.no_article = ? "; 
-		 
-		try (Connection cnx = ConnectionProvider.getConnection();) {
-			
-			
-			System.out.println("DAO debut, numero article : "+ noArticle);
-			
-			if (getMeilleurEnchere(noArticle) != null) {
-				
-				PreparedStatement pstmt = cnx.prepareStatement(sqlGetArticleAvecEnchere);
+//	@Override
+//	public ArticleVendu getArticleVendu(int noArticle) {
+//		
+//		
+//		
+//		ArticleVendu article = null;
+//		String sqlGetArticleAvecEnchere =  "SELECT ARTICLES_VENDUS.no_article,"
+//				+ "ARTICLES_VENDUS.nom_article,"
+//				+" ARTICLES_VENDUS.description,"
+//				+" ARTICLES_VENDUS.date_debut_encheres,"
+//		 		+" ARTICLES_VENDUS.date_fin_encheres,"
+//		 		+" ARTICLES_VENDUS.prix_initial,"
+//		 		+" ARTICLES_VENDUS.prix_vente,"
+//		 		+" ARTICLES_VENDUS.no_utilisateur as no_vendeur,"
+//				+" UTILISATEURS.pseudo as vendeur,"
+//		 		+" CATEGORIES.no_categorie,"
+//		 		+" CATEGORIES.libelle,"
+//		 		+" ENCHERES.no_utilisateur as encherisseur,"
+//		 		+" ENCHERES.montant_enchere,"
+//				+" RETRAITS.rue,"
+//				+" RETRAITS.code_postal,"
+//				+" RETRAITS.ville"
+//		 		+" FROM ARTICLES_VENDUS "
+//				+" JOIN UTILISATEURS ON ARTICLES_VENDUS.no_utilisateur = UTILISATEURS.no_utilisateur"
+//				+" JOIN RETRAITS ON ARTICLES_VENDUS.no_article = RETRAITS.no_article"
+//		 		+" JOIN CATEGORIES ON ARTICLES_VENDUS.no_categorie = CATEGORIES.no_categorie"
+//		 		+" JOIN ENCHERES ON ARTICLES_VENDUS.no_article = ENCHERES.no_article"
+//		 		+" WHERE ARTICLES_VENDUS.no_article = 22 and ENCHERES.montant_enchere = "
+//		 		+" (SELECT MAX(montant_enchere) FROM ARTICLES_VENDUS"
+//		 		+" JOIN ENCHERES ON ARTICLES_VENDUS.no_article=ENCHERES.no_article)"; 
+//		 
+//		String sqlGetArticleSansEnchere =  "SELECT ARTICLES_VENDUS.no_article,"
+//				+ " ARTICLES_VENDUS.nom_article,"
+//				+ " ARTICLES_VENDUS.description,"
+//				+" ARTICLES_VENDUS.date_debut_encheres,"
+//				+ " ARTICLES_VENDUS.date_fin_encheres,"
+//				+ " ARTICLES_VENDUS.prix_initial,"
+//				+ " ARTICLES_VENDUS.prix_vente,"
+//				+ " ARTICLES_VENDUS.no_utilisateur as numéro_vendeur,"
+//				+ " UTILISATEURS.pseudo as vendeur,"
+//				+ " CATEGORIES.no_categorie,"
+//				+ " CATEGORIES.libelle,"
+//				+ " RETRAITS.rue,"
+//				+ " RETRAITS.code_postal,"
+//				+ " RETRAITS.ville"
+//				+ " FROM ARTICLES_VENDUS"
+//				+ " JOIN UTILISATEURS ON ARTICLES_VENDUS.no_utilisateur = UTILISATEURS.no_utilisateur"
+//				+ " JOIN RETRAITS ON ARTICLES_VENDUS.no_article = RETRAITS.no_article"
+//				+ " JOIN CATEGORIES ON ARTICLES_VENDUS.no_categorie = CATEGORIES.no_categorie"
+//				+ " WHERE ARTICLES_VENDUS.no_article = ? "; 
+//		 
+//		try (Connection cnx = ConnectionProvider.getConnection();) {
+//			
+//			
+//			System.out.println("DAO debut, numero article : "+ noArticle);
+//			
+//			if (getMeilleurEnchere(noArticle) != null) {
+//				
+//				PreparedStatement pstmt = cnx.prepareStatement(sqlGetArticleAvecEnchere);
+////				pstmt.setInt(1, noArticle);
+//				ResultSet rs = pstmt.executeQuery();
+//				List<Enchere> encheres = new ArrayList<>();
+//				int noMeilleurEncherisseur = 0;
+//				System.out.println(" chemin 1 avant rs.next  ");
+//				if(rs.next()) {
+//					
+//						System.out.println("apres le rs.next");
+//						encheres.add(new Enchere(rs.getInt(12), rs.getInt(13)));
+//						System.out.println("DAO enchere " + encheres);
+//						article = new ArticleVendu(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getDate(4).toLocalDate(),
+//								rs.getDate(5).toLocalDate(),rs.getInt(6), rs.getInt(7), new Utilisateur(rs.getInt(8), rs.getString(9)), encheres,
+//								new Categorie(rs.getInt(10), rs.getString(11)) , new Retrait(rs.getString(14),rs.getString(15) ,rs.getString(16)));
+//						
+//						noMeilleurEncherisseur = rs.getInt(12);
+//					
+//				
+//				String meilleurEncherisseur = getPseudoForArticleVendu(noMeilleurEncherisseur);
+//				Utilisateur user = new Utilisateur(noMeilleurEncherisseur, meilleurEncherisseur);
+//			
+//				
+//				Enchere enchere = article.getEncheres().get(0);
+//		
+//				enchere.setUtilisateur(user);
+//					
+//				article.getEncheres().remove(0);
+//				article.getEncheres().add(enchere);
+//				System.out.println("DAO1 article  = " + article);
+//				rs.close();
+//				pstmt.close();
+//				cnx.close();
+//				
+//				
+//				}
+//			}else {
+//				
+//				PreparedStatement pstmt = cnx.prepareStatement(sqlGetArticleSansEnchere);
 //				pstmt.setInt(1, noArticle);
-				ResultSet rs = pstmt.executeQuery();
-				List<Enchere> encheres = new ArrayList<>();
-				int noMeilleurEncherisseur = 0;
-				System.out.println(" chemin 1 avant rs.next  ");
-				if(rs.next()) {
-					
-						System.out.println("apres le rs.next");
-						encheres.add(new Enchere(rs.getInt(12), rs.getInt(13)));
-						System.out.println("DAO enchere " + encheres);
-						article = new ArticleVendu(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getDate(4).toLocalDate(),
-								rs.getDate(5).toLocalDate(),rs.getInt(6), rs.getInt(7), new Utilisateur(rs.getInt(8), rs.getString(9)), encheres,
-								new Categorie(rs.getInt(10), rs.getString(11)) , new Retrait(rs.getString(14),rs.getString(15) ,rs.getString(16)));
-						
-						noMeilleurEncherisseur = rs.getInt(12);
-					
-				
-				String meilleurEncherisseur = getPseudoForArticleVendu(noMeilleurEncherisseur);
-				Utilisateur user = new Utilisateur(noMeilleurEncherisseur, meilleurEncherisseur);
-			
-				
-				Enchere enchere = article.getEncheres().get(0);
-		
-				enchere.setUtilisateur(user);
-					
-				article.getEncheres().remove(0);
-				article.getEncheres().add(enchere);
-				System.out.println("DAO1 article  = " + article);
-				rs.close();
-				pstmt.close();
-				cnx.close();
-				
-				
-				}
-			}else {
-				
-				PreparedStatement pstmt = cnx.prepareStatement(sqlGetArticleSansEnchere);
-				pstmt.setInt(1, noArticle);
-				ResultSet rs = pstmt.executeQuery();
-				List<Enchere> encheres = new ArrayList<>();
-				int noMeilleurEncherisseur = 0;
-				System.out.println(" chemin 2 avant rs.next : ");
-				if(rs.next()) {
-					
-					System.out.println(" chemin 2 apres rs.next : ");			
-						article = new ArticleVendu(rs.getInt(1), rs.getString(2), rs.getString(3), (rs.getDate(4)).toLocalDate(),
-								(rs.getDate(5)).toLocalDate(), rs.getInt(6), rs.getInt(7), new Utilisateur(rs.getInt(8), rs.getString(9)),
-								new Categorie(rs.getInt(10), rs.getString(11)) , new Retrait(rs.getString(12),rs.getString(13) ,rs.getString(14)));
-
-				}System.out.println("DAO2 article  = " + article);
-				rs.close();
-				pstmt.close();
-				cnx.close();
-			}
-		}catch (Exception e) {
-			e.printStackTrace();
-			
-		}
-		
-		return article;
-	}
+//				ResultSet rs = pstmt.executeQuery();
+//				List<Enchere> encheres = new ArrayList<>();
+//				int noMeilleurEncherisseur = 0;
+//				System.out.println(" chemin 2 avant rs.next : ");
+//				if(rs.next()) {
+//					
+//					System.out.println(" chemin 2 apres rs.next : ");			
+//						article = new ArticleVendu(rs.getInt(1), rs.getString(2), rs.getString(3), (rs.getDate(4)).toLocalDate(),
+//								(rs.getDate(5)).toLocalDate(), rs.getInt(6), rs.getInt(7), new Utilisateur(rs.getInt(8), rs.getString(9)),
+//								new Categorie(rs.getInt(10), rs.getString(11)) , new Retrait(rs.getString(12),rs.getString(13) ,rs.getString(14)));
+//
+//				}System.out.println("DAO2 article  = " + article);
+//				rs.close();
+//				pstmt.close();
+//				cnx.close();
+//			}
+//		}catch (Exception e) {
+//			e.printStackTrace();
+//			
+//		}
+//		
+//		return article;
+//	}
 	public String getMeilleurEnchere(int noArticle) {
 		Connection cnx = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		String meilleurEncherisseur = "SELECT MAX(montant_enchere) FROM ARTICLES_VENDUS JOIN ENCHERES ON ARTICLES_VENDUS.no_article=ENCHERES.no_article WHERE ENCHERES.no_article = ?";
-
+		String sqlMeilleurEncherisseur = "SELECT MAX(montant_enchere) FROM ENCHERES WHERE no_article = ?";
+		String meilleurEncherisseur = null;
 		try {
 			cnx = ConnectionProvider.getConnection();
-			pstmt = cnx.prepareStatement(meilleurEncherisseur);
+			pstmt = cnx.prepareStatement(sqlMeilleurEncherisseur);
 			pstmt.setInt(1, noArticle);
 			rs = pstmt.executeQuery();
 			if (rs.next()) {
@@ -420,7 +418,7 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 
 
 	@Override
-	public boolean enregistrerUneEnchere(Enchere nouvelleEnchere) {
+	public boolean enregistrerUneEnchere(Enchere nouvelleEnchere) throws SQLException {
 		Connection cnx = null;
 		PreparedStatement pstmt = null;
 		boolean succes = false;
@@ -429,6 +427,7 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 
 		try {
 			cnx = ConnectionProvider.getConnection();
+			cnx.setAutoCommit(false);
 			pstmt = cnx.prepareStatement(insertEnchere);
 			pstmt.setInt(1, nouvelleEnchere.getUtilisateur().getNoUtilisateur());
 			pstmt.setInt(2, nouvelleEnchere.getArticle().getNoArticle());
@@ -437,15 +436,14 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 			pstmt.executeUpdate();
 			succes = true;
 			
-			
+			cnx.commit();
 			pstmt.close();
 			cnx.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
+			cnx.rollback();
 			e.printStackTrace();
 		}
-
-		
 		return succes;
 	}
 
@@ -563,7 +561,167 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 	}
 
 	
+	@Override
+	public ArticleVendu getArticleVendu(int noArticle) {
+		List<Enchere> encheres = new ArrayList<>();
+		ResultSet rs = null;
+		PreparedStatement pstmt = null;
+		ArticleVendu article = null;
+		String sqlGetArticleAvecEnchere =  "SELECT ARTICLES_VENDUS.no_article,"
+				+ "ARTICLES_VENDUS.nom_article,"
+				+" ARTICLES_VENDUS.description,"
+				+" ARTICLES_VENDUS.date_debut_encheres,"
+		 		+" ARTICLES_VENDUS.date_fin_encheres,"
+		 		+" ARTICLES_VENDUS.prix_initial,"
+		 		+" ARTICLES_VENDUS.prix_vente,"
+		 		+" ARTICLES_VENDUS.no_utilisateur as no_vendeur,"
+				+" UTILISATEURS.pseudo as vendeur,"
+		 		+" CATEGORIES.no_categorie,"
+		 		+" CATEGORIES.libelle,"
+				+" RETRAITS.rue,"
+				+" RETRAITS.code_postal,"
+				+" RETRAITS.ville"
+		 		+" FROM ARTICLES_VENDUS"
+				+" JOIN UTILISATEURS ON ARTICLES_VENDUS.no_utilisateur = UTILISATEURS.no_utilisateur"
+				+" JOIN RETRAITS ON ARTICLES_VENDUS.no_article = RETRAITS.no_article"
+		 		+" JOIN CATEGORIES ON ARTICLES_VENDUS.no_categorie = CATEGORIES.no_categorie"
+		 		+" WHERE ARTICLES_VENDUS.no_article = ?";
+		
+		System.out.println("DAO debut, numero article : "+ noArticle);
+		
+		try (Connection cnx = ConnectionProvider.getConnection();) {
+			
+			 	pstmt = cnx.prepareStatement(sqlGetArticleAvecEnchere);
+				pstmt.setInt(1, noArticle);
+				
+				rs = pstmt.executeQuery();
+				System.out.println(" chemin 1 avant rs.next  ");
+				if(rs.next()) {
+						String meilleurEnchere = getMeilleurEnchere(noArticle);
+						System.out.println("apres le rs.next");
+						
+						encheres.add(getEnchere(noArticle));
+						
+						System.out.println("DAO encheres " + encheres);
+						article = new ArticleVendu(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getDate(4).toLocalDate(),
+								rs.getDate(5).toLocalDate(),rs.getInt(6), meilleurEnchere != null? Integer.parseInt(meilleurEnchere) : rs.getInt(6), new Utilisateur(rs.getInt(8), rs.getString(9)), encheres,
+								new Categorie(rs.getInt(10), rs.getString(11)) , new Retrait(rs.getString(12),rs.getString(13) ,rs.getString(14)));
+				
+				System.out.println("DAO1 article  = " + article);
+				rs.close();
+				pstmt.close();
+				cnx.close();
+			
+			}
+		}catch (Exception e) {
+			e.printStackTrace();
+			
+		}
+		
+		return article;
+	}
+	public Enchere getEnchere(int noArticle) {
+		Connection cnx = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		Enchere enchere = null;
+		String SQL_GET_ENCHERE = 
+				"SELECT ENCHERES.no_utilisateur,"
+				+ " ENCHERES.no_article, "
+				+ " ENCHERES.montant_enchere, "
+				+ " UTILISATEURS.pseudo "
+				+ " FROM ENCHERES "
+				+ " JOIN UTILISATEURS "
+				+ " ON ENCHERES.no_utilisateur = UTILISATEURS.no_utilisateur "
+				+ " WHERE no_article = ? "
+				+ " AND montant_enchere = (SELECT MAX(montant_enchere) FROM ENCHERES WHERE no_article = ? )";
 
+		try {
+			cnx = ConnectionProvider.getConnection();
+			pstmt = cnx.prepareStatement(SQL_GET_ENCHERE);
+			pstmt.setInt(1, noArticle);
+			pstmt.setInt(2, noArticle);
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				int noUtilisateur = rs.getInt(1);
+				Utilisateur user = selectBy(noUtilisateur);
+				enchere = new Enchere(null,rs.getInt(3), null, user);
+			}
+		
+			pstmt.close();
+			cnx.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		System.out.println("DAO getEnchere : " + enchere);
+		return enchere;
+	}
+	
+
+	@Override
+	public Utilisateur selectBy(int noUtilisateur) throws SQLException {
+		final String SELECT_BY_ID = "SELECT no_utilisateur, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur FROM UTILISATEURS where no_utilisateur=?";
+
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		Utilisateur utilisateur = null;
+
+		try (Connection cnx = ConnectionProvider.getConnection()) {
+
+			pstmt = cnx.prepareStatement(SELECT_BY_ID);
+			pstmt.setInt(1, noUtilisateur);
+			rs = pstmt.executeQuery();
+
+			if (rs.next()) {
+				utilisateur = new Utilisateur(rs.getInt("no_utilisateur"), rs.getString("pseudo"), rs.getString("nom"),
+						rs.getString("prenom"), rs.getString("email"), rs.getString("telephone"), rs.getString("rue"),
+						rs.getString("code_postal"), rs.getString("ville"), rs.getString("mot_de_passe"),
+						rs.getInt("credit"), rs.getBoolean("administrateur"));
+			}
+
+		} catch (SQLException e) {
+			// faire throw pour message utilisateur
+			e.printStackTrace();
+		} finally {
+			try {
+				if (pstmt != null) {
+					pstmt.close();
+				}
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+		return utilisateur;
+	}
+	
+	@Override
+	public void mettreAJourLePrixDeVente(int prixDeVente, int no_article) throws SQLException   {
+		Connection cnx = null;
+		PreparedStatement pstmt = null;
+		int rs;
+		final String SQL_PRIX_DE_VENTE = "UPDATE ARTICLES_VENDUS SET prix_vente = ? WHERE no_article = ?";
+
+		try {
+			System.out.println("debut MAJprixVente : "+ prixDeVente);
+			cnx = ConnectionProvider.getConnection();
+			pstmt = cnx.prepareStatement(SQL_PRIX_DE_VENTE);
+			pstmt.setInt(1, prixDeVente);
+			pstmt.setInt(2, no_article);
+			rs = pstmt.executeUpdate();
+			if(rs == 0) {
+				throw new SQLException();
+			}
+			System.out.println("fin MAJprixVente : "+ prixDeVente);
+			pstmt.close();
+			cnx.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			throw e;
+		}
+	}
 
 
 

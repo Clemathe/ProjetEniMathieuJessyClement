@@ -18,18 +18,26 @@
 		<jsp:include page="./fragments/header.jsp"></jsp:include>
 	</header>
 	<div class="text-center my-5">
-	<jsp:useBean id="now" class="java.util.Date"/>
-	<fmt:parseDate value="${ article.dateFinEncheres }" pattern="yyyy-MM-dd" var="parsedDateTime" type="both" />
-										<fmt:formatDate pattern="dd/MM/yyyy" value="${ parsedDateTime }" var="dateFinEnchere"/>
-	<c:if test="${dateFinEnchere > now}">
-		<c:choose>
-			<c:when test="${utilisateurCourant.pseudo == article.encheres.get(0).utilisateur.pseudo}">Vous avez remporté l'enchère</c:when>
-			<c:otherwise>${article.encheres.get(0).utilisateur.pseudo} a remporté l'enchère</c:otherwise>
-		</c:choose>
-	</c:if>
 	
-	
-	<c:if  test="${enchereMessage != null}">
+		<jsp:useBean id="now" class="java.util.Date"/>
+		<fmt:formatDate var="maintenant" value="${now}" pattern="dd/MM/yyyy" />
+		
+		<fmt:parseDate  value="${ article.dateFinEncheres}"  type="date" pattern="yyyy-MM-dd" var="parsedDateFin" />
+		<fmt:formatDate value="${parsedDateFin}" type="date" pattern="dd/MM/yyyy" var="dateFinEnchere" />
+		
+		<fmt:parseDate  value="${ article.dateDebutEncheres}"  type="date" pattern="yyyy-MM-dd" var="parsedDateDebut" />
+		<fmt:formatDate value="${parsedDateDebut}" type="date" pattern="dd/MM/yyyy" var="dateDebutEnchere" />
+		
+		<c:if test="${dateFinEnchere lt maintenant}">
+			<c:choose>
+				<c:when test="${utilisateurCourant.pseudo == article.encheres.get(0).utilisateur.pseudo}">Vous avez remporté l'enchère</c:when>
+				<c:when test="${article.encheres.get(0).montantEnchere == null}">Personne n' a remporté l'enchère</c:when>
+				<c:otherwise>${article.encheres.get(0).utilisateur.pseudo} a remporté l'enchère</c:otherwise>
+			</c:choose>
+		</c:if>
+		
+		
+		<c:if  test="${enchereMessage != null}">
 
 			<div class="container alert alert-info text-align center" role="alert">
 				${enchereMessage}</div>
@@ -64,14 +72,15 @@
 					</c:otherwise>
 				</c:choose>
 				<p>Mise à prix : ${article.miseAPrix} points</p>
+				
+				<p>Début de l'enchère : ${dateDebutEnchere} </p>
 
-				<p>Fin de l'enchère : <fmt:parseDate value="${ article.dateFinEncheres }" pattern="yyyy-MM-dd" var="parsedDateTime" type="both" />
-										<fmt:formatDate pattern="dd/MM/yyyy" value="${ parsedDateTime }" var="dateFinEnchere"/></p>
+				<p>Fin de l'enchère : ${dateFinEnchere}</p>
 
 				<p>Retrait : ${article.lieuRetrait}</p>
 							
 				<p>Vendeur : ${article.vendeur.pseudo}</p>
-
+			<c:if test="${!(dateFinEnchere lt maintenant || dateDebutEnchere gt maintenant)}"> 
 				<div class="d-flex justify-content-flex-end">
 					<form method="post" action="encheres"
 						class="form-horizontal">
@@ -94,6 +103,8 @@
 						</div>
 					</form>
 				</div>
+				</c:if>
+				<a href="accueil"><button class=" btn btn-info btn-lg mt-5">Retour</button></a>
 			</div>
 		</div>
 	</section>

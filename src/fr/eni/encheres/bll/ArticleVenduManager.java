@@ -13,7 +13,6 @@ public class ArticleVenduManager {
 	
 	private static ArticleVenduDAO articleVenduDAO;
 	
-	
 	public ArticleVenduManager() {
 		articleVenduDAO = DAOFactory.articleVenduDAO();
 	}
@@ -46,61 +45,63 @@ public class ArticleVenduManager {
 	public String Encherir(int montantEnchere, Utilisateur utilisateurCourant, int noArticle) {
 		int soldeUtilisateur = utilisateurCourant.getCredit();
 		ArticleVendu articleCourant = getArticleVendu(noArticle);
-		boolean auMoinsUneEnchere= false;
+		LocalDate echeanceEnchere = articleCourant.getDateFinEncheres();
+		boolean auMoinsUneEnchere= auMoinsUneEnchere(articleCourant);
+		int prixActuel = articleCourant.getPrixVente();
+		
 		String message = null;
-		// L'encherisseur a il assez de crédit ?
-		if (soldeUtilisateur > montantEnchere ) {
-			int enchereLaPlusHaute = 0;
-			
-			try {  // L'article contient il déjà une enchère ?
-				enchereLaPlusHaute = articleCourant.getEncheres().get(0).getMontantEnchere();
-				auMoinsUneEnchere = true;
-			} catch (Exception e) { 
-				auMoinsUneEnchere = false;
-			} // Deux possibilités : l'article contient une enchère et cette enchère est inférieure à celle de l'encherisseur. 
-				// Ou bien pas d'enchere dans l'article et enchère proposée supérieure au prix initial 
-			if(( enchereLaPlusHaute < montantEnchere && auMoinsUneEnchere ) || ( !auMoinsUneEnchere && soldeUtilisateur > articleCourant.getMiseAPrix() )) {
-				
-				UtilisateurManager uManager = new UtilisateurManager();
-				// creation de l'objet enchère
-				Enchere nouvelleEnchere = new Enchere(LocalDate.now(), montantEnchere, articleCourant, utilisateurCourant);
-				
-				try {
-					articleVenduDAO.enregistrerUneEnchere(nouvelleEnchere);
+		// La date de fin d'enchere est elle atteinte ?
+		if ( echeanceEnchere.compareTo(LocalDate.now()) > 0 ) {
+			// L'encherisseur a il assez de crédit ?
+			if (soldeUtilisateur > montantEnchere ) {
+				// Son offre est elle superieur au prix actuel ?
+				if( montantEnchere > prixActuel) {
 					
-				} catch (Exception e) {
+					UtilisateurManager uManager = new UtilisateurManager();
+					// creation de l'objet enchère
+					Enchere nouvelleEnchere = new Enchere(LocalDate.now(), montantEnchere, articleCourant, utilisateurCourant);
 					
-					message = "L'enchère n'a pas pu être enregistrée";
-					
-					return message;
-				}
-				try{
-					uManager.debiterUtilisateur(montantEnchere, utilisateurCourant);
-				}catch(Exception e){
-					//TODO Update BDD pour effacer enchère
-					message = "L'enchère n'a pas pu être enregistrée";
-					
-					return message;
-				}
-				try{
-					if (auMoinsUneEnchere) uManager.rembourserUtilisateur(enchereLaPlusHaute, articleCourant.getEncheres().get(0).getUtilisateur());
-				}catch(Exception e){
-					//TODO Update BDD pour effacer enchère et débit utilisateur
-				}
+					try {
+						articleVenduDAO.enregistrerUneEnchere(nouvelleEnchere);
 						
-				message = "Enchère enregistrée";
-		
-			}else {
-				message = "Votre enchère est inférieure à l'enchère la plus haute";
-			}
+					} catch (Exception e) {
+						
+						message = "L'enchère n'a pas pu être enregistrée";
+						
+						return message;
+					}
+					try{
+						uManager.debiterUtilisateur(montantEnchere, utilisateurCourant);
+						
+					}catch(Exception e){
+						//TODO Update BDD pour effacer enchère
+						message = "L'enchère n'a pas pu être enregistrée";
+						
+						return message;
+					}
+					try{
+						articleVenduDAO.mettreAJourLePrixDeVente(montantEnchere, noArticle);
+						if (auMoinsUneEnchere) uManager.rembourserUtilisateur(prixActuel, articleCourant.getEncheres().get(0).getUtilisateur());
+					}catch(Exception e){
+						//TODO Update BDD pour effacer enchère et débit utilisateur
+						message = "L'enchère n'a pas pu être enregistrée";
+					}
+							
+					message = "Enchère enregistrée";
+			
+				}else {
+					message = "Votre enchère est inférieure à l'enchère la plus haute ou à la mise à prix";
+				}
 		}else {
-			message = "Vous n'avez pas suffisament de crédit";
+				message = "Vous n'avez pas suffisament de crédit";
 		}
+	
+	}else {
+		message = "L'enchère est déjà terminée";
 		
-		
-		
-		return message;
 	}
+		return message;
+}
 	
 
 
@@ -119,8 +120,19 @@ public class ArticleVenduManager {
 		return ArticleVenduManager.articleVenduDAO.getVentesTerminees(noUtilisateur, ceJour);
 	}
 
+	// L'article contient il déjà une enchère ?
+	public boolean auMoinsUneEnchere(ArticleVendu articleCourant) {
+		int enchereLaPlusHaute;
+		boolean auMoinsUne;
+		try {  
+			enchereLaPlusHaute = articleCourant.getEncheres().get(0).getMontantEnchere();
+			auMoinsUne = true;
+			System.out.println("auMoinsUneEnchere = true;");
+		} catch (Exception e) { 
+			auMoinsUne = false;
+			System.out.println("auMoinsUneEnchere = false;");
+	}
+		return auMoinsUne;
 
-
-
-
+	}
 }
