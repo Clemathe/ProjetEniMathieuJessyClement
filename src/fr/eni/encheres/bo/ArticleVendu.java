@@ -20,11 +20,6 @@ public class ArticleVendu {
 	private Categorie categorie; 
 	private Retrait lieuRetrait;
 	
-	private Utilisateur utilisateur;
-	private String pseudoVendeur;
-	private int noCategorie;
-	
-	private int noUtilisateur;
 	private Enchere enchere;
 	
 
@@ -49,7 +44,7 @@ public class ArticleVendu {
 	}
 	//utilisé dans ajout nouvel article à la vente
 	public ArticleVendu(String nomArticle, String description, LocalDate dateDebutEncheres,
-			LocalDate dateFinEncheres, int miseAPrix, int noCategorie,Utilisateur utilisateur, Retrait lieuRetrait) {
+			LocalDate dateFinEncheres, int miseAPrix,Categorie categorie,Utilisateur vendeur, Retrait lieuRetrait) {
 		super();
 		
 		this.nomArticle = nomArticle;
@@ -57,18 +52,18 @@ public class ArticleVendu {
 		this.dateDebutEncheres = dateDebutEncheres;
 		this.dateFinEncheres = dateFinEncheres;
 		this.miseAPrix = miseAPrix;
-		this.noCategorie = noCategorie;
-		this.utilisateur = utilisateur;
+		this.categorie = categorie;
+		this.vendeur = vendeur;
 		this.lieuRetrait = lieuRetrait;
 	}
 	//utilisé dans page d'accueil
-	public ArticleVendu(int noArticle, String nomArticle, int PrixVente, LocalDate dateDebutEncheres,LocalDate dateFinEncheres, String pseudoVendeur) {
+	public ArticleVendu(int noArticle, String nomArticle, int PrixVente, LocalDate dateDebutEncheres,LocalDate dateFinEncheres, Utilisateur vendeur) {
 		setNoArticle(noArticle); 
 		setNomArticle(nomArticle);
 		setPrixVente(PrixVente);
 		setDateDebutEncheres(dateDebutEncheres);
 		setDateFinEncheres(dateFinEncheres);
-		setPseudoVendeur(pseudoVendeur);
+		setVendeur(vendeur);
 		
 	}
 	//utilisé dans mesVentes
@@ -82,7 +77,7 @@ public class ArticleVendu {
 		this.dateFinEncheres = dateFinEncheres;
 		this.miseAPrix = miseAPrix;
 		this.prixVente = prixVente;
-		this.enchere = enchere;
+		this.setEnchere(enchere);
 		this.categorie = categorie;
 		this.lieuRetrait = lieuRetrait;
 	}
@@ -238,36 +233,16 @@ public class ArticleVendu {
 	public void setLieuRetrait(Retrait lieuRetrait) {
 		this.lieuRetrait = lieuRetrait;
 	} 
-	public String getPseudoVendeur() {
-		return pseudoVendeur;
-	}
-	public void setPseudoVendeur(String pseudoVendeur) {
-		this.pseudoVendeur = pseudoVendeur;
-	}
-	public void setUtilisateur(Utilisateur utilisateur) {
-		this.utilisateur = utilisateur;
-	}
-	public int getNoCategorie() {
-		return noCategorie;
-	}
-
-	public void setNoCategorie(int noCategorie) {
-		this.noCategorie = noCategorie;
-	}
-
-	public int getNoUtilisateur() {
-		return noUtilisateur;
-	}
-
-	public void setNoUtilisateur(int noUtilisateur) {
-		this.noUtilisateur = noUtilisateur;
-	}
-
+	
 	public void setDateFinEncheres(LocalDate dateFinEncheres) {
 		this.dateFinEncheres = dateFinEncheres;
 	}
-	public Utilisateur getUtilisateur() {
-		return utilisateur;
+	
+	public Enchere getEnchere() {
+		return enchere;
+	}
+	public void setEnchere(Enchere enchere) {
+		this.enchere = enchere;
 	}
 
 }
