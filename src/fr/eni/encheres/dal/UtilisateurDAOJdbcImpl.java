@@ -268,4 +268,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 // test gihub commit
 	}
 
+	public void beginTransaction() {
+		
+	}
 }

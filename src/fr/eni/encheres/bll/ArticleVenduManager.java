@@ -62,29 +62,17 @@ public class ArticleVenduManager {
 					Enchere nouvelleEnchere = new Enchere(LocalDate.now(), montantEnchere, articleCourant, utilisateurCourant);
 					
 					try {
+						//TODO Begin transcation
 						articleVenduDAO.enregistrerUneEnchere(nouvelleEnchere);
-						
+						uManager.debiterUtilisateur(montantEnchere, utilisateurCourant);
+						articleVenduDAO.mettreAJourLePrixDeVente(montantEnchere, noArticle);
+						if (auMoinsUneEnchere) uManager.rembourserUtilisateur(prixActuel, articleCourant.getEncheres().get(0).getUtilisateur());
+						//TODO Commit Transcation
 					} catch (Exception e) {
 						
 						message = "L'enchère n'a pas pu être enregistrée";
 						
 						return message;
-					}
-					try{
-						uManager.debiterUtilisateur(montantEnchere, utilisateurCourant);
-						
-					}catch(Exception e){
-						//TODO Update BDD pour effacer enchère
-						message = "L'enchère n'a pas pu être enregistrée";
-						
-						return message;
-					}
-					try{
-						articleVenduDAO.mettreAJourLePrixDeVente(montantEnchere, noArticle);
-						if (auMoinsUneEnchere) uManager.rembourserUtilisateur(prixActuel, articleCourant.getEncheres().get(0).getUtilisateur());
-					}catch(Exception e){
-						//TODO Update BDD pour effacer enchère et débit utilisateur
-						message = "L'enchère n'a pas pu être enregistrée";
 					}
 							
 					message = "Enchère enregistrée";
