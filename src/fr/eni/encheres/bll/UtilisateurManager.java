@@ -82,7 +82,7 @@ public class UtilisateurManager {
 	}
 	
 
-	public boolean creerUtilisateur(String pseudo, String nom, String prenom, String email, String telephone,
+	public void creerUtilisateur(String pseudo, String nom, String prenom, String email, String telephone,
 			String rue, String codePostal, String ville, String motDePasse) throws SQLException {
 		String hashPassword = MD5Utils.digest(motDePasse);
 		Boolean insertOK = false;
@@ -98,12 +98,12 @@ public class UtilisateurManager {
 		utilisateur.setMotDePasse(hashPassword);
 		try {
 			utilisateurDAO.insertUtilisateur(utilisateur);
-			insertOK = true;
+			
 		} catch (Exception e) {
 // là pour message dal
 			e.printStackTrace();
 		}
-		return insertOK;
+		
 	}
 
 	public void insertUtilisateur(Utilisateur utilisateur) throws Exception {
@@ -150,5 +150,20 @@ public class UtilisateurManager {
 	public void supprimer(int no_utilisateur) throws SQLException {
 		System.out.println("supprimerManager");
 		utilisateurDAO.supprimerUtilisateur(no_utilisateur);
+	}
+
+
+	public String traitementErreur(Boolean validationOK, List<String> messageErreur) {
+		StringBuilder sb = new StringBuilder();
+		String erreur = ""; 
+		if (validationOK == false) {
+			for (String s : messageErreur) {
+				sb.append(s);
+				sb.append(" ");
+			}
+			 erreur = sb.toString();
+		
+	}
+		return erreur;
 	}
 }
