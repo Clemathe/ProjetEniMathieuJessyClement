@@ -93,13 +93,14 @@ public class ServletMonProfil extends HttpServlet {
 			// mot de passe de l'utilisateurCourant
 			utilisateurSession = (Utilisateur) request.getSession(true).getAttribute("utilisateurCourant");
 			String motDePasseSession = utilisateurSession.getMotDePasse();
-			String hashPassword2 = MD5Utils.digest(motDePasseSession);
+			//String hashPassword2 = MD5Utils.digest(motDePasseSession);
 
 			// verifier que les deux mots de passe matchent :
-			boolean userPassOK = hashPassword1.equals(hashPassword2);
+			// ne pas hasher mot de passe et login / envoie à méthode getutilisateurSession
+			boolean userPassOK = hashPassword1.equals(motDePasseSession);
 			
 			// à changer qaund check fonctionnera
-			if (userPassOK != false) {
+			if (userPassOK != true) {
 				message = "le mot de passe saisie ne correspond pas à l'utilisateur";
 			} else
 
@@ -149,6 +150,16 @@ public class ServletMonProfil extends HttpServlet {
 			System.out.println(sb.toString());
 			String messageU = sb.toString();
 			request.setAttribute("message", messageU);
+			Utilisateur utilisateur = new Utilisateur();
+			utilisateur = (Utilisateur) request.getSession(true).getAttribute("utilisateurCourant");
+
+			if (utilisateur == null) {
+				RequestDispatcher rd = request.getRequestDispatcher("/connexion");
+				rd.forward(request, response);
+				System.out.println("renvoyer vers page se connecter");
+			} else
+
+				request.setAttribute("utilisateur", utilisateur);
 			RequestDispatcher rd = request.getRequestDispatcher("WEB-INF/PageMonProfil.jsp");
 			rd.forward(request, response);
 

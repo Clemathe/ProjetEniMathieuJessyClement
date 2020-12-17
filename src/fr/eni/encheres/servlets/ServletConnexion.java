@@ -98,7 +98,8 @@ public class ServletConnexion extends HttpServlet {
 		UtilisateurManager UManager = new UtilisateurManager();
 		
 			try {Utilisateur utilisateurCourant = UManager.getUtilisateurPourSession(login, password);
-	
+			System.out.println("servelt connexion : " + utilisateurCourant);
+			
 				if(utilisateurCourant != null) {
 					HttpSession sessionCourante = request.getSession(true);
 		

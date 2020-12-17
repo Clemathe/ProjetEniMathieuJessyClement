@@ -111,7 +111,9 @@ public class UtilisateurManager {
 	}
 	public String modifierUtilisateur(int no_utilisateur, String pseudo, String nom, String prenom, String email, String telephone,
 			String rue, String codePostal, String ville, String motDePasse) throws Exception {
+		
 		String statutUpdate = "validation de la modification";
+		String hashPassword = MD5Utils.digest(motDePasse);
 		Utilisateur utilisateur = new Utilisateur();
 		utilisateur.setNoUtilisateur(no_utilisateur);
 		utilisateur.setPseudo(pseudo);
@@ -122,8 +124,7 @@ public class UtilisateurManager {
 		utilisateur.setRue(rue);
 		utilisateur.setVille(ville);
 		utilisateur.setCodePostal(codePostal);
-		MD5Utils.digest(motDePasse);
-		utilisateur.setMotDePasse(motDePasse);
+		utilisateur.setMotDePasse(hashPassword);
 
 		try {
 			utilisateurDAO.update(utilisateur);

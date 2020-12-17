@@ -10,7 +10,7 @@ import fr.eni.encheres.bo.Utilisateur;
 public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	private static final String INSERT_UTILISATEUR = "INSERT INTO UTILISATEURS (pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 	private static final String SELECT_BY_ID = "SELECT no_utilisateur, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur FROM UTILISATEURS where id=?";
-	private static final String UPDATE = "UPDATE UTILISATEURS set  pseudo = ?, nom =?, prenom=?, email=?, telephone=?, rue=?, code_postal=?, ville=?, mot_de_passe=? where pseudo=?";
+	private static final String UPDATE = "UPDATE UTILISATEURS set  pseudo = ?, nom =?, prenom=?, email=?, telephone=?, rue=?, code_postal=?, ville=?, mot_de_passe=? where no_utilisateur=?";
 	private static final String REMBOURSER_UTILISATEUR = "UPDATE Utilisateurs SET credit = credit + ? WHERE no_utilisateur = ?";
 	private static final String DEBITER_UTILISATEUR = "UPDATE Utilisateurs SET credit = credit - ? WHERE no_utilisateur = ?";
 	private static final String SUPPRIMER_UTILISATEUR = "DELETE FROM utilisateurs WHERE no_utilisateur = ?";
@@ -211,7 +211,8 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 			try {
 
 			System.out.println(utilisateur);
-				PreparedStatement pstmt = cnx.prepareStatement(UPDATE);
+			PreparedStatement pstmt = cnx.prepareStatement(UPDATE,
+					PreparedStatement.RETURN_GENERATED_KEYS);
 				
 	
 				pstmt.setString(1, utilisateur.getPseudo());
