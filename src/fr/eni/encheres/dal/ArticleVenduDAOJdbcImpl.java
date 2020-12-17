@@ -678,7 +678,8 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 			
 			if(rs.next()) {
 				int noUtilisateur = rs.getInt(1);
-				Utilisateur user = selectBy(noUtilisateur);
+				UtilisateurDAOJdbcImpl getUser = new UtilisateurDAOJdbcImpl();
+				Utilisateur user = getUser.selectBy(noUtilisateur);
 				enchere = new Enchere(null,rs.getInt(3), null, user);
 			}
 		
@@ -692,42 +693,6 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 		return enchere;
 	}
 	
-
-	@Override
-	public Utilisateur selectBy(int noUtilisateur) throws SQLException {
-		final String SELECT_BY_ID = "SELECT no_utilisateur, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur FROM UTILISATEURS where no_utilisateur=?";
-
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-		Utilisateur utilisateur = null;
-
-		try (Connection cnx = ConnectionProvider.getConnection()) {
-
-			pstmt = cnx.prepareStatement(SELECT_BY_ID);
-			pstmt.setInt(1, noUtilisateur);
-			rs = pstmt.executeQuery();
-
-			if (rs.next()) {
-				utilisateur = new Utilisateur(rs.getInt("no_utilisateur"), rs.getString("pseudo"), rs.getString("nom"),
-						rs.getString("prenom"), rs.getString("email"), rs.getString("telephone"), rs.getString("rue"),
-						rs.getString("code_postal"), rs.getString("ville"), rs.getString("mot_de_passe"),
-						rs.getInt("credit"), rs.getBoolean("administrateur"));
-			}
-
-		} catch (SQLException e) {
-			// faire throw pour message utilisateur
-			e.printStackTrace();
-		} finally {
-			try {
-				if (pstmt != null) {
-					pstmt.close();
-				}
-			} catch (Exception e2) {
-				e2.printStackTrace();
-			}
-		}
-		return utilisateur;
-	}
 	
 	@Override
 	public void mettreAJourLePrixDeVente(int prixDeVente, int no_article) throws SQLException   {

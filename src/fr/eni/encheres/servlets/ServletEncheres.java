@@ -70,22 +70,24 @@ public class ServletEncheres extends HttpServlet {
 				request.setAttribute("enchereMessage", enchereMessage);
 				
 				//Rechargement de la session utilisateur pour mettre a jour le solde
-//				if ( enchereMessage.equals("Enchère enregistrée"))
+//				if ( enchereMessage.equals("Enchère enregistrée")) {
 //					utilisateurCourant = uManager.getUtilisateurPourSession(utilisateurCourant.getPseudo(), utilisateurCourant.getMotDePasse());
 //					request.getSession().setAttribute("utilisateurCourant", utilisateurCourant);
-					
-				doGet(request, response);
+//					request.changeSessionId();
+//				}
+				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/PageEncherir.jsp");
+				rd.forward(request, response);
 			}catch (Exception e) {
 				
 				doGet(request, response);			
 			}
 			
 			}else {
-				response.sendRedirect("/encheres");
+				response.sendRedirect(request.getContextPath()+"/encheres");
 			}
 
 		}else {
-		response.sendRedirect("/connexion");
+		response.sendRedirect(request.getContextPath()+"/connexion");
 		}
 	}
 }

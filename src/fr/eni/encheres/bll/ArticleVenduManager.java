@@ -65,7 +65,7 @@ public class ArticleVenduManager {
 						Enchere nouvelleEnchere = new Enchere(LocalDate.now(), montantEnchere, articleCourant, utilisateurCourant);
 						
 						try {
-							//TODO Begin transcation
+							//TODO Begin transacation
 							articleVenduDAO.enregistrerUneEnchere(nouvelleEnchere);
 							uManager.debiterUtilisateur(montantEnchere, utilisateurCourant);
 							articleVenduDAO.mettreAJourLePrixDeVente(montantEnchere, noArticle);

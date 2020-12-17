@@ -8,6 +8,7 @@ public class Enchere {
 	private int montantEnchere; 
 	private ArticleVendu article; 
 	private Utilisateur utilisateur;
+	
 	private int noArticle;
 	private int noUtilisateur;
 	/**

@@ -27,8 +27,6 @@ public interface ArticleVenduDAO {
 	public List<ArticleVendu> getVentesNonDebutees(int noUtilisateur, LocalDate ceJour);
 	
 	public List<ArticleVendu> getVentesTerminees(int noUtilisateur, LocalDate ceJour);
-	
-	public Utilisateur selectBy(int no_utilisateur) throws SQLException;
 
 	void mettreAJourLePrixDeVente(int prixDeVente, int no_article) throws SQLException;
 

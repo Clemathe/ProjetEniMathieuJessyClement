@@ -9,7 +9,7 @@ import fr.eni.encheres.bo.Utilisateur;
 
 public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	private static final String INSERT_UTILISATEUR = "INSERT INTO UTILISATEURS (pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-	private static final String SELECT_BY_ID = "SELECT no_utilisateur, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur FROM UTILISATEURS where id=?";
+	private static final String SELECT_BY_ID = "SELECT no_utilisateur, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur FROM UTILISATEURS where no_utilisateur=?";
 	private static final String UPDATE = "UPDATE UTILISATEURS set  pseudo = ?, nom =?, prenom=?, email=?, telephone=?, rue=?, code_postal=?, ville=?, mot_de_passe=? where no_utilisateur=?";
 	private static final String REMBOURSER_UTILISATEUR = "UPDATE Utilisateurs SET credit = credit + ? WHERE no_utilisateur = ?";
 	private static final String DEBITER_UTILISATEUR = "UPDATE Utilisateurs SET credit = credit - ? WHERE no_utilisateur = ?";
@@ -112,7 +112,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	}
 
 	@Override
-	public Utilisateur selectBy(int no_utilisateur) throws SQLException {
+	public Utilisateur selectBy(int noUtilisateur) throws SQLException {
 
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -121,7 +121,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 		try (Connection cnx = ConnectionProvider.getConnection()) {
 
 			pstmt = cnx.prepareStatement(SELECT_BY_ID);
-			pstmt.setInt(1, no_utilisateur);
+			pstmt.setInt(1, noUtilisateur);
 			rs = pstmt.executeQuery();
 
 			if (rs.next()) {
@@ -132,7 +132,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 			}
 
 		} catch (SQLException e) {
-			// faire throw pour message utilisateur
+			//TODO faire throw pour message utilisateur
 			e.printStackTrace();
 		} finally {
 			try {

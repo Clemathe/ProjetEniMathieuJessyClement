@@ -32,6 +32,17 @@ public class Utilisateur implements Serializable{
 	public Utilisateur() {
 	}
 	
+	
+	
+	// Utilisateur pour session
+	public Utilisateur(int noUtilisateur, String pseudo, int credit) {
+		this.noUtilisateur = noUtilisateur;
+		this.pseudo = pseudo;
+		this.credit = credit;
+	}
+
+
+
 	public Utilisateur( String pseudo, String nom, String prenom, String email, String telephone,
 			String rue, String codePostal, String ville, String motDePasse, int credit) {
 		super();
@@ -86,8 +97,6 @@ public class Utilisateur implements Serializable{
 		this.administrateur = administrateur;
 		
 	}
-
-	
 
 	public Utilisateur(int noUtilisateur, String pseudo) {
 		super();
