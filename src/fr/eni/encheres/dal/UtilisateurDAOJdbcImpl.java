@@ -210,7 +210,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 			System.out.println("dans update DAOJDBCIMPL");
 			try {
 
-			
+			System.out.println(utilisateur);
 				PreparedStatement pstmt = cnx.prepareStatement(UPDATE);
 				
 	
@@ -224,6 +224,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 				pstmt.setString(8, utilisateur.getVille());
 				pstmt.setString(9, utilisateur.getMotDePasse());
 				pstmt.setInt(10,  utilisateur.getNoUtilisateur());
+				
 				pstmt.executeUpdate();
 				ResultSet rs = pstmt.getGeneratedKeys();
 				System.out.println(utilisateur);
@@ -233,9 +234,10 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 				pstmt.close();
 				cnx.close();
 				System.out.println("cnx.close update DAOJDBCIMPL");
+				
 			} catch (Exception e) {
 				e.printStackTrace();
-				cnx.rollback();
+				
 				throw e;
 			}
 		} catch (Exception e) {
