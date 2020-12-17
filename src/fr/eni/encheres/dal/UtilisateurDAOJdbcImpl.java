@@ -47,7 +47,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 					System.out.println(login+ " 3 " + hashPassword);
 					user = new Utilisateur(rs.getInt("no_utilisateur"),rs.getString("pseudo"),rs.getString("nom"),
 							rs.getString("prenom"),rs.getString("email"),rs.getString("telephone"),rs.getString("rue"),
-							rs.getString("code_postal"),hashPassword, rs.getString("ville"), rs.getInt("credit"), rs.getBoolean("administrateur"));
+							rs.getString("code_postal"), rs.getString("ville"), hashPassword,rs.getInt("credit"), rs.getBoolean("administrateur"));
 					
 				}
 				
@@ -265,7 +265,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-// test gihub
+// test gihub commit
 	}
 
 }

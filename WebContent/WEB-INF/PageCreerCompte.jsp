@@ -90,7 +90,7 @@
 			<label for="motDePasse1" class="col-md-2 col-form-label"> Mot de Passe : </label>
 			
 			<input class="form-controln col-md-4" type="password" id="motDePasse1"
-				name="motDePasse1" required="required"
+				name="motDePasse1" value="${param.motDePasse1}"required="required"
 				placeholder="8 à 12 caractères : aA12@!GH"> 
 			<label for="motDePasse" class="col-md-2 col-form-label"> Confirmer : </label>
 			

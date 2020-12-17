@@ -53,8 +53,7 @@ public class ServletCreerCompte extends HttpServlet {
 		String motDePasse = request.getParameter("motDePasse");
 		String motDePasse1 = request.getParameter("motDePasse1");
 
-		// int credit = 0;
-		// int noUtilisateur = 0;
+
 		List<String> messageErreur = new ArrayList<>();
 
 		// verification de la saise et intégrité des données
@@ -62,51 +61,39 @@ public class ServletCreerCompte extends HttpServlet {
 		UtilisateurManager utilisateurManager = new UtilisateurManager();
 		messageErreur = utilisateurManager.verificationSaisieUtilisateur(pseudo, nom, prenom, email, telephone, rue,
 				codePostal, ville, motDePasse, motDePasse1);
-		Boolean validationOK = utilisateurManager.validationCreationCompte(messageErreur);
+		boolean validationOK = utilisateurManager.validationCreationCompte(messageErreur);
+		
+		
+		// insert ou affichage message erreur
 
-		// traitement erreur de saisie : renvoie message erreur à l'utilisateur
-		StringBuilder sb = new StringBuilder();
-		boolean insertOK = false;
-		if (validationOK == false) {
-			for (String s : messageErreur) {
-				sb.append(s);
-				sb.append(" ");
-			}
-			System.out.println(sb.toString());
-			String Erreur = sb.toString();
-			request.setAttribute("Erreur", Erreur);
+						if (validationOK != true) {
+			
+			String erreur = utilisateurManager.traitementErreur(validationOK, messageErreur); 
+			request.setAttribute("Erreur", erreur);
 			RequestDispatcher rd = request.getRequestDispatcher("WEB-INF/PageCreerCompte.jsp");
 			rd.forward(request, response);
+			
 		} else
+			
 			try {
-				insertOK = utilisateurManager.creerUtilisateur(pseudo, nom, prenom, email, telephone, rue, codePostal,
+				utilisateurManager.creerUtilisateur(pseudo, nom, prenom, email, telephone, rue, codePostal,
 						ville, motDePasse);
 			} catch (SQLException e) {
 				e.printStackTrace();
-			}
-		//dans try
-		if (insertOK == false) {
-
-			String messageErreurDal = "échec creation de l'utilisateur :  pseudo et/ou email déjà utilisé(s )";
-			request.setAttribute("Erreur", messageErreurDal);
-			RequestDispatcher rd = request.getRequestDispatcher("WEB-INF/PageCreerCompte.jsp");
-			rd.forward(request, response);
-		}
-
-		// renvoie des attributs si insertUtilisateur is true
-
-		else 
-		
-		request.setAttribute("creationUtilisateur", "true"); 
-		request.setAttribute("loginCreated", email);
-        request.setAttribute("passwordCreated", motDePasse);
-       
-        System.out.println("envoi vers accueil "+ motDePasse + " " +email);
-       
-        RequestDispatcher rd = request.getRequestDispatcher("/connexion");
-        rd.forward(request, response);
-
-
+				String messageErreurDal = "échec creation de l'utilisateur :  pseudo et/ou email déjà utilisé(s )";
+				request.setAttribute("Erreur", messageErreurDal);
+				RequestDispatcher rd = request.getRequestDispatcher("WEB-INF/PageCreerCompte.jsp");
+				rd.forward(request, response);
+			}	
+				// fin traitement accompli renvoi l'utilisateur créé à la connexion	
+				request.setAttribute("creationUtilisateur", "true"); 
+				request.setAttribute("loginCreated", email);
+			    request.setAttribute("passwordCreated", motDePasse);  
+			    RequestDispatcher rd = request.getRequestDispatcher("/connexion");
+			    rd.forward(request, response);
 	}
 
+
 }
+
+
