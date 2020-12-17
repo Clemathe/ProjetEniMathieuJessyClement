@@ -53,8 +53,7 @@ public class ServletCreerCompte extends HttpServlet {
 		String motDePasse = request.getParameter("motDePasse");
 		String motDePasse1 = request.getParameter("motDePasse1");
 
-		// int credit = 0;
-		// int noUtilisateur = 0;
+
 		List<String> messageErreur = new ArrayList<>();
 
 		// verification de la saise et intégrité des données

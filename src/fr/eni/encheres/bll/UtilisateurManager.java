@@ -85,7 +85,7 @@ public class UtilisateurManager {
 	public void creerUtilisateur(String pseudo, String nom, String prenom, String email, String telephone,
 			String rue, String codePostal, String ville, String motDePasse) throws SQLException {
 		String hashPassword = MD5Utils.digest(motDePasse);
-		Boolean insertOK = false;
+		
 		Utilisateur utilisateur = new Utilisateur();
 		utilisateur.setPseudo(pseudo);
 		utilisateur.setNom(nom);
@@ -93,14 +93,12 @@ public class UtilisateurManager {
 		utilisateur.setEmail(email);
 		utilisateur.setTelephone(telephone);
 		utilisateur.setRue(rue);
-		utilisateur.setVille(ville);
 		utilisateur.setCodePostal(codePostal);
+		utilisateur.setVille(ville);
 		utilisateur.setMotDePasse(hashPassword);
 		try {
-			utilisateurDAO.insertUtilisateur(utilisateur);
-			
+			utilisateurDAO.insertUtilisateur(utilisateur);		
 		} catch (Exception e) {
-// là pour message dal
 			e.printStackTrace();
 		}
 		
