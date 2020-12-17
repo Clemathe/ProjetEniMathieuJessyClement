@@ -36,7 +36,7 @@ public class ServletEncheres extends HttpServlet {
 			System.out.println("serveletEnchere : " + article);
 			
 			request.setAttribute("article", article);
-			request.setAttribute("noArticle", article);
+			request.setAttribute("noArticle", noArticle);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -49,37 +49,43 @@ public class ServletEncheres extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		boolean encherir = request.getParameter("encherir") != null;
-		
+	
 		UtilisateurManager uManager = new UtilisateurManager();
 		ArticleVenduManager aVManager = new ArticleVenduManager();
+		
 		boolean sessionUtilisateur = request.getSession().getAttribute("utilisateurCourant") != null;
+		boolean encherir = request.getParameter("encherir") != null;
 		
 		if(sessionUtilisateur) {
 			if(encherir) {
 			try {
-				System.out.println("servlet enchere noArticle "+request.getParameter("noArticle"));
+				
 				int montant = Integer.parseInt(request.getParameter("montant"));
 				int noArticle = Integer.parseInt(request.getParameter("noArticle"));
-				System.out.println("servlet enchere noArticle"+request.getParameter("noArticle"));
+				
+				System.out.println("servlet enchere noArticle"+ noArticle);
+				
 				Utilisateur utilisateurCourant = (Utilisateur) request.getSession().getAttribute("utilisateurCourant");
 				String enchereMessage = aVManager.Encherir(montant, utilisateurCourant, noArticle );
 				request.setAttribute("enchereMessage", enchereMessage);
 				
 				//Rechargement de la session utilisateur pour mettre a jour le solde
-				utilisateurCourant = uManager.getUtilisateurPourSession(utilisateurCourant.getPseudo(), utilisateurCourant.getMotDePasse());
-				request.getSession().setAttribute("utilisateurCourant", utilisateurCourant);
+//				if ( enchereMessage.equals("Enchère enregistrée"))
+//					utilisateurCourant = uManager.getUtilisateurPourSession(utilisateurCourant.getPseudo(), utilisateurCourant.getMotDePasse());
+//					request.getSession().setAttribute("utilisateurCourant", utilisateurCourant);
+					
 				doGet(request, response);
-			} catch (Exception e) {
+			}catch (Exception e) {
 				
 				doGet(request, response);			
 			}
-		}else {
-			RequestDispatcher rd = request.getRequestDispatcher("/connexion");
-		}
-	
+			
+			}else {
+				response.sendRedirect("/encheres");
+			}
 
-	}
+		}else {
+		response.sendRedirect("/connexion");
+		}
 	}
 }
-

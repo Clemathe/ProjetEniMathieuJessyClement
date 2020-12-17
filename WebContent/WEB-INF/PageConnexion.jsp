@@ -51,8 +51,8 @@
 						chiffres, lettres minuscules et majuscules et symbole</small>
 				</div>
 				<div class="form-check mb-2">
-					<input type="checkbox" class="form-check-input" id="rememberMe">
-					<label class="form-check-label" for="rememberMe" id="rememberMe">Se
+					<input type="checkbox" class="form-check-input" id="rememeberMe">
+					<label class="form-check-label" for="rememeberMe" id="rememeberMe">Se
 						souvenir de moi</label>
 				</div>
 				<div class="form-group">
