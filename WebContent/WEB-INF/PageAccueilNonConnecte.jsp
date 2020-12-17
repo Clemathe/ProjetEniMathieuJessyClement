@@ -99,7 +99,7 @@
 					<h5 class="card-title">${EEC.nomArticle}</h5>
 					<p class="card-text">Prix: ${EEC.prixVente} points<br /> 
 					Fin de l'enchère: ${EEC.dateDebutEncheres}<br />
-					Vendeur: ${EEC.pseudoVendeur}</p>
+					Vendeur: ${EEC.vendeur.pseudo} </p>
 					<div class="text-center">
 						<c:if test="${utilisateurCourant != null}">					
 						<a href="encheres?noArticle=${EEC.noArticle}" class="btn btn-info">Accéder à la vente</a>
