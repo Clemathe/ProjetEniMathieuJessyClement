@@ -18,8 +18,6 @@ public interface ArticleVenduDAO {
 	
 	public List<ArticleVendu> getToutesEncheresEnCours();
 
-	public boolean enregistrerUneEnchere(Enchere nouvelleEnchere) throws SQLException;
-
 	public List<ArticleVendu> getMesVentes(int noUtilisateur);
 	
 	public List<ArticleVendu> getVentesEnCours(int noUtilisateur, LocalDate ceJour);
