@@ -47,7 +47,7 @@
 					: </label> <input class="form-controln col-md-4" type="text" id="pseudo"
 					name="pseudo" value="${utilisateur.pseudo}" required> <label
 					for="nom" class="col-md-2 col-form-label"> Nom : </label> <input
-					class="form-controln col-md-4" type="text" id="nom" name="pseudo"
+					class="form-controln col-md-4" type="text" id="nom" name="nom"
 					value="${utilisateur.nom}" required>
 			</div>
 

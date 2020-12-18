@@ -68,7 +68,7 @@ public class ServletMonProfil extends HttpServlet {
 		// entrer dans le formulaire PageModifierProfil.jsp
 
 		if (modifierProfil != null && !modifierProfil.isEmpty()) {
-			System.out.println("DoPost Servlet MonProfil if request.getParameter != null");
+			System.out.println("DoPost Servlet MonProfil première entrée");
 
 			Utilisateur utilisateur = new Utilisateur();
 			utilisateur = (Utilisateur) request.getSession(true).getAttribute("utilisateurCourant");
@@ -86,25 +86,28 @@ public class ServletMonProfil extends HttpServlet {
 			// 1. Vérifier que le motDePasse saisie = mot de passe en BDD de l'utilisateur
 			// courant :
 
-			// mot de passe saisie dans formulaire
+			// mot de passe saisie dans formulaire ne marche pas 
 			String motDePasseSaisie = (String) request.getParameter("motDePasse");
 			String hashPassword1 = MD5Utils.digest(motDePasseSaisie);
 
 			// mot de passe de l'utilisateurCourant
 			utilisateurSession = (Utilisateur) request.getSession(true).getAttribute("utilisateurCourant");
 			String motDePasseSession = utilisateurSession.getMotDePasse();
-			String hashPassword2 = MD5Utils.digest(motDePasseSession);
+			//String hashPassword2 = MD5Utils.digest(motDePasseSession);
 
 			// verifier que les deux mots de passe matchent :
-			boolean userPassOK = hashPassword1.equals(hashPassword2);
-
-			if (userPassOK != false) {
+			// ne pas hasher mot de passe et login / envoie à méthode getutilisateurSession
+			boolean userPassOK = hashPassword1.equals(motDePasseSession);
+			
+			// à changer qaund check fonctionnera
+			if (userPassOK != true) {
 				message = "le mot de passe saisie ne correspond pas à l'utilisateur";
 			} else
 
 				System.out.println("DoPost Servlet MonProfil if userPass != false");
 
 			request.setCharacterEncoding("UTF-8");
+			int no_utilisateur = utilisateurSession.getNoUtilisateur(); 
 			String pseudo = (String) request.getParameter("pseudo");
 			String nom = (String) request.getParameter("nom");
 			String prenom = (String) request.getParameter("prenom");
@@ -128,7 +131,7 @@ public class ServletMonProfil extends HttpServlet {
 
 				String statutUpdate = "ok";
 				try {
-					statutUpdate = utilisateurManager.modifierUtilisateur(pseudo, nom, prenom, email, telephone, rue,
+					statutUpdate = utilisateurManager.modifierUtilisateur(no_utilisateur, pseudo, nom, prenom, email, telephone, rue,
 							codePostal, ville, motDePasse);
 					System.out.println("try/catch utilisateurManager.modifierU" + statutUpdate);
 
@@ -147,6 +150,16 @@ public class ServletMonProfil extends HttpServlet {
 			System.out.println(sb.toString());
 			String messageU = sb.toString();
 			request.setAttribute("message", messageU);
+			Utilisateur utilisateur = new Utilisateur();
+			utilisateur = (Utilisateur) request.getSession(true).getAttribute("utilisateurCourant");
+
+			if (utilisateur == null) {
+				RequestDispatcher rd = request.getRequestDispatcher("/connexion");
+				rd.forward(request, response);
+				System.out.println("renvoyer vers page se connecter");
+			} else
+
+				request.setAttribute("utilisateur", utilisateur);
 			RequestDispatcher rd = request.getRequestDispatcher("WEB-INF/PageMonProfil.jsp");
 			rd.forward(request, response);
 

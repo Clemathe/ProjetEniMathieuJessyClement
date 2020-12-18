@@ -35,6 +35,7 @@ public class ServletConnexion extends HttpServlet {
 		Cookie cookieLogin = null; 
 		
 		if (deconnection == true) {
+			
 			// déconnection de la session
 			request.getSession().invalidate();
 
@@ -65,7 +66,6 @@ public class ServletConnexion extends HttpServlet {
 		rd.forward(request, response);
 		}
 	}
-
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
 	 *      response)
@@ -74,7 +74,7 @@ public class ServletConnexion extends HttpServlet {
 			throws ServletException, IOException {
 		
 		request.setCharacterEncoding("UTF-8");
-		boolean nouvelleConnexion = Boolean.parseBoolean(request.getParameter("nouvelleConnexion")); 
+//		boolean nouvelleConnexion = Boolean.parseBoolean(request.getParameter("nouvelleConnexion")); 
 		boolean creationUtilisateur = request.getAttribute("creationUtilisateur") != null;
 		String login = (String) request.getParameter("login");
 		String password = (String) request.getParameter("pass");
@@ -98,16 +98,17 @@ public class ServletConnexion extends HttpServlet {
 		UtilisateurManager UManager = new UtilisateurManager();
 		
 			try {Utilisateur utilisateurCourant = UManager.getUtilisateurPourSession(login, password);
-	
+			System.out.println("servelt connexion : " + utilisateurCourant);
+			
 				if(utilisateurCourant != null) {
 					HttpSession sessionCourante = request.getSession(true);
-		
 					// Création du profil de l'utilisateur et stockage en session
 					sessionCourante.setAttribute("utilisateurCourant", utilisateurCourant);
 					
 					// Attribut pour afficher une alerte de connexion réussie
 					request.setAttribute("nouvelleConnexion", "true");
-		
+					request.changeSessionId();
+					sessionCourante.setMaxInactiveInterval(5);
 					RequestDispatcher rd = getServletContext().getRequestDispatcher("/ServletAccueil");
 					rd.forward(request, response);
 		

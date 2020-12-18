@@ -31,9 +31,9 @@ public class ServletAccueil extends HttpServlet {
 			throws ServletException, IOException {
 		ArticleVenduManager enchereEnCours = new ArticleVenduManager();
 		List<ArticleVendu> enchere = enchereEnCours.getToutesEncheresEnCours();
-		System.out.println(enchere.toString());
+		System.out.println("doget accueil"  + enchere.toString());
 		request.setAttribute("enchereEnCours", enchereEnCours.getToutesEncheresEnCours());
-		LocalDate today = LocalDate.now();		
+		LocalDate today = LocalDate.now();
 		request.setAttribute("today", today);
 		
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/PageAccueilNonConnecte.jsp");

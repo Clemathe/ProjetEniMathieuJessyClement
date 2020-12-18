@@ -109,10 +109,13 @@ public class UtilisateurManager {
 		utilisateurDAO.insertUtilisateur(utilisateur);
 
 	}
-	public String modifierUtilisateur(String pseudo, String nom, String prenom, String email, String telephone,
+	public String modifierUtilisateur(int no_utilisateur, String pseudo, String nom, String prenom, String email, String telephone,
 			String rue, String codePostal, String ville, String motDePasse) throws Exception {
+		
 		String statutUpdate = "validation de la modification";
+		String hashPassword = MD5Utils.digest(motDePasse);
 		Utilisateur utilisateur = new Utilisateur();
+		utilisateur.setNoUtilisateur(no_utilisateur);
 		utilisateur.setPseudo(pseudo);
 		utilisateur.setNom(nom);
 		utilisateur.setPrenom(prenom);
@@ -121,7 +124,8 @@ public class UtilisateurManager {
 		utilisateur.setRue(rue);
 		utilisateur.setVille(ville);
 		utilisateur.setCodePostal(codePostal);
-		utilisateur.setMotDePasse(motDePasse);
+		utilisateur.setMotDePasse(hashPassword);
+
 		try {
 			utilisateurDAO.update(utilisateur);
 		} catch (Exception e) {
