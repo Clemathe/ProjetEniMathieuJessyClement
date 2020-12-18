@@ -81,6 +81,7 @@ public class ServletConnexion extends HttpServlet {
 		String seSouvenir = request.getParameter("rememberMe"); 
 		System.out.println("connexion "+request.getAttribute("creationUtilisateur"));
 		System.out.println("connexion "+ creationUtilisateur);
+		
 		if (seSouvenir != null) {
 			Cookie cookieLogin = new Cookie("login", login); 
 			cookieLogin.setMaxAge(200000);
