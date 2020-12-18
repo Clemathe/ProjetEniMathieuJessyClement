@@ -15,7 +15,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	private static final String DEBITER_UTILISATEUR = "UPDATE Utilisateurs SET credit = credit - ? WHERE no_utilisateur = ?";
 	private static final String SUPPRIMER_UTILISATEUR = "DELETE FROM utilisateurs WHERE no_utilisateur = ?";
 	private static final String SELECT_USER_SESSION_EMAIL = "SELECT no_utilisateur, pseudo,nom , prenom, email, telephone, rue, code_postal, ville, credit, administrateur FROM  Utilisateurs WHERE email = ? and mot_de_passe = ?";
-	private static final String SELECT_USER_SESSION_LOGIN = "SELECT no_utilisateur, pseudo,nom , prenom, email, telephone, rue, code_postal, ville, credit, administrateur FROM  Utilisateurs WHERE email = ? and mot_de_passe = ?";
+	private static final String SELECT_USER_SESSION_LOGIN = "SELECT no_utilisateur, pseudo,nom , prenom, email, telephone, rue, code_postal, ville, credit, administrateur FROM  Utilisateurs WHERE pseudo = ? and mot_de_passe = ?";
 		
 		@Override
 		public Utilisateur getUserforSession(String login, String hashPassword) throws SQLException {
