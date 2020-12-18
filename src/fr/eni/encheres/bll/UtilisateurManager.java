@@ -41,7 +41,7 @@ public class UtilisateurManager {
 			MessageErreur.add("erreur de saisie du pseudonyme : null ou caractères interdit");
 
 		} else if (nom == null || !nom.matches("^[a-zA-Z]*$")) {
-			//MessageErreur.add("erreur de saisie du Nom : null ou caractère interdit") à faire;
+			MessageErreur.add("erreur de saisie du Nom : null ou caractère interdit");
 
 		} else if (prenom == null || !prenom.matches("^[a-zA-Z]*$")) {
 			MessageErreur.add("erreur de saisie du Prenom : null ou caractère interdit");
@@ -55,8 +55,8 @@ public class UtilisateurManager {
 		} else if (rue == null) {
 			MessageErreur.add("erreur de saisie de la rue : null ");
 
-		//} else if (ville == null || !ville.matches("^[a-zA-Z]*$")) {
-		//	MessageErreur.add("erreur de saisie de la ville : null ou caractère interdit");
+		} else if (ville == null || !ville.matches("^[a-zA-Z]*$")) {
+			MessageErreur.add("erreur de saisie de la ville : null ou caractère interdit");
 		
 		} else if (codePostal == null || !codePostal.matches("^[0-9]{5}$")) {
 			MessageErreur.add("erreur de saisie du code postal : null ou caractère interdit");
@@ -84,8 +84,8 @@ public class UtilisateurManager {
 
 	public void creerUtilisateur(String pseudo, String nom, String prenom, String email, String telephone,
 			String rue, String codePostal, String ville, String motDePasse) throws SQLException {
-		String hashPassword = MD5Utils.digest(motDePasse);
 		
+		String hashPassword = MD5Utils.digest(motDePasse);
 		Utilisateur utilisateur = new Utilisateur();
 		utilisateur.setPseudo(pseudo);
 		utilisateur.setNom(nom);
@@ -96,6 +96,7 @@ public class UtilisateurManager {
 		utilisateur.setCodePostal(codePostal);
 		utilisateur.setVille(ville);
 		utilisateur.setMotDePasse(hashPassword);
+		utilisateur.setCredit(10);
 		try {
 			utilisateurDAO.insertUtilisateur(utilisateur);		
 		} catch (Exception e) {
@@ -167,5 +168,19 @@ public class UtilisateurManager {
 		
 	}
 		return erreur;
+	}
+	
+	public Utilisateur selectBy(int no_utilisateur) {
+		
+		Utilisateur utilisateurSession = new Utilisateur(); 
+		try {
+			 utilisateurSession = utilisateurDAO.selectBy(no_utilisateur);
+		} catch (SQLException e) {
+			System.out.println("erreur dans UtilisateurManager selectBy" + e);
+			e.printStackTrace();
+		} 
+		
+		return utilisateurSession;
+		
 	}
 }
