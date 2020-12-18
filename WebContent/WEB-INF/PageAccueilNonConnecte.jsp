@@ -49,11 +49,11 @@
 	
 	<form   action="" method="post">
 		<div class="row">
-			<div class="col-lg-4 col-12">
-				<label class="col-form-label" for="nomArticlePartiel">Filtres :</label>
+			<div class="col-lg-4 col-12 text-center">
+				<label class="col-form-label " for="nomArticlePartiel">Filtres </label>
 			</div>
-			<div class="col-lg-4 col-12">
-				<label class="col-form-label" for="categories">Catégories :</label>
+			<div class="col-lg-4 col-12 text-center">
+				<label class="col-form-label " for="categories">Catégories </label>
 			</div>
 		</div>
 		<div class="row justify-content-around">
