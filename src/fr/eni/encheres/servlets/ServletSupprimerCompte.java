@@ -28,7 +28,15 @@ public class ServletSupprimerCompte extends HttpServlet {
 			throws ServletException, IOException {
 
 		Utilisateur utilisateurSession = new Utilisateur();
-		utilisateurSession = (Utilisateur) request.getSession(true).getAttribute("utilisateurCourant");
+		UtilisateurManager um = new UtilisateurManager();
+		try {
+			int no_utilisateur = (int) request.getSession(true).getAttribute("no_utilisateur");
+			utilisateurSession = um.selectBy(no_utilisateur); 
+		} catch (Exception e) {
+			System.out.println("erreur dans récupération utilisateur doGet Supprimer Compte");
+		}
+		
+		
 		String prenom = (String) utilisateurSession.getPrenom();
 		int credit = (Integer) utilisateurSession.getCredit();
 		String attention = "Attention ";
@@ -54,24 +62,29 @@ public class ServletSupprimerCompte extends HttpServlet {
 			throws ServletException, IOException {
 
 		Utilisateur utilisateurSession = new Utilisateur();
-		UtilisateurManager utilisateurManager = new UtilisateurManager();
-		utilisateurSession = (Utilisateur) request.getSession(true).getAttribute("utilisateurCourant");
-		boolean sessionUtilisateur = request.getSession().getAttribute("utilisateurCourant") != null;
+		UtilisateurManager um = new UtilisateurManager();
+		try {
+			int no_utilisateur = (int) request.getSession(true).getAttribute("no_utilisateur");
+			utilisateurSession = um.selectBy(no_utilisateur); 
+		} catch (Exception e) {
+			System.out.println("erreur dans récupération utilisateur doGet Supprimer Compte");
+		}
+				
+		
 		int no_utilisateur = (int) utilisateurSession.getNoUtilisateur();
 		
-		if (sessionUtilisateur) {
+		if (no_utilisateur > 0) {
 			try {
-				utilisateurManager.supprimer(no_utilisateur);
+				um.supprimer(no_utilisateur);
 			} catch (SQLException e) {
 				e.printStackTrace();
+				RequestDispatcher rd = request.getRequestDispatcher("/connexion");
+				rd.forward(request, response);
 			}
 			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/PageAccueilNonConnecte.jsp");
 			rd.forward(request, response);
 
-		} else {
-			
-			RequestDispatcher rd = request.getRequestDispatcher("/connexion");
-		}
+		} 
 
 	}
 }
