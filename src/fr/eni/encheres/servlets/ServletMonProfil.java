@@ -33,7 +33,8 @@ public class ServletMonProfil extends HttpServlet {
 
 		//
 		Utilisateur utilisateur = new Utilisateur();
-		utilisateur = (Utilisateur) request.getSession(true).getAttribute("utilisateurCourant");
+		UtilisateurManager um = new UtilisateurManager(); 
+		int no_utilisateur = (int) request.getSession(true).getAttribute("no_utilisateur");
 
 		if (utilisateur == null) {
 			RequestDispatcher rd = request.getRequestDispatcher("/connexion");
@@ -70,9 +71,9 @@ public class ServletMonProfil extends HttpServlet {
 		if (modifierProfil != null && !modifierProfil.isEmpty()) {
 			System.out.println("DoPost Servlet MonProfil première entrée");
 
-			Utilisateur utilisateur = new Utilisateur();
-			utilisateur = (Utilisateur) request.getSession(true).getAttribute("utilisateurCourant");
-			request.setAttribute("utilisateur", utilisateur);
+			Utilisateur utilisateurSession = new Utilisateur();
+			utilisateurSession = (Utilisateur) request.getSession(true).getAttribute("utilisateurCourant");
+			request.setAttribute("utilisateur", utilisateurSession);
 			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/PageModifierProfil.jsp");
 			rd.forward(request, response);
 		}
@@ -92,17 +93,17 @@ public class ServletMonProfil extends HttpServlet {
 
 			// mot de passe de l'utilisateurCourant
 			utilisateurSession = (Utilisateur) request.getSession(true).getAttribute("utilisateurCourant");
-			String motDePasseSession = utilisateurSession.getMotDePasse();
-			//String hashPassword2 = MD5Utils.digest(motDePasseSession);
+			//String motDePasseSession = utilisateurSession.getMotDePasse();
+			
 
 			// verifier que les deux mots de passe matchent :
 			// ne pas hasher mot de passe et login / envoie à méthode getutilisateurSession
-			boolean userPassOK = hashPassword1.equals(motDePasseSession);
+			//boolean userPassOK = hashPassword1.equals(motDePasseSession);
 			
 			// à changer qaund check fonctionnera
-			if (userPassOK != true) {
-				message = "le mot de passe saisie ne correspond pas à l'utilisateur";
-			} else
+			//if (userPassOK != true) {
+			//	message = "le mot de passe saisie ne correspond pas à l'utilisateur";
+			//} else
 
 				System.out.println("DoPost Servlet MonProfil if userPass != false");
 
@@ -158,9 +159,10 @@ public class ServletMonProfil extends HttpServlet {
 				rd.forward(request, response);
 				System.out.println("renvoyer vers page se connecter");
 			} else
-
-				request.setAttribute("utilisateur", utilisateur);
-			RequestDispatcher rd = request.getRequestDispatcher("WEB-INF/PageMonProfil.jsp");
+			
+			request.changeSessionId();
+			//request.setAttribute("n", utilisateur);
+			RequestDispatcher rd = request.getRequestDispatcher("WEB-INF/PagesListeEncheresConnecte.jsp");
 			rd.forward(request, response);
 
 		}

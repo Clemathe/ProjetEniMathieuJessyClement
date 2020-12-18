@@ -96,6 +96,7 @@ public class UtilisateurManager {
 		utilisateur.setCodePostal(codePostal);
 		utilisateur.setVille(ville);
 		utilisateur.setMotDePasse(hashPassword);
+		utilisateur.setCredit(10);
 		try {
 			utilisateurDAO.insertUtilisateur(utilisateur);		
 		} catch (Exception e) {
@@ -167,5 +168,19 @@ public class UtilisateurManager {
 		
 	}
 		return erreur;
+	}
+	
+	public Utilisateur selectBy(int no_utilisateur) {
+		
+		Utilisateur utilisateurSession = new Utilisateur(); 
+		try {
+			 utilisateurSession = utilisateurDAO.selectBy(no_utilisateur);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
+		
+		return utilisateurSession;
+		
 	}
 }

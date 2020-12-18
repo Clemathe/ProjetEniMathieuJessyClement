@@ -69,6 +69,7 @@ public class ServletSupprimerCompte extends HttpServlet {
 			rd.forward(request, response);
 
 		} else {
+			
 			RequestDispatcher rd = request.getRequestDispatcher("/connexion");
 		}
 

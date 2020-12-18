@@ -112,7 +112,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	}
 
 	@Override
-	public Utilisateur selectBy(int noUtilisateur) throws SQLException {
+	public Utilisateur selectBy(int no_utilisateur) throws SQLException {
 
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -121,7 +121,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 		try (Connection cnx = ConnectionProvider.getConnection()) {
 
 			pstmt = cnx.prepareStatement(SELECT_BY_ID);
-			pstmt.setInt(1, noUtilisateur);
+			pstmt.setInt(1, no_utilisateur);
 			rs = pstmt.executeQuery();
 
 			if (rs.next()) {
