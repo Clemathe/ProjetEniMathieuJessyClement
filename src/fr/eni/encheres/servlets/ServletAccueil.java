@@ -29,6 +29,9 @@ public class ServletAccueil extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		Utilisateur utilisateurCourant = (Utilisateur) request.getSession().getAttribute("utilisateurCourant");
+		request.getSession().setAttribute("utilisateurCourant", utilisateurCourant);
+		
 		ArticleVenduManager enchereEnCours = new ArticleVenduManager();
 		List<ArticleVendu> enchere = enchereEnCours.getToutesEncheresEnCours();
 		System.out.println("doget accueil"  + enchere.toString());
