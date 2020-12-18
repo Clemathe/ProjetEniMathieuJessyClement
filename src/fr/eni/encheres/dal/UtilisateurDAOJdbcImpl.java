@@ -14,8 +14,8 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	private static final String REMBOURSER_UTILISATEUR = "UPDATE Utilisateurs SET credit = credit + ? WHERE no_utilisateur = ?";
 	private static final String DEBITER_UTILISATEUR = "UPDATE Utilisateurs SET credit = credit - ? WHERE no_utilisateur = ?";
 	private static final String SUPPRIMER_UTILISATEUR = "DELETE FROM utilisateurs WHERE no_utilisateur = ?";
-	private static final String SELECT_USER_SESSION_EMAIL = "SELECT no_utilisateur, pseudo,nom , prenom, email, telephone, rue, code_postal, ville, credit, administrateur FROM  Utilisateurs WHERE email = ? and mot_de_passe = ?";
-	private static final String SELECT_USER_SESSION_LOGIN = "SELECT no_utilisateur, pseudo,nom , prenom, email, telephone, rue, code_postal, ville, credit, administrateur FROM  Utilisateurs WHERE pseudo = ? and mot_de_passe = ?";
+	private static final String SELECT_USER_SESSION_EMAIL = "SELECT no_utilisateur, pseudo, credit FROM Utilisateurs WHERE email = ? and mot_de_passe = ?";
+	private static final String SELECT_USER_SESSION_LOGIN = "SELECT no_utilisateur, pseudo, credit FROM Utilisateurs WHERE pseudo = ? and mot_de_passe = ?";
 		
 		@Override
 		public Utilisateur getUserforSession(String login, String hashPassword) throws SQLException {
@@ -45,9 +45,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 				
 				if (rs.next()) {
 					System.out.println(login+ " 3 " + hashPassword);
-					user = new Utilisateur(rs.getInt("no_utilisateur"),rs.getString("pseudo"),rs.getString("nom"),
-							rs.getString("prenom"),rs.getString("email"),rs.getString("telephone"),rs.getString("rue"),
-							rs.getString("code_postal"), rs.getString("ville"), hashPassword,rs.getInt("credit"), rs.getBoolean("administrateur"));
+					user = new Utilisateur(rs.getInt("no_utilisateur"),rs.getString("pseudo"),rs.getInt("credit"));
 					
 				}
 				

@@ -108,7 +108,7 @@ public class ServletConnexion extends HttpServlet {
 					// Attribut pour afficher une alerte de connexion réussie
 					request.setAttribute("nouvelleConnexion", "true");
 					request.changeSessionId();
-					sessionCourante.setMaxInactiveInterval(5);
+					//sessionCourante.setMaxInactiveInterval(5);
 					RequestDispatcher rd = getServletContext().getRequestDispatcher("/ServletAccueil");
 					rd.forward(request, response);
 		
