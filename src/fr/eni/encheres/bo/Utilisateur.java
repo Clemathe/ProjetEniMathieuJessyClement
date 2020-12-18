@@ -107,6 +107,9 @@ public class Utilisateur implements Serializable{
 	public Utilisateur(int noUtilisateur) {
 		this.noUtilisateur=noUtilisateur;
 	}
+	public Utilisateur (String pseudo) {
+		this.pseudo = pseudo;
+	}
 
 	public int getNoUtilisateur() {
 		return noUtilisateur;

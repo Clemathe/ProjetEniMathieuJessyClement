@@ -42,7 +42,7 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 				pstmt.setString(1,concat);
 				ResultSet rs = pstmt.executeQuery();
 				while (rs.next()) {
-					ArticleVendu articleVendu= new ArticleVendu(rs.getInt(1), rs.getString(2),rs.getInt(3),rs.getDate(4).toLocalDate(),rs.getDate(5).toLocalDate(),rs.getString(6));
+					ArticleVendu articleVendu= new ArticleVendu(rs.getInt(1), rs.getString(2),rs.getInt(3),rs.getDate(4).toLocalDate(),rs.getDate(5).toLocalDate(),new Utilisateur(rs.getString(6)));
 					enchereEnCours.add(articleVendu);
 				}
 				rs.close();
@@ -74,7 +74,7 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 			pstmt.setString(2, categorie);
 			ResultSet rs = pstmt.executeQuery();
 			while (rs.next()) {
-				ArticleVendu articleVendu= new ArticleVendu(rs.getInt(1), rs.getString(2),rs.getInt(3),rs.getDate(4).toLocalDate(),rs.getDate(5).toLocalDate(),rs.getString(6));
+				ArticleVendu articleVendu= new ArticleVendu(rs.getInt(1), rs.getString(2),rs.getInt(3),rs.getDate(4).toLocalDate(),rs.getDate(5).toLocalDate(),new Utilisateur(rs.getString(6)));
 				enchereEnCours.add(articleVendu);
 			}
 			rs.close();
@@ -344,9 +344,9 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 			pstmt.setDate(4, Date.valueOf(articleVendu.getDateFinEncheres()));
 			pstmt.setInt(5, articleVendu.getMiseAPrix());
 			pstmt.setInt(6, articleVendu.getMiseAPrix());
-			pstmt.setInt(7, articleVendu.getUtilisateur().getNoUtilisateur());
-			pstmt.setInt(8, articleVendu.getNoCategorie());
-			System.out.println("n cat" + articleVendu.getNoCategorie());
+			pstmt.setInt(7, articleVendu.getVendeur().getNoUtilisateur());
+			pstmt.setInt(8, articleVendu.getCategorie().getNoCategorie());
+			System.out.println("n cat" + articleVendu.getCategorie().getNoCategorie());
 			
 			pstmt.executeUpdate();
 			ResultSet rs = pstmt.getGeneratedKeys();
@@ -400,7 +400,7 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 			PreparedStatement pstmt = cnx.prepareStatement(ENCHERES_EN_COURS);
 			ResultSet rs = pstmt.executeQuery();
 			while (rs.next()) {
-				ArticleVendu articleVendu= new ArticleVendu(rs.getInt(1), rs.getString(2),rs.getInt(3),rs.getDate(4).toLocalDate(),rs.getDate(5).toLocalDate(),rs.getString(6));
+				ArticleVendu articleVendu= new ArticleVendu(rs.getInt(1), rs.getString(2),rs.getInt(3),rs.getDate(4).toLocalDate(),rs.getDate(5).toLocalDate(),new Utilisateur(rs.getString(6)));
 				enchereEnCours.add(articleVendu);
 			}
 			rs.close();

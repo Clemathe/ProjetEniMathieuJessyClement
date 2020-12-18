@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import fr.eni.encheres.bll.ArticleVenduManager;
 import fr.eni.encheres.bll.CategorieManager;
 import fr.eni.encheres.bo.ArticleVendu;
+import fr.eni.encheres.bo.Categorie;
 import fr.eni.encheres.bo.Retrait;
 import fr.eni.encheres.bo.Utilisateur;
 
@@ -63,8 +64,9 @@ public class ServletVendreUnArticle extends HttpServlet {
 		int noUtilisateur = utilisateurCourant.getNoUtilisateur();
 		
 		//recuperation du noCategorie a partir du libelle choisit par le user
-		CategorieManager categorie = new CategorieManager();
-		int noCategorie = categorie.getCategorie(categorieLibelle);
+		CategorieManager Categorie = new CategorieManager();
+		Categorie noCategorie = new Categorie(Categorie.getCategorie(categorieLibelle));
+		 
 		
 		
 		System.out.println(nomArticle+" "+description+" "+ categorieLibelle+" "+ miseAPrix+" "+dateDebutEnchere+" "+dateFinEnchere+" "+ rue+" "+ codePostal+" "+ ville+" "+ noUtilisateur);
@@ -75,6 +77,7 @@ public class ServletVendreUnArticle extends HttpServlet {
 		Retrait lieuRetrait = new Retrait(rue, codePostal, ville);
 		//construction d'un utilisateur "léger"
 		Utilisateur utilisateur = new Utilisateur(noUtilisateur);
+		
 		
 		//Construction de l'article à créer en BDD
 		ArticleVendu articleAVendre = new ArticleVendu(nomArticle,description,dateDebutEnchere,dateFinEnchere,miseAPrix,noCategorie,utilisateur,lieuRetrait);
