@@ -19,7 +19,7 @@ public class ArticleVendu {
 	private List<Enchere> encheres; 
 	private Categorie categorie; 
 	private Retrait lieuRetrait;
-	
+	 
 	private Enchere enchere;
 	
 
