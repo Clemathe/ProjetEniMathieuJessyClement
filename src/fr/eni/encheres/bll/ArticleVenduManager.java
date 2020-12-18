@@ -1,11 +1,10 @@
 package fr.eni.encheres.bll;
 
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.List;
 
 import fr.eni.encheres.bo.ArticleVendu;
-import fr.eni.encheres.bo.Enchere;
-import fr.eni.encheres.bo.Utilisateur;
 import fr.eni.encheres.dal.ArticleVenduDAO;
 import fr.eni.encheres.dal.DAOFactory;
 
@@ -42,60 +41,9 @@ public class ArticleVenduManager {
 		ArticleVenduManager.articleVenduDAO.insertArticleVendu(articleVendu);
 	}
 
-	public String Encherir(int montantEnchere, Utilisateur utilisateurCourant, int noArticle) {
-		int soldeUtilisateur = utilisateurCourant.getCredit();
-		ArticleVendu articleCourant = getArticleVendu(noArticle);
-		LocalDate echeanceEnchere = articleCourant.getDateFinEncheres();
-		boolean auMoinsUneEnchere= auMoinsUneEnchere(articleCourant);
-		int prixActuel = articleCourant.getPrixVente();
-		
-		String message = null;
-		// La date de fin d'enchere est elle atteinte ?
-		if ( echeanceEnchere.compareTo(LocalDate.now()) > 0 ) {
-			// L'encherisseur est-il different du vendeur ?
-			
-			if(utilisateurCourant.getNoUtilisateur() != articleCourant.getVendeur().getNoUtilisateur()) {
-				// L'encherisseur a-t-il assez de crédit ?
-				if (soldeUtilisateur > montantEnchere ) {
-					// Son offre est elle superieur au prix actuel ?
-					if( montantEnchere > prixActuel) {
-						
-						UtilisateurManager uManager = new UtilisateurManager();
-						// creation de l'objet enchère
-						Enchere nouvelleEnchere = new Enchere(LocalDate.now(), montantEnchere, articleCourant, utilisateurCourant);
-						
-						try {
-							//TODO Begin transacation
-							articleVenduDAO.enregistrerUneEnchere(nouvelleEnchere);
-							uManager.debiterUtilisateur(montantEnchere, utilisateurCourant);
-							articleVenduDAO.mettreAJourLePrixDeVente(montantEnchere, noArticle);
-							if (auMoinsUneEnchere) uManager.rembourserUtilisateur(prixActuel, articleCourant.getEncheres().get(0).getUtilisateur());
-							//TODO Commit Transcation
-						} catch (Exception e) {
-							
-							message = "L'enchère n'a pas pu être enregistrée";
-							
-							return message;
-						}
-								
-						message = "Enchère enregistrée";
-				
-					}else {
-						message = "Votre enchère est inférieure à l'enchère la plus haute ou à la mise à prix";
-					}
-			}else {
-					message = "Vous n'avez pas suffisament de crédit";
-			}
-		}else {
-			message = "Vous ne pouvez pas enchérir sur votre vente";
-		}
-	}else {
-		message = "L'enchère est déjà terminée";
-		
+	public void mettreAJourLePrixDeVente(int montantEnchere, int noArticle) throws SQLException {
+		articleVenduDAO.mettreAJourLePrixDeVente(montantEnchere, noArticle);
 	}
-		return message;
-}
-	
 
 
 	public List<ArticleVendu> getVentesEnCours (int noUtilisateur, LocalDate ceJour) {
@@ -113,21 +61,6 @@ public class ArticleVenduManager {
 		return ArticleVenduManager.articleVenduDAO.getVentesTerminees(noUtilisateur, ceJour);
 	}
 
-	// L'article contient il déjà une enchère ?
-	public boolean auMoinsUneEnchere(ArticleVendu articleCourant) {
-		int enchereLaPlusHaute;
-		boolean auMoinsUne;
-		try {  
-			enchereLaPlusHaute = articleCourant.getEncheres().get(0).getMontantEnchere();
-			auMoinsUne = true;
-			System.out.println("auMoinsUneEnchere = true;");
-		} catch (Exception e) { 
-			auMoinsUne = false;
-			System.out.println("auMoinsUneEnchere = false;");
-	}
-		return auMoinsUne;
-
-	}
 	//JSP liste mes enchères : verif Checkbox
 	
 	public String radioBtn (String achatsVentes) {

@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import fr.eni.encheres.bll.ArticleVenduManager;
+import fr.eni.encheres.bll.EnchereManager;
 import fr.eni.encheres.bll.UtilisateurManager;
 import fr.eni.encheres.bo.ArticleVendu;
 import fr.eni.encheres.bo.Utilisateur;
@@ -51,7 +52,7 @@ public class ServletEncheres extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	
 		UtilisateurManager uManager = new UtilisateurManager();
-		ArticleVenduManager aVManager = new ArticleVenduManager();
+		EnchereManager eManager = new EnchereManager();
 		
 		boolean sessionUtilisateur = request.getSession().getAttribute("utilisateurCourant") != null;
 		boolean encherir = request.getParameter("encherir") != null;
@@ -66,7 +67,7 @@ public class ServletEncheres extends HttpServlet {
 				System.out.println("servlet enchere noArticle"+ noArticle);
 				
 				Utilisateur utilisateurCourant = (Utilisateur) request.getSession().getAttribute("utilisateurCourant");
-				String enchereMessage = aVManager.Encherir(montant, utilisateurCourant, noArticle );
+				String enchereMessage = eManager.Encherir(montant, utilisateurCourant, noArticle );
 				request.setAttribute("enchereMessage", enchereMessage);
 				
 				//Rechargement de la session utilisateur pour mettre a jour le solde
@@ -75,8 +76,7 @@ public class ServletEncheres extends HttpServlet {
 //					request.getSession().setAttribute("utilisateurCourant", utilisateurCourant);
 //					request.changeSessionId();
 //				}
-				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/PageEncherir.jsp");
-				rd.forward(request, response);
+				doGet(request, response);
 			}catch (Exception e) {
 				
 				doGet(request, response);			
