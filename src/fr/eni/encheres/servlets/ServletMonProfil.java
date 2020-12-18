@@ -33,16 +33,19 @@ public class ServletMonProfil extends HttpServlet {
 
 		//
 		Utilisateur utilisateur = new Utilisateur();
-		utilisateur = (Utilisateur) request.getSession(true).getAttribute("utilisateurCourant");
-
+		UtilisateurManager um = new UtilisateurManager(); 
+	
+		int no_utilisateur = (int) request.getSession(true).getAttribute("no_utilisateur");
+		utilisateur = um.selectBy(no_utilisateur); 
+		System.out.println(utilisateur);
+		
 		if (utilisateur == null) {
 			RequestDispatcher rd = request.getRequestDispatcher("/connexion");
 			rd.forward(request, response);
 			System.out.println("renvoyer vers page se connecter");
 		} else
 
-			request.setAttribute("utilisateur", utilisateur);
-
+		request.setAttribute("utilisateur", utilisateur);
 		System.out.println(utilisateur);
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/PageMonProfil.jsp");
 		rd.forward(request, response);
@@ -57,22 +60,22 @@ public class ServletMonProfil extends HttpServlet {
 			throws ServletException, IOException {
 
 		Utilisateur utilisateurSession = new Utilisateur();
-		UtilisateurManager utilisateurManager = new UtilisateurManager();
-
+		UtilisateurManager um = new UtilisateurManager();
+		
+		int no_utilisateur = (int) request.getSession(true).getAttribute("no_utilisateur");
+		utilisateurSession = um.selectBy(no_utilisateur); 
+		
 		List<String> messageUtilisateur = new ArrayList<>();
 		String message = "Votre profil a bien été modifié";
 		String modifierProfil = request.getParameter("modifierProfil");
 		String enregistrer = request.getParameter("enregistrer");
-		String supprimer = request.getParameter("supprimer");
-
-		// entrer dans le formulaire PageModifierProfil.jsp
+		
+		// entrer dans le formulaire PageModifierProfil.jsp avec parmaètres utilisteur
 
 		if (modifierProfil != null && !modifierProfil.isEmpty()) {
 			System.out.println("DoPost Servlet MonProfil première entrée");
 
-			Utilisateur utilisateur = new Utilisateur();
-			utilisateur = (Utilisateur) request.getSession(true).getAttribute("utilisateurCourant");
-			request.setAttribute("utilisateur", utilisateur);
+			request.setAttribute("utilisateur", utilisateurSession);
 			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/PageModifierProfil.jsp");
 			rd.forward(request, response);
 		}
@@ -86,28 +89,25 @@ public class ServletMonProfil extends HttpServlet {
 			// 1. Vérifier que le motDePasse saisie = mot de passe en BDD de l'utilisateur
 			// courant :
 
-			// mot de passe saisie dans formulaire ne marche pas 
+		
 			String motDePasseSaisie = (String) request.getParameter("motDePasse");
 			String hashPassword1 = MD5Utils.digest(motDePasseSaisie);
 
-			// mot de passe de l'utilisateurCourant
-			utilisateurSession = (Utilisateur) request.getSession(true).getAttribute("utilisateurCourant");
-			String motDePasseSession = utilisateurSession.getMotDePasse();
-			//String hashPassword2 = MD5Utils.digest(motDePasseSession);
-
+			//mot de passe de l'utilisateurCourant
+			String motDePasseSession = utilisateurSession.getMotDePasse(); 
+			
 			// verifier que les deux mots de passe matchent :
-			// ne pas hasher mot de passe et login / envoie à méthode getutilisateurSession
+			
 			boolean userPassOK = hashPassword1.equals(motDePasseSession);
 			
-			// à changer qaund check fonctionnera
 			if (userPassOK != true) {
-				message = "le mot de passe saisie ne correspond pas à l'utilisateur";
+			message = "le mot de passe saisie ne correspond pas à l'utilisateur";
 			} else
 
 				System.out.println("DoPost Servlet MonProfil if userPass != false");
 
 			request.setCharacterEncoding("UTF-8");
-			int no_utilisateur = utilisateurSession.getNoUtilisateur(); 
+			no_utilisateur = utilisateurSession.getNoUtilisateur(); 
 			String pseudo = (String) request.getParameter("pseudo");
 			String nom = (String) request.getParameter("nom");
 			String prenom = (String) request.getParameter("prenom");
@@ -120,10 +120,10 @@ public class ServletMonProfil extends HttpServlet {
 			String motDePasse1 = (String) request.getParameter("motDePasseNew");
 
 			// verifier l'intégrité des données du formulaire avant update
-			messageUtilisateur = (utilisateurManager.verificationSaisieUtilisateur(pseudo, nom, prenom, email,
+			messageUtilisateur = (um.verificationSaisieUtilisateur(pseudo, nom, prenom, email,
 					telephone, rue, codePostal, ville, motDePasse, motDePasse1));
 
-			boolean validationOK = utilisateurManager.validationCreationCompte(messageUtilisateur);
+			boolean validationOK = um.validationCreationCompte(messageUtilisateur);
 
 			// procéder à l'update en DBB si validationOK = true;
 
@@ -131,7 +131,7 @@ public class ServletMonProfil extends HttpServlet {
 
 				String statutUpdate = "ok";
 				try {
-					statutUpdate = utilisateurManager.modifierUtilisateur(no_utilisateur, pseudo, nom, prenom, email, telephone, rue,
+					statutUpdate = um.modifierUtilisateur(no_utilisateur, pseudo, nom, prenom, email, telephone, rue,
 							codePostal, ville, motDePasse);
 					System.out.println("try/catch utilisateurManager.modifierU" + statutUpdate);
 
@@ -140,28 +140,24 @@ public class ServletMonProfil extends HttpServlet {
 				}
 			}
 			// affichage du messageUtilisateur
-
 			messageUtilisateur.add(message);
-			StringBuilder sb = new StringBuilder();
-			for (String s : messageUtilisateur) {
-				sb.append(s);
-				sb.append(" ");
-			}
-			System.out.println(sb.toString());
-			String messageU = sb.toString();
+			String messageU = um.traitementErreur(validationOK, messageUtilisateur); 
+			
 			request.setAttribute("message", messageU);
-			Utilisateur utilisateur = new Utilisateur();
-			utilisateur = (Utilisateur) request.getSession(true).getAttribute("utilisateurCourant");
+			RequestDispatcher rd = request.getRequestDispatcher("WEB-INF/PageModifierProfil.jsp");
+			rd.forward(request, response);
+			
 
-			if (utilisateur == null) {
+			/*if (utilisateurSession == null) {
 				RequestDispatcher rd = request.getRequestDispatcher("/connexion");
 				rd.forward(request, response);
 				System.out.println("renvoyer vers page se connecter");
-			} else
-
-				request.setAttribute("utilisateur", utilisateur);
-			RequestDispatcher rd = request.getRequestDispatcher("WEB-INF/PageMonProfil.jsp");
-			rd.forward(request, response);
+			} else */
+			
+			//request.changeSessionId();
+			//request.setAttribute("n", utilisateur);
+			//RequestDispatcher rd = request.getRequestDispatcher("WEB-INF/PagesListeEncheresConnecte.jsp");
+			//rd.forward(request, response);
 
 		}
 	}
