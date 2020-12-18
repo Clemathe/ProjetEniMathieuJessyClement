@@ -176,7 +176,7 @@ public class UtilisateurManager {
 		try {
 			 utilisateurSession = utilisateurDAO.selectBy(no_utilisateur);
 		} catch (SQLException e) {
-			System.out.println("erreur dans UtilisateurManager selectBy");
+			System.out.println("erreur dans UtilisateurManager selectBy" + e);
 			e.printStackTrace();
 		} 
 		

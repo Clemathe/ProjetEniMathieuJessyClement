@@ -41,7 +41,7 @@ public class ServletSupprimerCompte extends HttpServlet {
 		int credit = (Integer) utilisateurSession.getCredit();
 		String attention = "Attention ";
 		String suite1 = " vous êtes sur le point de supprimer votre compte utilisateur, cette action est irréversible et vos ";
-		String suite2 = " crédit(s) seront perdus. Quel dommage ! "
+		String suite2 = " crédit(s) seront perdus. "
 				+ "Pour confirmer la suppression du compte cliquez sur supprimer" + " sinon cliquez sur retour ";
 		request.setAttribute("prenom", prenom);
 		request.setAttribute("attention", attention);

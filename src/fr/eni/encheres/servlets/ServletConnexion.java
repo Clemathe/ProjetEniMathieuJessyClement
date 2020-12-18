@@ -122,7 +122,7 @@ public class ServletConnexion extends HttpServlet {
 					rd.forward(request, response);
 				}
 			}catch (Exception e) {
-				// Sinon je retourne à la page d'ajout pour indiquer les problèmes:
+				// Sinon je retourne à la page d'ajout pour afficher le message d'erreur:
 				e.printStackTrace();
 				request.setAttribute("erreurs", e.getMessage());
 				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/PageAccueilNonConnecte.jsp");

@@ -70,7 +70,7 @@ public class ServletMonProfil extends HttpServlet {
 		String modifierProfil = request.getParameter("modifierProfil");
 		String enregistrer = request.getParameter("enregistrer");
 		
-		// entrer dans le formulaire PageModifierProfil.jsp
+		// entrer dans le formulaire PageModifierProfil.jsp avec parmaètres utilisteur
 
 		if (modifierProfil != null && !modifierProfil.isEmpty()) {
 			System.out.println("DoPost Servlet MonProfil première entrée");

@@ -260,8 +260,9 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 				pstmt.executeUpdate(); 
 				cnx.close();
 				
-				System.out.println("utilisateur DAOJDBCIMPL fin de supprimer");
+				System.out.println("utilisateur DAOJDBCIMPL fin de supprimerUtilisateur");
 			} catch (Exception e) {
+				
 				System.out.println("erreur dans supprimerUtilisateur utilisateurDAOJDBCImpl");
 				e.printStackTrace();
 			}

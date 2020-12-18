@@ -7,10 +7,7 @@ public class Utilisateur implements Serializable{
 	
 	
 	/**
-	 * La class Utilisateur respecte les règles d'un JavaBean:
-	 * -implémente l'interface Serializable
-	 * -Respecte la nomenclature des getters et setters
-	 * -il y a un constructeur sans parametre
+	 * La class Utilisateur respecte les règles d'un JavaBean
 	 */
 	private static final long serialVersionUID = 1L;
 	private int noUtilisateur; 
