@@ -1,10 +1,13 @@
 package fr.eni.encheres.bll;
 
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.time.LocalDate;
 
 import fr.eni.encheres.bo.ArticleVendu;
 import fr.eni.encheres.bo.Enchere;
 import fr.eni.encheres.bo.Utilisateur;
+import fr.eni.encheres.dal.ConnectionProvider;
 import fr.eni.encheres.dal.DAOFactory;
 import fr.eni.encheres.dal.EnchereDAO;
 import fr.eni.encheres.dal.EnchereDAOJdbcImpl;
@@ -17,7 +20,7 @@ public class EnchereManager {
 		enchereDAO = DAOFactory.getEnchereDAO();
 	}
 	
-	public String Encherir(int montantEnchere, Utilisateur utilisateurCourant, int noArticle) {
+	public String Encherir(int montantEnchere, Utilisateur utilisateurCourant, int noArticle) throws SQLException {
 		ArticleVenduManager aVManager = new ArticleVenduManager();
 		
 		int soldeUtilisateur = utilisateurCourant.getCredit();
@@ -36,21 +39,19 @@ public class EnchereManager {
 				if (soldeUtilisateur > montantEnchere ) {
 					// Son offre est elle superieur au prix actuel ?
 					if( montantEnchere > prixActuel) {
-						
 						UtilisateurManager uManager = new UtilisateurManager();
-						
 						// creation de l'objet enchère
 						Enchere nouvelleEnchere = new Enchere(LocalDate.now(), montantEnchere, articleCourant, utilisateurCourant);
-						
+						Connection cnx = ConnectionProvider.getConnection();
 						try {
-							//TODO Begin transacation
+							cnx.setAutoCommit(false);
 							enchereDAO.enregistrerUneEnchere(nouvelleEnchere);
 							uManager.debiterUtilisateur(montantEnchere, utilisateurCourant);
 							aVManager.mettreAJourLePrixDeVente(montantEnchere, noArticle);
 							if (auMoinsUneEnchere) uManager.rembourserUtilisateur(prixActuel, articleCourant.getEncheres().get(0).getUtilisateur());
-							//TODO Commit Transcation
+							cnx.commit();
 						} catch (Exception e) {
-							
+							cnx.rollback();
 							message = "L'enchère n'a pas pu être enregistrée";
 							
 							return message;
