@@ -14,8 +14,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.codec.binary.StringUtils;
-
 import fr.eni.encheres.bll.MD5Utils;
 import fr.eni.encheres.bll.UtilisateurManager;
 import fr.eni.encheres.bo.Utilisateur;
@@ -32,11 +30,11 @@ public class ServletMonProfil extends HttpServlet {
 			throws ServletException, IOException {
 
 		//
-		Utilisateur utilisateur = new Utilisateur();
+		
 		UtilisateurManager um = new UtilisateurManager(); 
 	
-		int no_utilisateur = (int) request.getSession(true).getAttribute("no_utilisateur");
-		utilisateur = um.selectBy(no_utilisateur); 
+		Utilisateur utilisateurCourant =  (Utilisateur) request.getSession().getAttribute("utilisateurCourant");
+		Utilisateur utilisateur = um.selectBy(utilisateurCourant.getNoUtilisateur()); 
 		System.out.println(utilisateur);
 		
 		if (utilisateur == null) {
@@ -62,8 +60,8 @@ public class ServletMonProfil extends HttpServlet {
 		Utilisateur utilisateurSession = new Utilisateur();
 		UtilisateurManager um = new UtilisateurManager();
 		
-		int no_utilisateur = (int) request.getSession(true).getAttribute("no_utilisateur");
-		utilisateurSession = um.selectBy(no_utilisateur); 
+		Utilisateur utilisateurCourant =  (Utilisateur) request.getSession().getAttribute("utilisateurCourant");
+		utilisateurSession = um.selectBy(utilisateurCourant.getNoUtilisateur()); 
 		
 		List<String> messageUtilisateur = new ArrayList<>();
 		String message = "Votre profil a bien été modifié";
@@ -107,7 +105,7 @@ public class ServletMonProfil extends HttpServlet {
 				System.out.println("DoPost Servlet MonProfil if userPass != false");
 
 			request.setCharacterEncoding("UTF-8");
-			no_utilisateur = utilisateurSession.getNoUtilisateur(); 
+			int noUtilisateur = utilisateurSession.getNoUtilisateur(); 
 			String pseudo = (String) request.getParameter("pseudo");
 			String nom = (String) request.getParameter("nom");
 			String prenom = (String) request.getParameter("prenom");
@@ -131,7 +129,7 @@ public class ServletMonProfil extends HttpServlet {
 
 				String statutUpdate = "ok";
 				try {
-					statutUpdate = um.modifierUtilisateur(no_utilisateur, pseudo, nom, prenom, email, telephone, rue,
+					statutUpdate = um.modifierUtilisateur(noUtilisateur, pseudo, nom, prenom, email, telephone, rue,
 							codePostal, ville, motDePasse);
 					System.out.println("try/catch utilisateurManager.modifierU" + statutUpdate);
 
@@ -144,8 +142,7 @@ public class ServletMonProfil extends HttpServlet {
 			String messageU = um.traitementErreur(validationOK, messageUtilisateur); 
 			
 			request.setAttribute("message", messageU);
-			RequestDispatcher rd = request.getRequestDispatcher("WEB-INF/PageModifierProfil.jsp");
-			rd.forward(request, response);
+			doGet(request, response);
 			
 
 			/*if (utilisateurSession == null) {
